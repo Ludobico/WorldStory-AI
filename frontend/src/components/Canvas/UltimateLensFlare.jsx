@@ -2,13 +2,13 @@
 // React Three Fiber Ultimate LensFlare
 // To be used Effect together with react-three/postprocessing
 
-import { Uniform, Color, Vector3 } from 'three'
-import { BlendFunction, Effect } from 'postprocessing'
-import { wrapEffect } from './util.tsx'
-import { useRef, useMemo, useEffect } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
-import { useTexture } from '@react-three/drei'
-import { easing } from 'maath'
+import { Uniform, Color, Vector3 } from "three";
+import { BlendFunction, Effect } from "postprocessing";
+import { wrapEffect } from "./util.tsx";
+import { useRef, useMemo, useEffect } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import { easing } from "maath";
 
 const LensFlareShader = {
   fragmentShader: /* glsl */ `
@@ -55,8 +55,8 @@ const LensFlareShader = {
   vec4 txD(sampler2D tex, vec2 xtC, vec2 dir, vec3 ditn) {return vec4(txL(tex, (xtC + (dir * ditn.r))).r,txL(tex, (xtC + (dir * ditn.g))).g,txL(tex, (xtC + (dir * ditn.b))).b,1.0);}
   vec4 strB(){vec2 aspXtc = vec2(1.0) - (((vxtC - vec2(0.5)) * vec2(1.0)) + vec2(0.5)); vec2 xtC = vec2(1.0) - vxtC; vec2 ghvc = (vec2(0.5) - xtC) * 0.3 - lensPosition; vec2 ghNm = normalize(ghvc * vec2(1.0)) * vec2(1.0);vec2 haloVec = normalize(ghvc) * 0.6;vec2 hlNm = ghNm * 0.6;vec2 texelSize = vec2(1.0) / vec2(iResolution.xy);vec3 ditn = vec3(-(texelSize.x * 1.5), 0.2, texelSize.x * 1.5);vec4 c = vec4(0.0);for (int i = 0; i < 8; i++) {vec2 offset = xtC + (ghvc * float(i));c += txD(lensDirtTexture, offset, ghNm, ditn) * pow(max(0.0, 1.0 - (length(vec2(0.5) - offset) / length(vec2(0.5)))), 10.0);}vec2 uyTrz = xtC + hlNm; return (c * geLC((length(vec2(0.5) - aspXtc) / length(vec2(haloScale))))) +(txD(lensDirtTexture, uyTrz, ghNm, ditn) * pow(max(0.0, 1.0 - (length(vec2(0.5) - uyTrz) / length(vec2(0.5)))), 10.0));} 
   void mainImage(vec4 v,vec2 r,out vec4 i){vec2 g=r-.5;g.y*=iResolution.y/iResolution.x;vec2 l=lensPosition*.5;l.y*=iResolution.y/iResolution.x;vec3 f=mLs(g,l)*20.*colorGain/256.;if(aditionalStreaks){vec3 o=vec3(.9,.2,.1),p=vec3(.3,.1,.9);for(float n=0.;n<10.;n++)f+=drC(g,pow(rnd(n*2e3)*2.8,.1)+1.41,0.,o+n,p+n,rnd(n*20.)*3.+.2-.5,lensPosition);}if(secondaryGhosts){vec3 n=vec3(0);n+=rHx(g,-lensPosition*.25,ghostScale*1.4,vec3(.25,.35,0));n+=rHx(g,lensPosition*.25,ghostScale*.5,vec3(1,.5,.5));n+=rHx(g,lensPosition*.1,ghostScale*1.6,vec3(1));n+=rHx(g,lensPosition*1.8,ghostScale*2.,vec3(0,.5,.75));n+=rHx(g,lensPosition*1.25,ghostScale*.8,vec3(1,1,.5));n+=rHx(g,-lensPosition*1.25,ghostScale*5.,vec3(.5,.5,.25));n+=fpow(1.-abs(distance(lensPosition*.8,g)-.7),.985)*colorGain/2100.;f+=n;}if(starBurst){vxtC=g+.5;vec4 n=geLD(g);float o=1.-clamp(0.5,0.,.5)*2.;n+=mix(n,pow(n*2.,vec4(2))*.5,o);float s=(g.x+g.y)*(1./6.);vec2 d=mat2(cos(s),-sin(s),sin(s),cos(s))*vxtC;n+=geLS(d)*2.;f+=clamp(n.xyz*strB().xyz,.01,1.);}i=enabled?vec4(mix(f,vec3(0),opacity)+v.xyz,v.w):vec4(v);}
-`
-}
+`,
+};
 
 export class LensFlareEffect extends Effect {
   constructor({
@@ -78,40 +78,40 @@ export class LensFlareEffect extends Effect {
     aditionalStreaks = true,
     ghostScale = 0.0,
     opacity = 1.0,
-    starBurst = true
+    starBurst = true,
   } = {}) {
-    super('LensFlareEffect', LensFlareShader.fragmentShader, {
+    super("LensFlareEffect", LensFlareShader.fragmentShader, {
       blendFunction,
       uniforms: new Map([
-        ['enabled', new Uniform(enabled)],
-        ['glareSize', new Uniform(glareSize)],
-        ['lensPosition', new Uniform(lensPosition)],
-        ['iTime', new Uniform(0)],
-        ['iResolution', new Uniform(iResolution)],
-        ['starPoints', new Uniform(starPoints)],
-        ['flareSize', new Uniform(flareSize)],
-        ['flareSpeed', new Uniform(flareSpeed)],
-        ['flareShape', new Uniform(flareShape)],
-        ['animated', new Uniform(animated)],
-        ['anamorphic', new Uniform(anamorphic)],
-        ['colorGain', new Uniform(colorGain)],
-        ['lensDirtTexture', new Uniform(lensDirtTexture)],
-        ['haloScale', new Uniform(haloScale)],
-        ['secondaryGhosts', new Uniform(secondaryGhosts)],
-        ['aditionalStreaks', new Uniform(aditionalStreaks)],
-        ['ghostScale', new Uniform(ghostScale)],
-        ['starBurst', new Uniform(starBurst)],
-        ['opacity', new Uniform(opacity)]
-      ])
-    })
+        ["enabled", new Uniform(enabled)],
+        ["glareSize", new Uniform(glareSize)],
+        ["lensPosition", new Uniform(lensPosition)],
+        ["iTime", new Uniform(0)],
+        ["iResolution", new Uniform(iResolution)],
+        ["starPoints", new Uniform(starPoints)],
+        ["flareSize", new Uniform(flareSize)],
+        ["flareSpeed", new Uniform(flareSpeed)],
+        ["flareShape", new Uniform(flareShape)],
+        ["animated", new Uniform(animated)],
+        ["anamorphic", new Uniform(anamorphic)],
+        ["colorGain", new Uniform(colorGain)],
+        ["lensDirtTexture", new Uniform(lensDirtTexture)],
+        ["haloScale", new Uniform(haloScale)],
+        ["secondaryGhosts", new Uniform(secondaryGhosts)],
+        ["aditionalStreaks", new Uniform(aditionalStreaks)],
+        ["ghostScale", new Uniform(ghostScale)],
+        ["starBurst", new Uniform(starBurst)],
+        ["opacity", new Uniform(opacity)],
+      ]),
+    });
   }
 
   update(renderer, inputBuffer, deltaTime) {
-    this.uniforms.get('iTime').value += deltaTime
+    this.uniforms.get("iTime").value += deltaTime;
   }
 }
 
-const LensFlare = wrapEffect(LensFlareEffect)
+const LensFlare = wrapEffect(LensFlareEffect);
 
 function Effects({
   position = { x: -25, y: 6, z: -60 },
@@ -125,85 +125,85 @@ function Effects({
   animated = true,
   anamorphic = false,
   colorGain = new Color(56, 22, 11),
-  dirtTextureFile = 'https://i.ibb.co/c3x4dBy/lens-Dirt-Texture.jpg',
+  dirtTextureFile = "https://i.ibb.co/c3x4dBy/lens-Dirt-Texture.jpg",
   haloScale = 0.5,
   secondaryGhosts = true,
   aditionalStreaks = true,
   ghostScale = 0.5,
   starBurst = true,
   enabled = true,
-  opacity = 1.0
+  opacity = 1.0,
 }) {
-  const lensRef = useRef()
+  const lensRef = useRef();
 
-  const screenPosition = new Vector3(position.x, position.y, position.z)
-  let flarePosition = new Vector3()
+  const screenPosition = new Vector3(position.x, position.y, position.z);
+  let flarePosition = new Vector3();
 
-  const { viewport, raycaster } = useThree()
-  const lensDirtTexture = useTexture(dirtTextureFile)
+  const { viewport, raycaster } = useThree();
+  const lensDirtTexture = useTexture(dirtTextureFile);
 
-  let projectedPosition
+  let projectedPosition;
 
   useFrame(({ scene, mouse, camera, delta }) => {
     if (lensRef) {
       if (followMouse) {
-        lensRef.current.uniforms.get('lensPosition').value.x = mouse.x
-        lensRef.current.uniforms.get('lensPosition').value.y = mouse.y
-        easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 0.0, 0.07, delta)
+        lensRef.current.uniforms.get("lensPosition").value.x = mouse.x;
+        lensRef.current.uniforms.get("lensPosition").value.y = mouse.y;
+        easing.damp(lensRef.current.uniforms.get("opacity"), "value", 0.0, 0.07, delta);
       } else {
-        projectedPosition = screenPosition.clone()
-        projectedPosition.project(camera)
+        projectedPosition = screenPosition.clone();
+        projectedPosition.project(camera);
 
-        flarePosition.set(projectedPosition.x, projectedPosition.y, projectedPosition.z)
+        flarePosition.set(projectedPosition.x, projectedPosition.y, projectedPosition.z);
 
-        if (flarePosition.z > 1) return
+        if (flarePosition.z > 1) return;
 
-        raycaster.setFromCamera(projectedPosition, camera)
-        const intersects = raycaster.intersectObjects(scene.children, true)
+        raycaster.setFromCamera(projectedPosition, camera);
+        const intersects = raycaster.intersectObjects(scene.children, true);
 
         if (intersects[0]) {
-          if (intersects[0].object.userData && intersects[0].object.userData.lensflare === 'no-occlusion') {
-            easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 0.0, 0.07, delta)
+          if (intersects[0].object.userData && intersects[0].object.userData.lensflare === "no-occlusion") {
+            easing.damp(lensRef.current.uniforms.get("opacity"), "value", 0.0, 0.07, delta);
           } else {
             //Check for MeshTransmissionMaterial
             if (intersects[0].object.material.uniforms) {
               if (intersects[0].object.material.uniforms._transmission) {
                 if (intersects[0].object.material.uniforms._transmission.value > 0.2) {
-                  easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 0.2, 0.07, delta)
+                  easing.damp(lensRef.current.uniforms.get("opacity"), "value", 0.2, 0.07, delta);
                 }
               }
             } else {
-              easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 1.0, 0.07, delta)
+              easing.damp(lensRef.current.uniforms.get("opacity"), "value", 1.0, 0.07, delta);
             }
 
             //Check for MeshPhysicalMaterial with transmission setting
             if (intersects[0].object.material._transmission && intersects[0].object.material._transmission > 0.2) {
-              easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 0.2, 0.07, delta)
+              easing.damp(lensRef.current.uniforms.get("opacity"), "value", 0.2, 0.07, delta);
             } else {
-              easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 1.0, 0.07, delta)
+              easing.damp(lensRef.current.uniforms.get("opacity"), "value", 1.0, 0.07, delta);
             }
 
             //Check for OtherMaterials with transparent parameter
             if (intersects[0].object.material.transparent) {
-              easing.damp(lensRef.current.uniforms.get('opacity'), 'value', intersects[0].object.material.opacity, 0.07, delta)
+              easing.damp(lensRef.current.uniforms.get("opacity"), "value", intersects[0].object.material.opacity, 0.07, delta);
             } else {
-              easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 1.0, 0.07, delta)
+              easing.damp(lensRef.current.uniforms.get("opacity"), "value", 1.0, 0.07, delta);
             }
           }
         } else {
-          easing.damp(lensRef.current.uniforms.get('opacity'), 'value', 0.0, 0.07, delta)
+          easing.damp(lensRef.current.uniforms.get("opacity"), "value", 0.0, 0.07, delta);
         }
 
-        lensRef.current.uniforms.get('lensPosition').value.x = flarePosition.x
-        lensRef.current.uniforms.get('lensPosition').value.y = flarePosition.y
+        lensRef.current.uniforms.get("lensPosition").value.x = flarePosition.x;
+        lensRef.current.uniforms.get("lensPosition").value.y = flarePosition.y;
       }
     }
-  })
+  });
 
   useEffect(() => {
-    lensRef.current.uniforms.get('iResolution').value.x = viewport.width
-    lensRef.current.uniforms.get('iResolution').value.y = viewport.height
-  }, [viewport])
+    lensRef.current.uniforms.get("iResolution").value.x = viewport.width;
+    lensRef.current.uniforms.get("iResolution").value.y = viewport.height;
+  }, [viewport]);
 
   return useMemo(
     () => (
@@ -230,25 +230,8 @@ function Effects({
       />
     ),
 
-    [
-      glareSize,
-      blendFunction,
-      starPoints,
-      flareSize,
-      flareSpeed,
-      flareShape,
-      animated,
-      anamorphic,
-      colorGain,
-      haloScale,
-      secondaryGhosts,
-      aditionalStreaks,
-      ghostScale,
-      starBurst,
-      enabled,
-      opacity
-    ]
-  )
+    [glareSize, blendFunction, starPoints, flareSize, flareSpeed, flareShape, animated, anamorphic, colorGain, haloScale, secondaryGhosts, aditionalStreaks, ghostScale, starBurst, enabled, opacity]
+  );
 }
 
-export default Effects
+export default Effects;
