@@ -3,7 +3,7 @@ import LensFlare from "./UltimateLensFlare";
 import "../Static/WorldStory.css";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { OrbitControls, PerspectiveCamera, useTexture } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
 import lensIMG from "../Static/lensDirtTexture.png";
 import { folder, useControls } from "leva";
 import background from "../Static/background1.jpg";
@@ -71,6 +71,7 @@ const WorldStory = () => {
       </EffectComposer>
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
+      <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
     </>
   );
 };
