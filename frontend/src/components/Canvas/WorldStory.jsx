@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useRef } from "react";
 import LensFlare from "./UltimateLensFlare";
 import "../Static/WorldStory.css";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, useTexture } from "@react-three/drei";
 import lensIMG from "../Static/lensDirtTexture.png";
 import { folder, useControls } from "leva";
+import background from "../Static/background1.jpg";
 import * as THREE from "three";
+
+function Skybox() {
+  const texture = useTexture(background);
+  return (
+    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
+      <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
+      <meshBasicMaterial toneMapped={false} map={texture} side={THREE.BackSide} />
+    </mesh>
+  );
+}
 
 const WorldStory = () => {
   //   const lensFlareProps = useControls({
@@ -42,16 +53,24 @@ const WorldStory = () => {
   //       { collapsed: true }
   //     ),
   //   });
+
+  const OrbitcameraRef = useRef();
+  const cameraRef = useRef();
+  const cameraHandler = () => {
+    console.log(cameraRef.current);
+  };
   return (
     <>
       <Canvas gl={{ alpha: false, stencil: false, antialias: false, depth: false }} dpr={1}>
-        <OrbitControls />
+        <OrbitControls ref={OrbitcameraRef} autoRotate />
+        <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
         <EffectComposer>
           {/* 테스트용 */}
           {/* <LensFlare dirtTextureFile={lensIMG} {...lensFlareProps} /> */}
-
-          <LensFlare dirtTextureFile={lensIMG} colorGain={new THREE.Color(56, 22, 11)} opacity={0.8} flareShape={0.37} flareSize={0.008} flareSpeed={0.4} glareSize={0.01} starPoints={0.1} ghostScale={0.1} haloScale={0.5} />
+          <LensFlare dirtTextureFile={lensIMG} colorGain={new THREE.Color(56, 22, 11)} opacity={0.8} flareShape={0.37} flareSize={0.004} flareSpeed={0.4} glareSize={0.01} starPoints={0.1} ghostScale={0.1} haloScale={0.5} />
         </EffectComposer>
+        <directionalLight intensity={1} position={[0, 0, 0]} />
+        <Skybox />
       </Canvas>
     </>
   );
