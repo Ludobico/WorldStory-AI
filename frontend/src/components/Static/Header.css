@@ -1,0 +1,32 @@
+.html_header_top_div {
+  margin: 0;
+  padding: 0;
+  font-family: "Monaco", sans-serif;
+  z-index: 999;
+  color: white;
+  text-decoration: none;
+  display: block;
+  height: 10vh;
+}
+
+ul {
+  list-style: none;
+}
+
+header {
+  position: absolute;
+  top: 1.25rem;
+  left: 60%;
+}
+.nav_list {
+  display: flex;
+  gap: 4rem;
+}
+.nav {
+  margin-top: 20px;
+}
+
+li {
+  font-size: 1.25rem;
+  font-weight: 700;
+}

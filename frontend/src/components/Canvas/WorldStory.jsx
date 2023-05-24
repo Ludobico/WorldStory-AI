@@ -8,6 +8,7 @@ import lensIMG from "../Static/lensDirtTexture.png";
 import { folder, useControls } from "leva";
 import background from "../Static/background1.jpg";
 import * as THREE from "three";
+import Header from "../Header/Header";
 
 function Skybox() {
   const texture = useTexture(background);
@@ -61,17 +62,15 @@ const WorldStory = () => {
   };
   return (
     <>
-      <Canvas gl={{ alpha: false, stencil: false, antialias: false, depth: false }} dpr={1}>
-        <OrbitControls ref={OrbitcameraRef} autoRotate />
-        <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
-        <EffectComposer>
-          {/* 테스트용 */}
-          {/* <LensFlare dirtTextureFile={lensIMG} {...lensFlareProps} /> */}
-          <LensFlare dirtTextureFile={lensIMG} colorGain={new THREE.Color(56, 22, 11)} opacity={0.8} flareShape={0.37} flareSize={0.004} flareSpeed={0.4} glareSize={0.01} starPoints={0.1} ghostScale={0.1} haloScale={0.5} />
-        </EffectComposer>
-        <directionalLight intensity={1} position={[0, 0, 0]} />
-        <Skybox />
-      </Canvas>
+      <OrbitControls ref={OrbitcameraRef} autoRotate enableZoom={false} />
+      <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
+      <EffectComposer>
+        {/* 테스트용 */}
+        {/* <LensFlare dirtTextureFile={lensIMG} {...lensFlareProps} /> */}
+        <LensFlare dirtTextureFile={lensIMG} colorGain={new THREE.Color(56, 22, 11)} opacity={0.8} flareShape={0.37} flareSize={0.004} flareSpeed={0.4} glareSize={0.01} starPoints={0.1} ghostScale={0.1} haloScale={0.5} />
+      </EffectComposer>
+      <directionalLight intensity={1} position={[0, 0, 0]} />
+      <Skybox />
     </>
   );
 };
