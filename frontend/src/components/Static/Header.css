@@ -16,7 +16,7 @@ ul {
 header {
   position: absolute;
   top: 1.25rem;
-  left: 60%;
+  left: 50%;
 }
 .nav_list {
   display: flex;
@@ -26,7 +26,26 @@ header {
   margin-top: 20px;
 }
 
-li {
+.intro {
+  display: flex;
   font-size: 1.25rem;
   font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+  letter-spacing: 0.25em;
+  /* visibility: hidden; */
+  overflow: hidden;
+}
+.intro span {
+  display: block;
+  position: relative;
+}
+
+.intro span::before {
+  content: attr(data-char);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-110%);
+  color: #fff;
 }

@@ -15,7 +15,7 @@ function Skybox() {
   return (
     <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
       <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
-      <meshBasicMaterial toneMapped={false} map={texture} side={THREE.BackSide} />
+      <meshBasicMaterial toneMapped={false} map={texture} side={THREE.FrontSide} />
     </mesh>
   );
 }
