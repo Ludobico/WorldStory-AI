@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 const Header = () => {
   const textRef = useRef();
   const textRef2 = useRef();
+  const underlineRef = useRef();
 
   var tl = gsap.timeline();
   let [animationFlag, setAnimationFlag] = useState(false);
@@ -26,9 +27,10 @@ const Header = () => {
         duration: 1,
         yPercent: 110,
         stagger: 0.08,
-        ease: "expo.inOut",
+        ease: "Power1.inOut",
       });
     }
+
     if (animationFlag2 === true) {
       tl.set(charElement2, {
         yPercent: 0,
@@ -37,7 +39,7 @@ const Header = () => {
         duration: 1,
         yPercent: 110,
         stagger: 0.08,
-        ease: "expo.inOut",
+        ease: "Power1.inOut",
       });
     }
   });
