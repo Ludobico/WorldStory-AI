@@ -3,7 +3,7 @@ import LensFlare from "./UltimateLensFlare";
 import "../Static/WorldStory.css";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
+import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
 import lensIMG from "../Static/lensDirtTexture.png";
 import { folder, useControls } from "leva";
 import background from "../Static/background1.jpg";
@@ -18,6 +18,10 @@ function Skybox() {
       <meshBasicMaterial toneMapped={false} map={texture} side={THREE.FrontSide} />
     </mesh>
   );
+}
+
+function Introduce() {
+  return <div>asd</div>;
 }
 
 const WorldStory = () => {
@@ -38,6 +42,9 @@ const WorldStory = () => {
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
+      <Html>
+        <Introduce />
+      </Html>
     </>
   );
 };
