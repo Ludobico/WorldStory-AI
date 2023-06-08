@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "glslify": "^7.1.1",
     "gsap": "^3.11.5",
     "gsap-trial": "^3.11.5",
     "leva": "^0.9.34",

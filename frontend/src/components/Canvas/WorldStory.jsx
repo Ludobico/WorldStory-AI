@@ -1,22 +1,43 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LensFlare from "./UltimateLensFlare";
 import "./WorldStory.css";
-import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
 import lensIMG from "../Static/lensDirtTexture.png";
-import { folder, useControls } from "leva";
-import background from "../Static/background3.jpg";
+import background_1 from "../Static/background1.jpg";
+import background_2 from "../Static/background2.jpg";
+import background_3 from "../Static/background3.jpg";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TransitionShaderMaterial from "../Shaders/TransitionShader";
+import { useFrame } from "@react-three/fiber";
 
 function Skybox() {
-  const texture = useTexture(background);
+  const backgroundList = useTexture([background_1, background_2, background_3]);
+  const [textureIndex, setTextureIndex] = useState(0);
+  const shaderMaterialRef = useRef();
+
+  useFrame((state, delta) => {
+    const time = state.clock.elapsedTime;
+    if (time > 3) {
+      gsap.to(shaderMaterialRef.current, {
+        uProgress: 1,
+        onStart: () => {
+          shaderMaterialRef.current.uTexture1 = setTextureIndex((prevIndex) => (prevIndex + 1) % 3);
+          state.clock.elapsedTime = 0;
+        },
+        onComplete: () => {
+          shaderMaterialRef.current.uProgress = 0;
+        },
+      });
+    }
+  });
   return (
     <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
       <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
-      <meshBasicMaterial toneMapped={false} map={texture} side={THREE.FrontSide} />
+      {/* <meshBasicMaterial toneMapped={false} map={background1} side={THREE.FrontSide} /> */}
+      <transitionShaderMaterial ref={shaderMaterialRef} uTexture1={backgroundList[textureIndex]} uTexture2={backgroundList[1]} attach="material" />
     </mesh>
   );
 }
