@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import "../Static/Header.css";
+import "./Header.css";
 import { gsap } from "gsap";
 
 const Header = () => {

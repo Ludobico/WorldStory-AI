@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import LensFlare from "./UltimateLensFlare";
-import "../Static/WorldStory.css";
+import "./WorldStory.css";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
 import lensIMG from "../Static/lensDirtTexture.png";
 import { folder, useControls } from "leva";
-import background from "../Static/background1.jpg";
+import background from "../Static/background3.jpg";
 import * as THREE from "three";
-import Header from "../Header/Header";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function Skybox() {
   const texture = useTexture(background);
@@ -23,46 +23,22 @@ function Skybox() {
 
 function Introduce() {
   useEffect(() => {
-    let text_animation = gsap.timeline();
-    text_animation.from(".introduce_word", {
-      y: 70,
-      stagger: {
-        each: 0.02,
-      },
+    const reveal = gsap.utils.toArray(".project_reveal");
+    reveal.forEach((text, i) => {
+      ScrollTrigger.create({
+        trigger: text,
+        toggleClass: "active",
+        start: "top 100%",
+        end: "bottom 10%",
+      });
     });
   });
   return (
     <>
-      <div className="Introduce_intro">
-        <div style={{ display: "flex" }}>
-          {"Create".split("").map((word) => {
-            return word === " " ? <div className="introduce_word">&nbsp;</div> : <div className="introduce_word">{word}</div>;
-          })}
-        </div>
-      </div>
-      <div className="Introduce_intro1">
-        <div style={{ display: "flex" }}>
-          {"Your own".split("").map((word) => {
-            return word === " " ? <div className="introduce_word">&nbsp;</div> : <div className="introduce_word">{word}</div>;
-          })}
-        </div>
-      </div>
-      <div className="Introduce_intro2">
-        <div style={{ display: "flex" }}>
-          {"Fictional".split("").map((word) => {
-            return word === " " ? <div className="introduce_word">&nbsp;</div> : <div className="introduce_word">{word}</div>;
-          })}
-        </div>
-      </div>
-      <div className="Introduce_intro3">
-        <div style={{ display: "flex" }}>
-          {"Characters".split("").map((word) => {
-            return word === " " ? <div className="introduce_word">&nbsp;</div> : <div className="introduce_word">{word}</div>;
-          })}
-        </div>
-      </div>
-      {/* <div className="Introduce_intro1">Your own</div>
-      <div className="Introduce_intro2">Fictional Characters</div> */}
+      <div className="Introduce_intro project_reveal">Create</div>
+      <div className="Introduce_intro1 project_reveal">Your own</div>
+      <div className="Introduce_intro2 project_reveal">Fictional</div>
+      <div className="Introduce_intro3 project_reveal">Characters</div>
     </>
   );
 }
