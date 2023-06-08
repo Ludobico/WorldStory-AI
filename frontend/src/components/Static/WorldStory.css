@@ -29,3 +29,12 @@
   pointer-events: none;
   color: white;
 }
+.Introduce_intro3 {
+  position: absolute;
+  font-size: 6em;
+  top: 65%;
+  left: 10%;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  pointer-events: none;
+  color: white;
+}
