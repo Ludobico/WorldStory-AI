@@ -1,0 +1,30 @@
+.Introduce_intro {
+  position: absolute;
+  font-size: 6em;
+  top: 20%;
+  left: 10%;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  z-index: 99;
+  pointer-events: none;
+  color: white;
+}
+.Introduce_intro1 {
+  position: absolute;
+  font-size: 6em;
+  top: 35%;
+  left: 10%;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  z-index: 99;
+  pointer-events: none;
+  color: white;
+}
+.Introduce_intro2 {
+  position: absolute;
+  font-size: 6em;
+  top: 50%;
+  left: 10%;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  z-index: 99;
+  pointer-events: none;
+  color: white;
+}

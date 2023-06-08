@@ -21,7 +21,13 @@ function Skybox() {
 }
 
 function Introduce() {
-  return <div>asd</div>;
+  return (
+    <>
+      <div className="Introduce_intro">Create</div>
+      <div className="Introduce_intro1">Your</div>
+      <div className="Introduce_intro2">Fictional Characters</div>
+    </>
+  );
 }
 
 const WorldStory = () => {
@@ -42,7 +48,7 @@ const WorldStory = () => {
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-      <Html>
+      <Html fullscreen>
         <Introduce />
       </Html>
     </>
