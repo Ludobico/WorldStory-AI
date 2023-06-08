@@ -48,7 +48,7 @@ const WorldStory = () => {
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-      <Html fullscreen>
+      <Html fullscreen wrapperClass="Introduce_top_div" zIndexRange={[100, 0]}>
         <Introduce />
       </Html>
     </>
