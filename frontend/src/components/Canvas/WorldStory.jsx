@@ -10,8 +10,8 @@ import background_3 from "../Static/background3.jpg";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TransitionShaderMaterial from "../Shaders/TransitionShader";
 import { useFrame } from "@react-three/fiber";
+import BackgroundTransition from "../Shaders/BackgroundTransition";
 
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
@@ -19,25 +19,16 @@ function Skybox() {
   const shaderMaterialRef = useRef();
 
   useFrame((state, delta) => {
-    const time = state.clock.elapsedTime;
-    if (time > 3) {
-      gsap.to(shaderMaterialRef.current, {
-        uProgress: 1,
-        onStart: () => {
-          shaderMaterialRef.current.uTexture1 = setTextureIndex((prevIndex) => (prevIndex + 1) % 3);
-          state.clock.elapsedTime = 0;
-        },
-        onComplete: () => {
-          shaderMaterialRef.current.uProgress = 0;
-        },
-      });
-    }
+    const material = shaderMaterialRef.current.material;
+    const time = shaderMaterialRef.current.time;
+
+    material.uniforms.progress.value = Math.sin(time) * 0.5 + 0.5; // 전환 효과를 적용하기 위한 progress 값을 변경
   });
   return (
-    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
+    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]} ref={shaderMaterialRef}>
       <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
-      {/* <meshBasicMaterial toneMapped={false} map={background1} side={THREE.FrontSide} /> */}
-      <transitionShaderMaterial ref={shaderMaterialRef} uTexture1={backgroundList[textureIndex]} uTexture2={backgroundList[1]} attach="material" />
+      {/* <meshBasicMaterial toneMapped={false} map={backgroundList[textureIndex]} side={THREE.FrontSide} /> */}
+      <backgroundTransition texture1={backgroundList[0]} texture2={backgroundList[1]} texture3={backgroundList[2]} attach="material" />
     </mesh>
   );
 }
