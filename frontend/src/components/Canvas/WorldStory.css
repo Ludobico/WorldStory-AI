@@ -38,6 +38,22 @@
   pointer-events: none;
   color: white;
 }
+@media (max-width: 1024px) {
+  .project_reveal {
+    font-size: 3.5em;
+  }
+  .Introduce_intro3 {
+    top: 67%;
+  }
+}
+@media (max-width: 479px) {
+  .project_reveal {
+    font-size: 2em;
+  }
+  .project_reveal {
+    font-size: 2em;
+  }
+}
 
 .project_reveal {
   display: block;
