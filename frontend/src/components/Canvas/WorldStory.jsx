@@ -24,13 +24,30 @@ function Skybox() {
   const [textureIndex, setTextureIndex] = useState(0);
   const shaderMaterialRef = useRef();
 
-  useFrame((state, delta) => {});
+  useFrame(({ mouse }) => {
+    if (mouse.x < -0.3333) {
+      gsap.to(shaderMaterialRef.current, {
+        uProgress: 0,
+        onStart: () => {
+          shaderMaterialRef.current.uTexture1 = backgroundList[0];
+        },
+      });
+    } else if (mouse.x < 0.3333) {
+      gsap.to(shaderMaterialRef.current, {
+        uProgress: 1,
+        onComplete: () => {
+          shaderMaterialRef.current.uTexture1 = backgroundList[1];
+        },
+      });
+    } else if (mouse.x > 0.3333) {
+      gsap.to(shaderMaterialRef.current, {
+        uProgress: 0,
+      });
+    }
+  });
+
   return (
-    <mesh
-      userData={{ LensFlare: "no-occlusion" }}
-      scale={[-1, 1, 1]}
-      ref={shaderMaterialRef}
-    >
+    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
       <sphereBufferGeometry
         castShadow={false}
         receiveShadow={false}
@@ -40,8 +57,9 @@ function Skybox() {
       <transitionShaderMaterial
         ref={shaderMaterialRef}
         uTexture1={backgroundList[0]}
-        uTexture2={backgroundList[1]}
-        uTexture3={backgroundList[2]}
+        uTexture2={backgroundList[2]}
+        uTexture3={backgroundList[1]}
+        uProgress={0}
         attach="material"
       />
     </mesh>
