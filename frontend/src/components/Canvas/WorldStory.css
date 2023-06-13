@@ -1,45 +1,68 @@
 .Introduce_top_div {
   width: auto;
   height: auto;
+  display: flex;
+  width: 100vw;
+  font-size: 6em;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  pointer-events: none;
+  color: white;
 }
+
+.intro_reveal {
+  left: 10%;
+}
+
 .Introduce_intro {
-  position: absolute;
-  font-size: 6em;
+  width: 70%;
+  height: 6rem;
+  position: relative;
+  overflow: hidden;
   top: 20%;
-  left: 10%;
-  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
-  color: white;
 }
+.Introduce_intro span {
+  position: absolute;
+  line-height: 6.2rem;
+}
+
 .Introduce_intro1 {
-  position: absolute;
-  font-size: 6em;
-  top: 35%;
-  left: 10%;
-  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
-  color: white;
+  width: 70%;
+  height: 6rem;
+  position: relative;
+  overflow: hidden;
+  top: 25%;
 }
+.Introduce_intro1 span {
+  position: absolute;
+  line-height: 6.5rem;
+}
+
 .Introduce_intro2 {
-  position: absolute;
-  font-size: 6em;
-  top: 50%;
-  left: 10%;
-  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
-  color: white;
+  width: 70%;
+  height: 6rem;
+  position: relative;
+  overflow: hidden;
+  top: 30%;
 }
+.Introduce_intro2 span {
+  position: absolute;
+  line-height: 6.5rem;
+}
+
 .Introduce_intro3 {
-  position: absolute;
-  font-size: 6em;
-  top: 65%;
-  left: 10%;
-  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
-  color: white;
+  width: 70%;
+  height: 6rem;
+  position: relative;
+  overflow: hidden;
+  top: 35%;
 }
+.Introduce_intro3 span {
+  position: absolute;
+  line-height: 6.5rem;
+}
+
 @media (max-width: 1024px) {
-  .project_reveal {
+  .intro_reveal {
     font-size: 3.5em;
   }
   .Introduce_intro3 {
@@ -47,53 +70,7 @@
   }
 }
 @media (max-width: 479px) {
-  .project_reveal {
+  .intro_reveal {
     font-size: 2em;
   }
-  .project_reveal {
-    font-size: 2em;
-  }
-}
-
-.project_reveal {
-  display: block;
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: 0.2s;
-  transition-delay: 0.2s;
-}
-.project_reveal:nth-child(2) {
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: 0.2s;
-  transition-delay: 0.2s;
-  margin-top: 10px;
-}
-.project_reveal:nth-child(3) {
-  margin-top: 10px;
-}
-.project_reveal.active {
-  transform: scaleX(1);
-  transition-delay: 0s;
-}
-
-.project_reveal.active::before {
-  transform: scaleX(0);
-  transition-delay: 0.2s;
-}
-
-.project_reveal::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  transform-origin: right;
-  transition: 0.2s;
-  transition-delay: 0s;
-}
-.project_reveal:nth-child(2):before {
-  transition-delay: 0.1s;
 }

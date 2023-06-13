@@ -52,22 +52,32 @@ function Skybox() {
 
 function Introduce() {
   useEffect(() => {
-    const reveal = gsap.utils.toArray(".project_reveal");
-    reveal.forEach((text, i) => {
-      ScrollTrigger.create({
-        trigger: text,
-        toggleClass: "active",
-        start: "top 100%",
-        end: "bottom 10%",
-      });
+    const tl = gsap.timeline();
+
+    tl.from(".intro_reveal span", 1.8, {
+      y: 100,
+      ease: "power4.out",
+      delay: 1,
+      skewY: 5,
+      stagger: {
+        amount: 0.5,
+      },
     });
   });
   return (
     <>
-      <div className="Introduce_intro project_reveal">Create</div>
-      <div className="Introduce_intro1 project_reveal">Your own</div>
-      <div className="Introduce_intro2 project_reveal">Fictional</div>
-      <div className="Introduce_intro3 project_reveal">Characters</div>
+      <div className="Introduce_intro intro_reveal">
+        <span>Create</span>
+      </div>
+      <div className="Introduce_intro1 intro_reveal">
+        <span>Your own</span>
+      </div>
+      <div className="Introduce_intro2 intro_reveal">
+        <span>Fictional</span>
+      </div>
+      <div className="Introduce_intro3 intro_reveal">
+        <span>Characters</span>
+      </div>
     </>
   );
 }
