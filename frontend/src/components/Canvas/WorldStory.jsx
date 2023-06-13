@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useFrame } from "@react-three/fiber";
 import TransitionShaderMaterial from "../Shaders/TransitionShader";
 import SceneTransitionShader from "../Shaders/SceneTransitionShader";
+import InsideStory from "./InsideStory";
 
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
