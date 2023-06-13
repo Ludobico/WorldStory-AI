@@ -17,24 +17,52 @@ import SceneTransitionShader from "../Shaders/SceneTransitionShader";
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
   const [textureIndex, setTextureIndex] = useState(0);
+  const tl = gsap.timeline();
+  const [texture_change_trigger, set_texture_change_trigger] = useState(0);
+  const [texture_change_trigger_flag, set_texture_change_trigger_flag] = useState(false);
+  // 머터리얼에 적용하는 ref
   const shaderMaterialRef = useRef();
 
-  useFrame(({ mouse }) => {
-    if (mouse.x < -0.3333) {
+  // 매쉬에 적용하는 ref
+  const meshRef = useRef();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      set_texture_change_trigger((prevTrigger) => {
+        if (prevTrigger === 2) {
+          set_texture_change_trigger(prevTrigger - 1);
+          set_texture_change_trigger_flag(true);
+        } else if (prevTrigger === 1 && texture_change_trigger_flag === false) {
+          set_texture_change_trigger(prevTrigger + 1);
+        } else if (prevTrigger === 1 && texture_change_trigger_flag === true) {
+          set_texture_change_trigger(prevTrigger - 1);
+        } else if (prevTrigger === 0) {
+          set_texture_change_trigger(prevTrigger + 1);
+          set_texture_change_trigger_flag(false);
+        }
+      });
+    }, 3000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
+  useFrame(() => {
+    if (texture_change_trigger == 0) {
       gsap.to(shaderMaterialRef.current, {
         uProgress: 0,
         onStart: () => {
           shaderMaterialRef.current.uTexture1 = backgroundList[0];
         },
       });
-    } else if (mouse.x < 0.3333) {
+    } else if (texture_change_trigger == 1) {
       gsap.to(shaderMaterialRef.current, {
         uProgress: 1,
         onComplete: () => {
           shaderMaterialRef.current.uTexture1 = backgroundList[1];
         },
       });
-    } else if (mouse.x > 0.3333) {
+    } else if (texture_change_trigger == 2) {
       gsap.to(shaderMaterialRef.current, {
         uProgress: 0,
       });
@@ -42,7 +70,7 @@ function Skybox() {
   });
 
   return (
-    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]}>
+    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]} ref={meshRef}>
       <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
       {/* <meshBasicMaterial toneMapped={false} map={backgroundList[textureIndex]} side={THREE.FrontSide} /> */}
       <transitionShaderMaterial ref={shaderMaterialRef} uTexture1={backgroundList[0]} uTexture2={backgroundList[2]} uTexture3={backgroundList[1]} uProgress={0} attach="material" />
@@ -90,7 +118,6 @@ const WorldStory = () => {
   };
   return (
     <>
-      <sceneTransitionShader />
       <OrbitControls ref={OrbitcameraRef} autoRotate enableZoom={false} />
       <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
       <EffectComposer>
