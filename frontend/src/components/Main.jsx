@@ -14,16 +14,18 @@ import "./Canvas/InsideStory.css";
 const Main = () => {
   gsap.registerPlugin(ScrollTrigger);
   return (
-    <div>
+    <div className="Main_top_div">
       <Canvas gl={{ alpha: false, stencil: false, antialias: false, depth: false }} dpr={1} style={{ width: "100vw", height: "100vh" }}>
         <Html fullscreen wrapperClass="html_header_top_div">
           <Header />
         </Html>
         <WorldStory />
       </Canvas>
-      <Canvas>
-        <InsideStory />
-      </Canvas>
+      <div className="inside">
+        <Canvas>
+          <InsideStory />
+        </Canvas>
+      </div>
     </div>
   );
 };
