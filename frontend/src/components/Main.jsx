@@ -10,6 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoaderTransition from "./Loader/LoaderTransition";
 import InsideStory from "./Canvas/InsideStory";
 import "./Canvas/InsideStory.css";
+import Logo from "./Header/Logo";
 
 const Main = () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,6 +19,7 @@ const Main = () => {
       <Canvas gl={{ alpha: false, stencil: false, antialias: false, depth: false }} dpr={1} style={{ width: "100vw", height: "100vh" }}>
         <Html fullscreen wrapperClass="html_header_top_div">
           <Header />
+          <Logo />
         </Html>
         <WorldStory />
       </Canvas>

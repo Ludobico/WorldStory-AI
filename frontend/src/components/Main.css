@@ -9,3 +9,8 @@ html {
   height: 100vh;
   background-color: grey;
 }
+
+@font-face {
+  font-family: "azonix";
+  src: url("./Static/Azonix.otf");
+}

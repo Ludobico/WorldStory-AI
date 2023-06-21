@@ -24,9 +24,9 @@ const Header = () => {
         yPercent: 0,
       });
       tl.to(charElement, {
-        duration: 1,
+        duration: 0.3,
         yPercent: 110,
-        stagger: 0.08,
+        stagger: 0.03,
         ease: "Power1.inOut",
       });
     }
@@ -36,9 +36,9 @@ const Header = () => {
         yPercent: 0,
       });
       tl.to(charElement2, {
-        duration: 1,
+        duration: 0.3,
         yPercent: 110,
-        stagger: 0.08,
+        stagger: 0.03,
         ease: "Power1.inOut",
       });
     }
