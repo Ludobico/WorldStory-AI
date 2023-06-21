@@ -1,0 +1,10 @@
+.logo_top_div {
+  color: white;
+  font-size: 2rem;
+  width: 100vw;
+  height: 10vh;
+  position: absolute;
+  top: 2.25rem;
+  margin-left: 60px;
+  font-family: "azonix";
+}
