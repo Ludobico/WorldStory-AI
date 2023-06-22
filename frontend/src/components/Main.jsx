@@ -24,9 +24,7 @@ const Main = () => {
         <WorldStory />
       </Canvas>
       <div className="inside">
-        <Canvas>
-          <InsideStory />
-        </Canvas>
+        <InsideStory />
       </div>
     </div>
   );
