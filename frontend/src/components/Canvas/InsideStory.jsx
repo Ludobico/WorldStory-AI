@@ -14,7 +14,7 @@ function Test() {
     <>
       <mesh>
         <planeBufferGeometry args={[1, 3]} />
-        <noiseSwirlsShader dispFactor={1} currentImage={texture1} nextImage={texture2} />
+        <noiseSwirlsShader dispFactor={0.5} currentImage={texture1} nextImage={texture2} />
       </mesh>
     </>
   );
