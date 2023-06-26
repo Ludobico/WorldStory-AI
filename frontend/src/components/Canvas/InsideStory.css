@@ -1,0 +1,20 @@
+.Introduce_top_div {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+.Introduce_top_intro {
+  position: relative;
+  height: auto;
+  color: white;
+  font-size: 4rem;
+  margin: 0 auto;
+  margin-top: 50px;
+  font-family: "azonix";
+}
+.introduce_example_video_div {
+  display: flex;
+  position: relative;
+  top: 0%;
+  left: -50%;
+}
