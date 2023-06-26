@@ -14,3 +14,53 @@
   margin-top: 50px;
   font-family: "azonix";
 }
+.Introduce__inside_video {
+  position: relative;
+  top: 5%;
+  margin-left: 40px;
+}
+.Introduce__inside_text_reveal {
+  width: 40vw;
+  color: white;
+  position: relative;
+  top: -50%;
+  margin-left: 40px;
+  display: inline-block;
+  font-size: 1.5em;
+  font-family: "GT-Sectra-Fine", "Microsoft Yahei";
+  pointer-events: none;
+  letter-spacing: 1.5px;
+  line-height: 40px;
+}
+.Introduce__inside_text_reveal {
+  display: block;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: 0.2s;
+  transition-delay: 0.2s;
+}
+.Introduce__inside_text_reveal.active {
+  transform: scaleX(1);
+  transition-delay: 0s;
+}
+
+.Introduce__inside_text_reveal.active::before {
+  transform: scaleX(0);
+  transition-delay: 0.2s;
+}
+
+.Introduce__inside_text_reveal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  transform-origin: right;
+  transition: 0.2s;
+  transition-delay: 0s;
+}
+.Introduce__inside_text_reveal:nth-child(2):before {
+  transition-delay: 0.1s;
+}

@@ -8,6 +8,7 @@ import example2 from "../Static/example2.mp4";
 import NoiseSwirlsShader from "../Shaders/NoiseSwirlsShader";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function Test() {
   const shaderRef = useRef();
@@ -41,10 +42,24 @@ function Test() {
   );
 }
 function Introduce() {
+  useEffect(() => {
+    const reveal = gsap.utils.toArray(".Introduce__inside_text_reveal");
+    reveal.forEach((text, i) => {
+      ScrollTrigger.create({
+        trigger: text,
+        toggleClass: "active",
+        start: "top 90%",
+        end: "top 20%",
+      });
+    });
+  });
   return (
     <div className="Introduce_inside_top_div">
       <div className="Introduce__inside_top_intro">Create personal characters</div>
-      <div>asdasd</div>
+      <div className="Introduce__inside_video">
+        <video src={example1} loop autoPlay muted width="900" height="600" />
+      </div>
+      <div className="Introduce__inside_text_reveal">The model is "WizardLM 13B GGML" and all character setting will be saved as JSON format</div>
     </div>
   );
 }
