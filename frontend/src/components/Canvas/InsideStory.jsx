@@ -33,17 +33,18 @@ function Test() {
         <planeBufferGeometry args={[3, 3]} />
         <noiseSwirlsShader dispFactor={0} currentImage={texture1} nextImage={texture2} />
       </mesh>
-      <mesh position={[-3.5, 0, 0]}>
+      {/* <mesh position={[-3.5, 0, 0]}>
         <planeGeometry args={[8, 9]} />
         <meshBasicMaterial map={videoTexture1} toneMapped={false} />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
 function Introduce() {
   return (
-    <div className="Introduce_top_div">
-      <div className="Introduce_top_intro">Create personal characters</div>
+    <div className="Introduce_inside_top_div">
+      <div className="Introduce__inside_top_intro">Create personal characters</div>
+      <div>asdasd</div>
     </div>
   );
 }
