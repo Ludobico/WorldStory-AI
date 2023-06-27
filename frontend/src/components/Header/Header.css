@@ -2,12 +2,9 @@ header {
   margin: 0;
   padding: 0;
   font-family: "azonix";
-  z-index: 1;
   color: white;
   text-decoration: none;
   display: block;
-  height: 10vh;
-  width: 100vw;
 }
 
 ul {

@@ -10,10 +10,12 @@ import background_3 from "../Static/background3.jpg";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useFrame } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import TransitionShaderMaterial from "../Shaders/TransitionShader";
 import SceneTransitionShader from "../Shaders/SceneTransitionShader";
 import InsideStory from "./InsideStory";
+import Header from "../Header/Header";
+import Logo from "../Header/Logo";
 
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
@@ -107,6 +109,10 @@ function Introduce() {
       <div className="Introduce_intro3 intro_reveal">
         <span>Characters</span>
       </div>
+      <div className="button_container">
+        <div className="intro_button button_reveal">Character setting</div>
+        <div className="intro_button2 button_reveal">Chat with Character</div>
+      </div>
     </>
   );
 }
@@ -129,8 +135,9 @@ const WorldStory = () => {
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-      <Html fullscreen wrapperClass="Introduce_top_div" zIndexRange={[100, 0]}>
+      <Html fullscreen wrapperClass="Introduce_top_div">
         <Introduce />
+        <Logo />
       </Html>
     </>
   );

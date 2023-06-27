@@ -5,8 +5,8 @@
   width: 100vw;
   font-size: 6em;
   font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
   color: white;
+  pointer-events: auto;
 }
 
 .intro_reveal {
@@ -73,4 +73,35 @@
   .intro_reveal {
     font-size: 2em;
   }
+}
+.button_container {
+  display: flex;
+  position: relative;
+  top: 40%;
+  left: 10%;
+}
+.intro_button {
+  font-size: 1.5rem;
+  position: relative;
+  padding: 12px 36px;
+  margin: 10px 0;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #0162c8, #55e7fc);
+  cursor: pointer;
+}
+.intro_button:hover {
+  background: white;
+}
+
+.intro_button2 {
+  font-size: 1.5rem;
+  position: relative;
+  padding: 12px 36px;
+  margin: 10px 0;
+  margin-left: 80px;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  background: transparent;
+  border: 2px solid #755bea;
 }

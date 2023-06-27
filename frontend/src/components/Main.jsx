@@ -17,9 +17,9 @@ const Main = () => {
   return (
     <div className="Main_top_div">
       <Canvas gl={{ alpha: false, stencil: false, antialias: false, depth: false }} dpr={1} style={{ width: "100vw", height: "100vh" }}>
-        <Html fullscreen wrapperClass="html_header_top_div">
-          <Header />
-          <Logo />
+        <Html fullscreen>
+          {/* <Header />
+          <Logo /> */}
         </Html>
         <WorldStory />
       </Canvas>

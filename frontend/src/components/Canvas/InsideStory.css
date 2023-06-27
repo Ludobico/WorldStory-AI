@@ -28,7 +28,6 @@
   display: inline-block;
   font-size: 1.5em;
   font-family: "GT-Sectra-Fine", "Microsoft Yahei";
-  pointer-events: none;
   letter-spacing: 1.5px;
   line-height: 40px;
 }
