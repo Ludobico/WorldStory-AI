@@ -90,9 +90,6 @@
   background: linear-gradient(90deg, #0162c8, #55e7fc);
   cursor: pointer;
 }
-.intro_button:hover {
-  background: white;
-}
 
 .intro_button2 {
   font-size: 1.5rem;
@@ -104,4 +101,5 @@
   border-radius: 40px;
   background: transparent;
   border: 2px solid #755bea;
+  cursor: pointer;
 }
