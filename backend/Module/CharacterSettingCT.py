@@ -1,10 +1,6 @@
-from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
-from langchain.prompts.chat import ChatPromptTemplate, SystemMessagePromptTemplate, AIMessagePromptTemplate, HumanMessagePromptTemplate
-from langchain.schema import AIMessage, HumanMessage, SystemMessage
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.memory import ConversationBufferMemory
 from ctransformers.langchain import CTransformers
 
 
@@ -55,5 +51,5 @@ class CharacterSettingLangchain_CTransformers:
 
 
 if __name__ == "__main__":
-    CSL = CharacterSettingLangchain()
+    CSL = CharacterSettingLangchain_CTransformers()
     CSL.run_llm_chain()
