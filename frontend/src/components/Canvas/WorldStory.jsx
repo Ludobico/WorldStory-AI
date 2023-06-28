@@ -16,6 +16,8 @@ import SceneTransitionShader from "../Shaders/SceneTransitionShader";
 import InsideStory from "./InsideStory";
 import Header from "../Header/Header";
 import Logo from "../Header/Logo";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
@@ -81,7 +83,7 @@ function Skybox() {
   );
 }
 
-function Introduce() {
+const Introduce = () => {
   useEffect(() => {
     const tl = gsap.timeline();
 
@@ -110,12 +112,16 @@ function Introduce() {
         <span>Characters</span>
       </div>
       <div className="button_container">
-        <div className="intro_button button_reveal">Character setting</div>
+        <div className="intro_button button_reveal">
+          <a href="/charsetting" className="Introduce_a">
+            Character setting
+          </a>
+        </div>
         <div className="intro_button2 button_reveal">Chat with Character</div>
       </div>
     </>
   );
-}
+};
 
 const WorldStory = () => {
   const OrbitcameraRef = useRef();
