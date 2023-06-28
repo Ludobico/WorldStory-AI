@@ -8,3 +8,8 @@
   margin-left: 60px;
   font-family: "azonix";
 }
+
+.logo_top_div a {
+  text-decoration: none;
+  color: inherit;
+}

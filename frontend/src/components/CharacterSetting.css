@@ -1,0 +1,53 @@
+.CharacterSetting_top_div {
+  width: 100vw;
+  height: 100vh;
+  background-color: #040d15;
+  position: absolute;
+  color: white;
+}
+
+.CharacterSetting_codeblock {
+  position: relative;
+  top: 20%;
+  margin-left: 3rem;
+  color: white;
+  width: 70vw;
+  height: 30vh;
+  border: solid 2px white;
+}
+.CharacterSetting_generate_button {
+  font-size: 1.5rem;
+  position: relative;
+  top: 30%;
+  padding: 12px 36px;
+  margin: 10px 0;
+  margin-left: 3rem;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #0162c8, #55e7fc);
+  cursor: pointer;
+  width: fit-content;
+}
+.CharacterSetting_setting_letter {
+  font-size: 2rem;
+  position: relative;
+  top: 30%;
+  margin-left: 3rem;
+}
+.CharacterSetting_setting_1 {
+  margin-left: 3rem;
+}
+.CharacterSetting_setting_settings {
+  position: relative;
+  top: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.CharacterSetting_setting {
+  width: 11.25rem;
+  height: 11.25rem;
+  background: gray;
+  font-size: 2rem;
+}
