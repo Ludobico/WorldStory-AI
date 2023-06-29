@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CharacterSetting.css";
 import Logo from "./Header/Logo";
+import axios from "axios";
+
 const CharacterSetting = () => {
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const get_data = () => {
+    const fetch_data = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/test");
+        setData(response);
+      } finally {
+        setIsLoading(false);
+        console.log(data);
+      }
+    };
+    fetch_data();
+  };
   return (
     <div className="CharacterSetting_top_div">
       <div className="CharacterSetting_logo">
@@ -10,7 +26,9 @@ const CharacterSetting = () => {
       <pre className="CharacterSetting_codeblock">
         <code></code>
       </pre>
-      <div className="CharacterSetting_generate_button">Generate</div>
+      <div className="CharacterSetting_generate_button" onClick={get_data}>
+        Generate
+      </div>
       <div className="CharacterSetting_setting_letter">Setting</div>
       <div className="CharacterSetting_setting_settings">
         <div className="CharacterSetting_setting_1 CharacterSetting_setting">1</div>
