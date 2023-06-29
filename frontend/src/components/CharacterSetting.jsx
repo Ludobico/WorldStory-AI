@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CharacterSetting.css";
 import Logo from "./Header/Logo";
 import axios from "axios";
@@ -6,11 +6,22 @@ import axios from "axios";
 const CharacterSetting = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const eventSource = new EventSource("http://localhost:8000/test");
+    eventSource.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      console.log(data);
+    };
+    return () => {
+      eventSource.close();
+    };
+  }, []);
   const get_data = () => {
     const fetch_data = async () => {
       try {
+        setData("");
         const response = await axios.get("http://localhost:8000/test");
-        setData(response.data);
+        setData(response);
       } finally {
         setIsLoading(false);
         console.log(data);

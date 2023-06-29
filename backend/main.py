@@ -34,7 +34,7 @@ async def test():
 async def chaintest():
     model_path = os.path.join(
         '.', 'Models', 'WizardLM-13B-1.0.ggmlv3.q4_0.bin')
-    return StreamingResponse(CSL.llm_connect(), media_type='text/event-stream')
+    return CSL.llm_connect()
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)
