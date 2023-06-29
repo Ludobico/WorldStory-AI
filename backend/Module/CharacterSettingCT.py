@@ -21,7 +21,7 @@ class CharacterSettingLangchain_CTransformers:
         template = """
             {instruct}
 
-            Character Full Name:
+            Character Name:
             Gender:
             Age:
             Personality:
@@ -33,7 +33,7 @@ class CharacterSettingLangchain_CTransformers:
             create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
             Let's think step by step.
 
-            Provide a JSON-formatted response with information about a person. Include the following fields: Character Full Name, Gender, Age, Personality, Background, Dialogue Style and Appearance. Do not create any keys except for the 7 keys above
+            Provide a JSON-formatted response with information about a person. Include the following fields: Character Name, Gender, Age, Personality, Background, Dialogue Style and Appearance. Do not create any keys except for the 7 keys above
 
             writer : 
 

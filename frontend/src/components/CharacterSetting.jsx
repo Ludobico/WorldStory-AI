@@ -10,7 +10,7 @@ const CharacterSetting = () => {
     const fetch_data = async () => {
       try {
         const response = await axios.get("http://localhost:8000/test");
-        setData(response);
+        setData(response.data);
       } finally {
         setIsLoading(false);
         console.log(data);
@@ -18,16 +18,23 @@ const CharacterSetting = () => {
     };
     fetch_data();
   };
+
+  const log_test = () => {
+    console.log(data);
+  };
   return (
     <div className="CharacterSetting_top_div">
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
       <pre className="CharacterSetting_codeblock">
-        <code></code>
+        <code>{data}</code>
       </pre>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
         Generate
+      </div>
+      <div className="CharacterSetting_generate_button" onClick={log_test}>
+        test
       </div>
       <div className="CharacterSetting_setting_letter">Setting</div>
       <div className="CharacterSetting_setting_settings">
