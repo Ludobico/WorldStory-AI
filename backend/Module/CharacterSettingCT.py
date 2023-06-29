@@ -19,25 +19,25 @@ class CharacterSettingLangchain_CTransformers:
                        callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096,)
 
         template = """
-            {instruct}
+{instruct}
 
-            Character Name:
-            Gender:
-            Age:
-            Personality:
-            Background:
-            Dialogue Style:
-            Appearance:
+Character Name:
+Gender:
+Age:
+Personality:
+Background:
+Dialogue Style:
+Appearance:
 
-            Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind.
-            create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
-            Let's think step by step.
+Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind.
+create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
+Let's think step by step.
 
-            Provide a JSON-formatted response with information about a person. Include the following fields: Character Name, Gender, Age, Personality, Background, Dialogue Style and Appearance. Do not create any keys except for the 7 keys above
+Provide a JSON-formatted response with information about a person. Include the following fields: Character Name, Gender, Age, Personality, Background, Dialogue Style and Appearance. Do not create any keys except for the 7 keys above
 
-            writer : 
+writer : 
 
-            """
+"""
         prompt = PromptTemplate(
             template=template, input_variables=["instruct"])
         llm_chain = LLMChain(prompt=prompt, llm=llm)

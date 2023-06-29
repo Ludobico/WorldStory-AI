@@ -30,11 +30,14 @@ async def test():
     return {'message': "hello world"}
 
 
+async def generate_stream_data():
+    for data in CSL.llm_connect():
+        yield data
+
+
 @app.get('/test')
 async def chaintest():
-    model_path = os.path.join(
-        '.', 'Models', 'WizardLM-13B-1.0.ggmlv3.q4_0.bin')
-    return CSL.llm_connect()
+    return StreamingResponse(generate_stream_data(), media_type='text/plain')
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)

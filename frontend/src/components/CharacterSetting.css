@@ -1,6 +1,6 @@
 .CharacterSetting_top_div {
   width: 100vw;
-  height: 100vh;
+  height: 120vh;
   background-color: #040d15;
   position: absolute;
   color: white;
@@ -8,17 +8,18 @@
 
 .CharacterSetting_codeblock {
   position: relative;
-  top: 20%;
+  top: 10%;
   margin-left: 3rem;
   color: white;
   width: 70vw;
-  height: 30vh;
+  height: 35vh;
   border: solid 2px white;
+  white-space: pre-wrap;
 }
 .CharacterSetting_generate_button {
   font-size: 1.5rem;
   position: relative;
-  top: 20%;
+  top: 10%;
   padding: 12px 36px;
   margin: 10px 0;
   margin-left: 3rem;
