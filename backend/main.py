@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from Module.CharacterSettingCT import CharacterSettingLangchain_CTransformers
-from pydantic import BaseModel
-from typing import Optional
 import uvicorn
+from fastapi_async_langchain.responses import StreamingResponse
 
 app = FastAPI()
 CSL = CharacterSettingLangchain_CTransformers()
@@ -37,7 +35,7 @@ async def generate_stream_data():
 
 @app.get('/test')
 async def chaintest():
-    return StreamingResponse(generate_stream_data(), media_type='text/plain')
+    return StreamingResponse(CSL.llm_connect(), media_type='text/event-stream')
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)

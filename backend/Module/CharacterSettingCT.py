@@ -16,7 +16,7 @@ class CharacterSettingLangchain_CTransformers:
         # print("model path : {0}".format(model_dir))
         # print("model path type : {0}".format(type(model_dir)))
         llm = LlamaCpp(model_path='./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin',
-                       callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096,)
+                       callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
 
         template = """
 {instruct}

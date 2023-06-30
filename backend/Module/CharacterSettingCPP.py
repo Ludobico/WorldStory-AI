@@ -8,7 +8,7 @@ class CharacterSettingLangchain_LlamaCPP():
     def llm_connect(self):
         callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
         llm = LlamaCpp(model_path="../Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                       callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096,)
+                       callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
         return llm
 
     def prompt_setting(self):
@@ -46,3 +46,4 @@ class CharacterSettingLangchain_LlamaCPP():
         text = "You are a talented writer creating a character for a story. Provide detailed information for the following aspects of your character:"
         llm_chain = self.llm_prompt_chain()
         response = llm_chain.run(text)
+        return response

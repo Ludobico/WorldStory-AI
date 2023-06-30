@@ -6,19 +6,6 @@ import axios from "axios";
 const CharacterSetting = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  // const get_data = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     setData("");
-  //     const response = await axios.get("http://localhost:8000/test", { responseType: "stream" });
-  //     setData(response.data);
-  //     console.log(response);
-  //   } catch (e) {
-  //     console.log(e);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   const get_data = () => {
     setIsLoading(true);
     setData("");
@@ -60,7 +47,7 @@ const CharacterSetting = () => {
       </div>
       <div className="CharacterSetting_codeblock">
         {/* <div className="CharacterSetting_code">{formatted_data}</div> */}
-        <p>{formatted_data}</p>
+        <p>{data}</p>
       </div>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
         Generate
