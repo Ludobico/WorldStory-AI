@@ -58,9 +58,10 @@ const CharacterSetting = () => {
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
-      <pre className="CharacterSetting_codeblock">
-        <code className="CharacterSetting_code">{data}</code>
-      </pre>
+      <div className="CharacterSetting_codeblock">
+        {/* <div className="CharacterSetting_code">{formatted_data}</div> */}
+        <p>{formatted_data}</p>
+      </div>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
         Generate
       </div>

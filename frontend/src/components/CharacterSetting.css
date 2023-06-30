@@ -15,6 +15,19 @@
   height: 35vh;
   border: solid 2px white;
   white-space: pre-wrap;
+  background-color: transparent;
+}
+.CharacterSetting_codeblock p {
+  margin: 0;
+  margin-bottom: 1.25rem;
+  margin-top: 1.25rem;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-size: 1rem;
+  line-height: 1.75;
 }
 .CharacterSetting_generate_button {
   font-size: 1.5rem;
