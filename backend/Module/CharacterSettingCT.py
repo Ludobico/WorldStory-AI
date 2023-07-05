@@ -8,13 +8,6 @@ from langchain.llms import LlamaCpp
 class CharacterSettingLangchain_CTransformers:
     def llm_connect(self):
         callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-        config = {'stream': True, 'batch_size': 8,
-                  'max_new_tokens': 512, 'temperature': 0.95}
-        # llm = LlamaCpp(model_path='../Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin',
-        #                callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096,)
-        # print("*************************************************************************")
-        # print("model path : {0}".format(model_dir))
-        # print("model path type : {0}".format(type(model_dir)))
         llm = LlamaCpp(model_path='./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin',
                        callback_manager=callback_manager, verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
 
