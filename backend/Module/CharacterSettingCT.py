@@ -3,6 +3,7 @@ from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from ctransformers.langchain import CTransformers
 from langchain.llms import LlamaCpp
+from sse_starlette.sse import EventSourceResponse
 
 
 class CharacterSettingLangchain_CTransformers:
@@ -35,7 +36,7 @@ writer :
             template=template, input_variables=["instruct"])
         llm_chain = LLMChain(prompt=prompt, llm=llm)
         text = "You are a talented writer creating a character for a story. Provide detailed information for the following aspects of your character:"
-        return llm_chain.run(text)
+        return EventSourceResponse(llm_chain.run(text))
 
 
 if __name__ == "__main__":

@@ -30,7 +30,6 @@ async def test():
 
 async def generate_stream_data():
     for data in CSL.llm_connect():
-        print(data)
         yield data
 
 
