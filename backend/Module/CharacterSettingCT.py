@@ -36,7 +36,7 @@ writer :
             template=template, input_variables=["instruct"])
         llm_chain = LLMChain(prompt=prompt, llm=llm)
         text = "You are a talented writer creating a character for a story. Provide detailed information for the following aspects of your character:"
-        return EventSourceResponse(llm_chain.run(text))
+        return llm_chain, text
 
 
 if __name__ == "__main__":
