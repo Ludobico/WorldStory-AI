@@ -30,13 +30,16 @@ async def test():
 
 async def generate_stream_data():
     for data in CSL.llm_connect():
-        print(data)
         yield data
 
 
 @app.get('/test')
-async def chaintest():
-    return StreamingResponse(generate_stream_data(), media_type='text/event-stream')
+# async def chaintest():
+#     return StreamingResponse(generate_stream_data(), media_type='text/event-stream')
+async def test1():
+    test_var = CSL.llm_connect()
+    print(test_var['llm'])
+    print(test_var['prompt'])
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=8000)
