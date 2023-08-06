@@ -1,2 +1,1 @@
 # WorldStory_AI
-.
