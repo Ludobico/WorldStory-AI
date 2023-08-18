@@ -49,7 +49,7 @@ async def send_message(message: str) -> AsyncIterable[str]:
     callback_manager = CallbackManager([callback])
 
     llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   callback_manager=callback_manager, verbose=True, streaming=True)
+                   callbacks=[callback], verbose=True, streaming=True)
     llm_chain = LLMChain(prompt=prompt, llm=llm,)
 
     question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"

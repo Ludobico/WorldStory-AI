@@ -31,32 +31,29 @@ prompt = PromptTemplate(template=template, input_variables=["question"])
 Sender = Callable[[Union[str, bytes]], Awaitable[None]]
 
 
-class AsyncStreamCallbackHandler(AsyncCallbackHandler):
-    """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
+# class AsyncStreamCallbackHandler(AsyncCallbackHandler):
+#     """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
 
-    def __init__(self, send: Sender):
-        super().__init__()
-        self.send = send
+#     def __init__(self, send: Sender):
+#         super().__init__()
+#         self.send = send
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-        """Rewrite on_llm_new_token to send token to client."""
-        await self.send(f"data: {token}\n\n")
+#     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+#         """Rewrite on_llm_new_token to send token to client."""
+#         await self.send(f"data: {token}\n\n")
 
 
 async def send_message(message: str) -> AsyncIterable[str]:
     # Callbacks support token-wise streaming
     callback = AsyncIteratorCallbackHandler()
-    cb = AsyncCallbackHandler()
-    print('cbcb {0}'.format(cb))
-    # callback_manager = CallbackManager([callback])
-    cm = AsyncCallbackManagerForLLMRun(cb)
+    callback_manager = CallbackManager([callback])
     # Verbose is required to pass to the callback manager
 
     # Make sure the model path is correct for your system!
     llm = LlamaCpp(
         # replace with your model path
         model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-        callback_manager=None,
+        callback_manager=callback_manager,
         verbose=True,
         streaming=True,
     )
@@ -70,7 +67,6 @@ async def send_message(message: str) -> AsyncIterable[str]:
         try:
             await fn
         except Exception as e:
-            # TODO: handle exception
             print(f"Caught exception: {e}")
         finally:
             # Signal the aiter to stop.
@@ -97,6 +93,28 @@ class StreamRequest(BaseModel):
 @app.post("/stream")
 def stream(body: StreamRequest):
     return StreamingResponse(send_message(body.message), media_type="text/event-stream")
+
+
+@app.post("/stream_chat")
+def stream_chat():
+    template = """
+    Question: {instruct}
+
+    Answer: Let's work this out in a step by step way to be sure we have the right answer.
+    """
+
+    llm = LlamaCpp(model_path="./testmodel/llama2-22b-daydreamer-v3.ggmlv3.q2_K.bin",
+                   verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
+    prompt = PromptTemplate(template=template, input_variables=["instruct"])
+    model = LLMChain(prompt=prompt, llm=llm, verbose=False)
+
+    # for chunk in llm._stream(prompt=template):
+    #     print(chunk.text)
+    response = model.run(
+        "What NFL team won the Super Bowl in the year Justin Bieber was born?")
+
+    for chunk in llm._stream():
+        print(chunk.text)
 
 
 if __name__ == "__main__":
