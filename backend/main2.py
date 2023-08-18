@@ -55,3 +55,26 @@ async def send_message(message: str) -> AsyncIterable[str]:
             print("Caught exception : {0}".format(e))
         finally:
             event.set()
+
+    task = asyncio.create_task(wrap_done(
+        llm_chain.arun(question),
+        callback.done
+    ))
+
+    async for token in callback.aiter():
+        yield f"data: {token}\n\n"
+
+    await task
+
+
+class StreamRequest(BaseModel):
+    message: str
+
+
+@app.post("/stream")
+def stream(body: StreamRequest):
+    return StreamingResponse(send_message(body.message), media_type="text/event-stream")
+
+
+if __name__ == "__main__":
+    uvicorn.run(host="0.0.0.0", port=8000, app=app)
