@@ -1,6 +1,6 @@
 import asyncio
 import os
-from typing import AsyncIterable, Awaitable, Callable, Union, Any
+from typing import AsyncIterable, Awaitable, Callable, Union, Any, Dict, List
 
 import uvicorn
 from dotenv import load_dotenv
@@ -14,6 +14,8 @@ from uuid import UUID
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
 from langchain.callbacks.manager import CallbackManager, AsyncCallbackManagerForLLMRun
+from langchain.schema import LLMResult, HumanMessage
+from langchain.callbacks.base import AsyncCallbackHandler, BaseCallbackHandler
 
 # Load env variables from .env file
 load_dotenv()
@@ -103,18 +105,51 @@ def stream_chat():
     Answer: Let's work this out in a step by step way to be sure we have the right answer.
     """
 
-    llm = LlamaCpp(model_path="./testmodel/llama2-22b-daydreamer-v3.ggmlv3.q2_K.bin",
+    llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
                    verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
     prompt = PromptTemplate(template=template, input_variables=["instruct"])
-    model = LLMChain(prompt=prompt, llm=llm, verbose=False)
+    model = LLMChain(prompt=prompt, llm=llm)
 
     # for chunk in llm._stream(prompt=template):
     #     print(chunk.text)
-    response = model.run(
-        "What NFL team won the Super Bowl in the year Justin Bieber was born?")
+    # response = model.run(
+    #     "What NFL team won the Super Bowl in the year Justin Bieber was born?")
 
-    for chunk in llm._stream():
+    for chunk in llm._stream(prompt=prompt):
         print(chunk.text)
+
+
+@app.post("/langdocs_stream")
+async def test():
+    class MyCustomSyncHandler(BaseCallbackHandler):
+        def on_llm_new_token(self, token: str, **kwargs) -> None:
+            print(
+                f"Sync handler being called in a `thread_pool_executor`: token: {token}")
+
+    class MyCustomAsyncHandler(AsyncCallbackHandler):
+
+        async def on_llm_start(
+            self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
+        ) -> None:
+            await asyncio.sleep(0.3)
+
+        async def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
+            print("token end")
+            await asyncio.sleep(0.3)
+
+    template = """
+    Question: {instruct}
+
+    Answer: Let's work this out in a step by step way to be sure we have the right answer.
+    """
+
+    llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+                   verbose=True, temperature=0.95, max_tokens=25, n_ctx=4096, streaming=True, callbacks=[MyCustomAsyncHandler(), MyCustomSyncHandler()])
+    prompt = PromptTemplate(template=template, input_variables=["instruct"])
+    model = LLMChain(prompt=prompt, llm=llm)
+    question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
+
+    model.run(question)
 
 
 if __name__ == "__main__":
