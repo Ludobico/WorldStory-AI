@@ -7,11 +7,17 @@ const CharacterSetting = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [testText, setTestText] = useState([]);
+
+  // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
   const text_div_ref = useRef();
+
+  // text_div_ref가 늘어나면 전체화면도 늘어남
+  const container_div_ref = useRef();
 
   useEffect(() => {
     if (text_div_ref.current) {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + "px";
+      container_div_ref.current.style.height = container_div_ref.current.scrollHeight + "px";
     }
   }, [testText]);
   const get_data = () => {
@@ -34,27 +40,12 @@ const CharacterSetting = () => {
   const log_test = () => {
     setTestText(testText.concat("test asdasd asdasd asdasd asdasd "));
   };
-
-  const test_data = `
-  ,"Name": "Evelyn",
-          "Gender": "Female",
-         "Age": "28",
-        "Personality": "Brave, curious, and adventurous. She is always seeking out new experiences and is not afraid of the unknown.",
-      "Background": "Evelyn was born in a small town on the coast of France. Her parents were both scientists who spent most of their time researching in remote locations around the world. From an early age, Evelyn was exposed to different cultures and ways of life that inspired her sense of adventure.",
-         "Dialogue Style": "Evelyn speaks with a French accent and often uses metaphors and analogies to describe her experiences. She has a knack for storytelling and can captivate an audience with her words.",
-       "Appearance": "Evelyn has long, curly brown hair and deep green eyes. She is tall and slender, with a graceful gait that conveys both strength and elegance."
-  `;
-  const formatted_data = test_data
-    .split("\n")
-    .map((line) => line.trim())
-    .join("\n");
   return (
-    <div className="CharacterSetting_top_div">
+    <div className="CharacterSetting_top_div" ref={container_div_ref}>
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
       <div className="CharacterSetting_codeblock" ref={text_div_ref}>
-        {/* <div className="CharacterSetting_code">{formatted_data}</div> */}
         {/* <p>{data}</p> */}
         <p>{testText}</p>
       </div>
