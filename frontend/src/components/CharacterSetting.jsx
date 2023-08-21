@@ -39,7 +39,7 @@ const CharacterSetting = () => {
       });
   };
   const log_test = () => {
-    // setTestText(testText.concat("test asdasd asdasd asdasd asdasd "));
+    setToken(token.concat("test asdasd asdasd asdasd asdasd "));
   };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
@@ -47,7 +47,7 @@ const CharacterSetting = () => {
         <Logo />
       </div>
       <div className="CharacterSetting_codeblock" ref={text_div_ref}>
-        {/* <p>{data}</p> */}
+        <p>{data}</p>
         <p>{token}</p>
       </div>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
@@ -56,13 +56,13 @@ const CharacterSetting = () => {
       <div className="CharacterSetting_generate_button" onClick={log_test}>
         test
       </div>
-      <div className="CharacterSetting_setting_letter">Setting</div>
+      {/* <div className="CharacterSetting_setting_letter">Setting</div>
       <div className="CharacterSetting_setting_settings">
         <div className="CharacterSetting_setting_1 CharacterSetting_setting">1</div>
         <div className="CharacterSetting_setting_2 CharacterSetting_setting">2</div>
         <div className="CharacterSetting_setting_3 CharacterSetting_setting">3</div>
         <div className="CharacterSetting_setting_4 CharacterSetting_setting">4</div>
-      </div>
+      </div> */}
     </div>
   );
 };
