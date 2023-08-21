@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CharacterSetting.css";
 import Logo from "./Header/Logo";
 import axios from "axios";
@@ -6,6 +6,14 @@ import axios from "axios";
 const CharacterSetting = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [testText, setTestText] = useState([]);
+  const text_div_ref = useRef();
+
+  useEffect(() => {
+    if (text_div_ref.current) {
+      text_div_ref.current.style.height = text_div_ref.current.scrollHeight + "px";
+    }
+  }, [testText]);
   const get_data = () => {
     setIsLoading(true);
     setData("");
@@ -24,7 +32,7 @@ const CharacterSetting = () => {
       });
   };
   const log_test = () => {
-    console.log(data);
+    setTestText(testText.concat("test asdasd asdasd asdasd asdasd "));
   };
 
   const test_data = `
@@ -45,9 +53,10 @@ const CharacterSetting = () => {
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
-      <div className="CharacterSetting_codeblock">
+      <div className="CharacterSetting_codeblock" ref={text_div_ref}>
         {/* <div className="CharacterSetting_code">{formatted_data}</div> */}
-        <p>{data}</p>
+        {/* <p>{data}</p> */}
+        <p>{testText}</p>
       </div>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
         Generate
