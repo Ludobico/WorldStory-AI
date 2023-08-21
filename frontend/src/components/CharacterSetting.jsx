@@ -6,7 +6,9 @@ import axios from "axios";
 const CharacterSetting = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [testText, setTestText] = useState([]);
+
+  // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
+  const [token, setToken] = useState([]);
 
   // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
   const text_div_ref = useRef();
@@ -19,16 +21,15 @@ const CharacterSetting = () => {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + "px";
       container_div_ref.current.style.height = container_div_ref.current.scrollHeight + "px";
     }
-  }, [testText]);
+  }, [token]);
   const get_data = () => {
     setIsLoading(true);
     setData("");
 
     axios
-      .get("http://localhost:8000/test", { responseType: "stream" })
+      .post("http://localhost:8000/langdocs_stream")
       .then((response) => {
-        setData(response.data);
-        console.log(response);
+        setToken(response);
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +39,7 @@ const CharacterSetting = () => {
       });
   };
   const log_test = () => {
-    setTestText(testText.concat("test asdasd asdasd asdasd asdasd "));
+    // setTestText(testText.concat("test asdasd asdasd asdasd asdasd "));
   };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
@@ -47,7 +48,7 @@ const CharacterSetting = () => {
       </div>
       <div className="CharacterSetting_codeblock" ref={text_div_ref}>
         {/* <p>{data}</p> */}
-        <p>{testText}</p>
+        <p>{token}</p>
       </div>
       <div className="CharacterSetting_generate_button" onClick={get_data}>
         Generate

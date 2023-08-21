@@ -5,7 +5,8 @@ from typing import AsyncIterable, Awaitable, Callable, Union, Any, Dict, List
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel
@@ -22,6 +23,25 @@ load_dotenv()
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get('/')
+async def hello_world():
+    return {'message': "hello world"}
+
 
 template = """Question: {question}
 
@@ -33,16 +53,16 @@ prompt = PromptTemplate(template=template, input_variables=["question"])
 Sender = Callable[[Union[str, bytes]], Awaitable[None]]
 
 
-# class AsyncStreamCallbackHandler(AsyncCallbackHandler):
-#     """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
+class AsyncStreamCallbackHandler(AsyncCallbackHandler):
+    """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
 
-#     def __init__(self, send: Sender):
-#         super().__init__()
-#         self.send = send
+    def __init__(self, send: Sender):
+        super().__init__()
+        self.send = send
 
-#     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-#         """Rewrite on_llm_new_token to send token to client."""
-#         await self.send(f"data: {token}\n\n")
+    async def on_llm_new_token(self, token: str, **kwargs) -> None:
+        """Rewrite on_llm_new_token to send token to client."""
+        await self.send(f"data: {token}\n\n")
 
 
 async def send_message(message: str) -> AsyncIterable[str]:
@@ -58,6 +78,7 @@ async def send_message(message: str) -> AsyncIterable[str]:
         callback_manager=callback_manager,
         verbose=True,
         streaming=True,
+        max_tokens=25
     )
 
     llm_chain = LLMChain(prompt=prompt, llm=llm)
@@ -119,18 +140,24 @@ def stream_chat():
         print(chunk.text)
 
 # Need chunk update
+
+
 @app.post("/langdocs_stream")
 async def test():
+    token_list = []
+
     class MyCustomSyncHandler(BaseCallbackHandler):
         def on_llm_new_token(self, token: str, **kwargs) -> None:
+            # 실제 chunk 단위로 답변
             print(
                 f"Sync handler being called in a `thread_pool_executor`: token: {token}")
+            return JSONResponse(content={"token": token})
 
     class MyCustomAsyncHandler(AsyncCallbackHandler):
 
         async def on_llm_start(
-            self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
-        ) -> None:
+                self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any) -> None:
+            print("zzzz....")
             await asyncio.sleep(0.3)
 
         async def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
@@ -149,8 +176,8 @@ async def test():
     model = LLMChain(prompt=prompt, llm=llm)
     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
 
-    model.run(question)
+    await model.arun(question)
 
 
 if __name__ == "__main__":
-    uvicorn.run(host="0.0.0.0", port=8000, app=app)
+    uvicorn.run(host="0.0.0.0", port=8000)
