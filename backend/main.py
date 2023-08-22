@@ -1,30 +1,20 @@
-
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-# from langchain.callbacks.base import CallbackManager
-from langchain.chat_models import ChatOpenAI
-from fastapi.responses import StreamingResponse
-import queue
-import threading
 import asyncio
 import os
-from typing import AsyncIterable, Awaitable, Callable, Union, Any, Dict, List
-
+from typing import AsyncIterable, Awaitable, Callable, Union, Any
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse, JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel
-from uuid import UUID
 
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
-# from langchain.callbacks.manager import CallbackManager, AsyncCallbackManagerForLLMRun
-from langchain.callbacks.manager import CallbackManager
-from langchain.schema import LLMResult, HumanMessage
-from langchain.callbacks.base import AsyncCallbackHandler, BaseCallbackHandler
+from langchain.callbacks.manager import CallbackManager, AsyncCallbackManagerForLLMRun
+
+import tracemalloc
 
 # Load env variables from .env file
 load_dotenv()
@@ -45,74 +35,79 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+tracemalloc.start()
+
 
 @app.get('/')
 async def hello_world():
     return {'message': "hello world"}
 
 
-@app.on_event("startup")
-async def startup():
-    print("Server Startup!")
+# Load env variables from .env file
 
 
-class ThreadedGenerator:
-    def __init__(self):
-        self.queue = queue.Queue()
+template = """Question: {question}
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        item = self.queue.get()
-        if item is StopIteration:
-            raise item
-        return item
-
-    def send(self, data):
-        self.queue.put(data)
-
-    def close(self):
-        self.queue.put(StopIteration)
+Answer: Let's work this out in a step by step way to be sure we have the right answer."""
 
 
-class ChainStreamHandler(StreamingStdOutCallbackHandler):
-    def __init__(self, gen):
-        super().__init__()
-        self.gen = gen
-
-    def on_llm_new_token(self, token: str, **kwargs):
-        print(token)
-        self.gen.send(token)
+prompt = PromptTemplate(template=template, input_variables=["question"])
 
 
-def llm_thread(g):
-    template = """
-        Question : {question}
-
-        Answer : Let's work this out in a step by step way to be sure we habe the right answer.
-        """
-    prompt = PromptTemplate(template=template, input_variables=["question"])
-    question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"
-    try:
-        llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                       callbacks=CallbackManager([ChainStreamHandler(g)]), verbose=True, streaming=True, max_tokens=25)
-        llm_chain = LLMChain(prompt=prompt, llm=llm,)
-        llm_chain.run(question)
-
-    finally:
-        g.close()
+Sender = Callable[[Union[str, bytes]], Awaitable[None]]
 
 
-def chat():
-    g = ThreadedGenerator()
-    threading.Thread(target=llm_thread, args=(g)).start()
-    return g
+async def send_message(message: str) -> AsyncIterable[str]:
+    # Callbacks support token-wise streaming
+    callback = AsyncIteratorCallbackHandler()
+    callback_manager = CallbackManager([callback])
+    # Verbose is required to pass to the callback manager
+
+    # Make sure the model path is correct for your system!
+    llm = LlamaCpp(
+        # replace with your model path
+        model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+        callback_manager=callback_manager,
+        verbose=True,
+        streaming=True,
+        max_tokens=25,
+    )
+
+    llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True)
+    question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
+
+    async def wrap_done(fn: Awaitable, event: asyncio.Event):
+        """Wrap an awaitable with an event to signal when it's done or an exception is raised."""
+        try:
+            await fn
+        except Exception as e:
+            # TODO: handle exception
+            print(f"Caught exception: {e}")
+        finally:
+            # Signal the aiter to stop.
+            event.set()
+
+    # Begin a task that runs in the background.
+    task = asyncio.create_task(wrap_done(
+        llm_chain.arun(question),
+        callback.done),
+    )
+
+    async for token in callback.aiter():
+        # Use server-sent-events to stream the response
+        yield f"data: {token}\n\n"
+
+    await task
 
 
-@app.get("/qs")
-async def stream():
-    return StreamingResponse(chat(), media_type='text/event-stream')
+class StreamRequest(BaseModel):
+    """Request body for streaming."""
+    message: str
+
+
+@app.post("/stream")
+def stream(body: StreamRequest):
+    return StreamingResponse(send_message(body.message), media_type="text/event-stream")
 
 
 if __name__ == "__main__":
