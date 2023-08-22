@@ -27,9 +27,10 @@ const CharacterSetting = () => {
     setData("");
 
     axios
-      .post("http://localhost:8000/langdocs_stream")
+      .get("http://localhost:8000/qs")
       .then((response) => {
         setToken(response);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);

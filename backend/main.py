@@ -1,3 +1,10 @@
+
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+# from langchain.callbacks.base import CallbackManager
+from langchain.chat_models import ChatOpenAI
+from fastapi.responses import StreamingResponse
+import queue
+import threading
 import asyncio
 import os
 from typing import AsyncIterable, Awaitable, Callable, Union, Any, Dict, List
@@ -14,7 +21,8 @@ from uuid import UUID
 
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
-from langchain.callbacks.manager import CallbackManager, AsyncCallbackManagerForLLMRun
+# from langchain.callbacks.manager import CallbackManager, AsyncCallbackManagerForLLMRun
+from langchain.callbacks.manager import CallbackManager
 from langchain.schema import LLMResult, HumanMessage
 from langchain.callbacks.base import AsyncCallbackHandler, BaseCallbackHandler
 
@@ -43,142 +51,69 @@ async def hello_world():
     return {'message': "hello world"}
 
 
-template = """Question: {question}
-
-Answer: Let's work this out in a step by step way to be sure we have the right answer."""
-
-prompt = PromptTemplate(template=template, input_variables=["question"])
+@app.on_event("startup")
+async def startup():
+    print("Server Startup!")
 
 
-Sender = Callable[[Union[str, bytes]], Awaitable[None]]
+class ThreadedGenerator:
+    def __init__(self):
+        self.queue = queue.Queue()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        item = self.queue.get()
+        if item is StopIteration:
+            raise item
+        return item
+
+    def send(self, data):
+        self.queue.put(data)
+
+    def close(self):
+        self.queue.put(StopIteration)
 
 
-class AsyncStreamCallbackHandler(AsyncCallbackHandler):
-    """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
-
-    def __init__(self, send: Sender):
+class ChainStreamHandler(StreamingStdOutCallbackHandler):
+    def __init__(self, gen):
         super().__init__()
-        self.send = send
+        self.gen = gen
 
-    async def on_llm_new_token(self, token: str, **kwargs) -> None:
-        """Rewrite on_llm_new_token to send token to client."""
-        await self.send(f"data: {token}\n\n")
-
-
-async def send_message(message: str) -> AsyncIterable[str]:
-    # Callbacks support token-wise streaming
-    callback = AsyncIteratorCallbackHandler()
-    callback_manager = CallbackManager([callback])
-    # Verbose is required to pass to the callback manager
-
-    # Make sure the model path is correct for your system!
-    llm = LlamaCpp(
-        # replace with your model path
-        model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-        callback_manager=callback_manager,
-        verbose=True,
-        streaming=True,
-        max_tokens=25
-    )
-
-    llm_chain = LLMChain(prompt=prompt, llm=llm)
-
-    question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
-
-    async def wrap_done(fn: Awaitable, event: asyncio.Event):
-        """Wrap an awaitable with an event to signal when it's done or an exception is raised."""
-        try:
-            await fn
-        except Exception as e:
-            print(f"Caught exception: {e}")
-        finally:
-            # Signal the aiter to stop.
-            event.set()
-
-    # Begin a task that runs in the background.
-    task = asyncio.create_task(wrap_done(
-        llm_chain.arun(question),
-        callback.done),
-    )
-
-    async for token in callback.aiter():
-        # Use server-sent-events to stream the response
-        yield f"data: {token}\n\n"
-
-    await task
+    def on_llm_new_token(self, token: str, **kwargs):
+        print(token)
+        self.gen.send(token)
 
 
-class StreamRequest(BaseModel):
-    """Request body for streaming."""
-    message: str
-
-
-@app.post("/stream")
-def stream(body: StreamRequest):
-    return StreamingResponse(send_message(body.message), media_type="text/event-stream")
-
-
-@app.post("/stream_chat")
-def stream_chat():
+def llm_thread(g):
     template = """
-    Question: {instruct}
+        Question : {question}
 
-    Answer: Let's work this out in a step by step way to be sure we have the right answer.
-    """
+        Answer : Let's work this out in a step by step way to be sure we habe the right answer.
+        """
+    prompt = PromptTemplate(template=template, input_variables=["question"])
+    question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"
+    try:
+        llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+                       callbacks=CallbackManager([ChainStreamHandler(g)]), verbose=True, streaming=True, max_tokens=25)
+        llm_chain = LLMChain(prompt=prompt, llm=llm,)
+        llm_chain.run(question)
 
-    llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   verbose=True, temperature=0.95, max_tokens=512, n_ctx=4096, streaming=True)
-    prompt = PromptTemplate(template=template, input_variables=["instruct"])
-    model = LLMChain(prompt=prompt, llm=llm)
-
-    # for chunk in llm._stream(prompt=template):
-    #     print(chunk.text)
-    # response = model.run(
-    #     "What NFL team won the Super Bowl in the year Justin Bieber was born?")
-
-    for chunk in llm._stream(prompt=prompt):
-        print(chunk.text)
-
-# Need chunk update
+    finally:
+        g.close()
 
 
-@app.post("/langdocs_stream")
-async def test():
-    token_list = []
+def chat():
+    g = ThreadedGenerator()
+    threading.Thread(target=llm_thread, args=(g)).start()
+    return g
 
-    class MyCustomSyncHandler(AsyncCallbackManagerForLLMRun):
-        def on_llm_new_token(self, token: str, **kwargs) -> None:
-            # 실제 chunk 단위로 답변
-            print(
-                f"Sync handler being called in a `thread_pool_executor`: token: {token}")
-            return JSONResponse(content={"token": token})
 
-    class MyCustomAsyncHandler(AsyncCallbackHandler):
+@app.get("/qs")
+async def stream():
+    return StreamingResponse(chat(), media_type='text/event-stream')
 
-        async def on_llm_start(
-                self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any) -> None:
-            print("zzzz....")
-            await asyncio.sleep(0.3)
-
-        async def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
-            print("token end")
-            await asyncio.sleep(0.3)
-
-    callback_manager = AsyncCallbackManagerForLLMRun([MyCustomSyncHandler])
-
-    template = """
-    Question: {instruct}
-
-    Answer: Let's work this out in a step by step way to be sure we have the right answer.
-    """
-
-    llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   verbose=True, temperature=0.95, max_tokens=25, n_ctx=4096, streaming=True, callback_manager=callback_manager)
-    prompt = PromptTemplate(template=template, input_variables=["instruct"])
-    model = LLMChain(prompt=prompt, llm=llm)
-    question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
-
-    await model.arun(question)
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000)
