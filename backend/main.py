@@ -146,7 +146,7 @@ def stream_chat():
 async def test():
     token_list = []
 
-    class MyCustomSyncHandler(BaseCallbackHandler):
+    class MyCustomSyncHandler(AsyncCallbackManagerForLLMRun):
         def on_llm_new_token(self, token: str, **kwargs) -> None:
             # 실제 chunk 단위로 답변
             print(
@@ -164,6 +164,8 @@ async def test():
             print("token end")
             await asyncio.sleep(0.3)
 
+    callback_manager = AsyncCallbackManagerForLLMRun([MyCustomSyncHandler])
+
     template = """
     Question: {instruct}
 
@@ -171,13 +173,12 @@ async def test():
     """
 
     llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   verbose=True, temperature=0.95, max_tokens=25, n_ctx=4096, streaming=True, callbacks=[MyCustomAsyncHandler(), MyCustomSyncHandler()])
+                   verbose=True, temperature=0.95, max_tokens=25, n_ctx=4096, streaming=True, callback_manager=callback_manager)
     prompt = PromptTemplate(template=template, input_variables=["instruct"])
     model = LLMChain(prompt=prompt, llm=llm)
     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
 
     await model.arun(question)
-
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000)
