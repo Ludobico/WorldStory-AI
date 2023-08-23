@@ -1,5 +1,5 @@
+
 from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.base import AsyncCallbackHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -39,7 +39,7 @@ async def hello_world():
 
 
 @app.get('/qs')
-async def qs(question: str):
+def qs():
     template = """Question: {question}
 
     Answer: Let's work this out in a step by step way to be sure we have the right answer."""
@@ -47,12 +47,14 @@ async def qs(question: str):
     prompt = PromptTemplate(template=template, input_variables=["question"])
 
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-
     llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   callback_manager=callback_manager, verbose=True, streaming=True)
+                   callback_manager=callback_manager, verbose=True, streaming=True, max_tokens=25)
     llm_chain = LLMChain(prompt=prompt, llm=llm,)
 
     question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"
+
+    for text in llm_chain.stream(question):
+        yield text
 
 
 if __name__ == "__main__":
