@@ -23,7 +23,11 @@ const CharacterSetting = () => {
         }
     }, [token]);
     const get_data = () => {
-
+        const generator = async () => {
+            const res = await axios.get("http://localhost:8000/qs")
+            await console.log(res)
+        }
+        generator();
     };
     const log_test = () => {
         setToken(token.concat('test asdasd asdasd asdasd asdasd '));

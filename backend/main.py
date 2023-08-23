@@ -1,16 +1,28 @@
-
+import threading
+import queue
+import asyncio
+import uvicorn
+import time
+from typing import AsyncIterable, Awaitable, Callable, Union, Any
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+from langchain.callbacks import AsyncIteratorCallbackHandler
+from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from fastapi.middleware.cors import CORSMiddleware
+from langchain.schema import (
+    AIMessage,
+    HumanMessage,
+    SystemMessage
+)
+from pydantic import BaseModel
+import tracemalloc
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, WebSocket
-
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
-
-import tracemalloc
-
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 # Load env variables from .env file
 load_dotenv()
 
@@ -37,24 +49,61 @@ tracemalloc.start()
 async def hello_world():
     return {'message': "hello world"}
 
+    # template = """Question: {question}
 
-@app.get('/qs')
-def qs():
+    # Answer: Let's work this out in a step by step way to be sure we have the right answer."""
+
+    # prompt = PromptTemplate(template=template, input_variables=["question"])
+
+    # callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+    # llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+    #                callback_manager=callback_manager, verbose=True, streaming=True, max_tokens=25)
+    # llm_chain = LLMChain(prompt=prompt, llm=llm,)
+
+    # question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"
+
+
+class Message(BaseModel):
+    content: str
+
+
+async def send_message(content: str) -> AsyncIterable[str]:
+    callback = AsyncIteratorCallbackHandler()
     template = """Question: {question}
 
     Answer: Let's work this out in a step by step way to be sure we have the right answer."""
 
     prompt = PromptTemplate(template=template, input_variables=["question"])
 
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
     llm = LlamaCpp(model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-                   callback_manager=callback_manager, verbose=True, streaming=True, max_tokens=25)
-    llm_chain = LLMChain(prompt=prompt, llm=llm,)
+                   callbacks=[callback], verbose=True, streaming=True, max_tokens=25)
+    llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True)
+    print("content check \n {0}".format(content))
+    task = asyncio.create_task(
+        llm_chain.arun(content)
 
-    question = "What NFL team won the Super Bowl in the year Justin Bierber was born?"
+    )
 
-    for text in llm_chain.stream(question):
-        yield text
+    try:
+        async for token in callback.aiter():
+            yield token
+    except Exception as e:
+        print(f"Caught exception: {e}")
+    finally:
+        callback.done.set()
+
+    await task
+
+
+@app.post("/stream_chat")
+async def stream_chat(message: Message):
+    generator = send_message(message.content)
+    return StreamingResponse(generator, media_type="text/event-stream")
+
+
+class StreamRequest(BaseModel):
+    """Request body for streaming."""
+    message: str
 
 
 if __name__ == "__main__":
