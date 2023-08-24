@@ -16,6 +16,7 @@ from langchain.callbacks.manager import CallbackManager
 from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
+from langchain.llms import CTransformers
 # Load env variables from .env file
 load_dotenv()
 
@@ -38,80 +39,112 @@ app.add_middleware(
 tracemalloc.start()
 
 
-template = """Question: {question}
+# template = """Question: {question}
 
-Answer: Let's work this out in a step by step way to be sure we have the right answer."""
+# Answer: Let's work this out in a step by step way to be sure we have the right answer."""
 
-prompt = PromptTemplate(template=template, input_variables=["question"])
-
-
-Sender = Callable[[Union[str, bytes]], Awaitable[None]]
+# prompt = PromptTemplate(template=template, input_variables=["question"])
 
 
-class AsyncStreamCallbackHandler(AsyncCallbackHandler):
-    """Callback handler for streaming, inheritance from AsyncCallbackHandler."""
-
-    def __init__(self, send: Sender):
-        super().__init__()
-        self.send = send
-
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-        """Rewrite on_llm_new_token to send token to client."""
-        await self.send(f"data: {token}\n\n")
+# Sender = Callable[[Union[str, bytes]], Awaitable[None]]
 
 
-async def send_message(message: str) -> AsyncIterable[str]:
-    # Callbacks support token-wise streaming
+# async def send_message(message: str) -> AsyncIterable[str]:
+#     # Callbacks support token-wise streaming
+#     callback = AsyncIteratorCallbackHandler()
+#     callback_manager = CallbackManager([callback])
+#     # Verbose is required to pass to the callback manager
+
+#     # Make sure the model path is correct for your system!
+#     llm = LlamaCpp(
+#         # replace with your model path
+#         model_path="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin",
+#         callback_manager=callback_manager,
+#         verbose=True,
+#         streaming=True,
+#         max_tokens=25,
+#     )
+
+#     llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True,)
+
+#     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
+
+#     async def wrap_done(fn: Awaitable, event: asyncio.Event):
+#         """Wrap an awaitable with an event to signal when it's done or an exception is raised."""
+#         try:
+#             await fn
+#         except Exception as e:
+#             # TODO: handle exception
+#             print(f"Caught exception: {e}")
+#         finally:
+#             # Signal the aiter to stop.
+#             event.set()
+
+#     # Begin a task that runs in the background.
+#     task = asyncio.create_task(wrap_done(
+#         llm_chain.arun(question),
+#         callback.done),
+#     )
+
+#     async for token in callback.aiter():
+#         # Use server-sent-events to stream the response
+#         yield f"data: {token}\n\n"
+
+#     await task
+
+
+# class StreamRequest(BaseModel):
+#     """Request body for streaming."""
+#     message: str
+
+
+# @app.post("/stream")
+# def stream(body: StreamRequest):
+#     return StreamingResponse(send_message(body.message), media_type="text/event-stream")
+
+class Message(BaseModel):
+    content: str
+
+
+async def send_message(content: str) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
-    callback_manager = CallbackManager([callback])
-    # Verbose is required to pass to the callback manager
+    template = """Question: {question}
 
-    # Make sure the model path is correct for your system!
+    Answer: Let's work this out in a step by step way to be sure we have the right answer."""
+
+    prompt = PromptTemplate(template=template, input_variables=["question"])
+
     llm = LlamaCpp(
-        # replace with your model path
-        model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-        callback_manager=callback_manager,
+        model_path="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin",
+        callbacks=[callback],
         verbose=True,
         streaming=True,
-        max_tokens=64
+        max_tokens=25,
     )
 
-    llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True)
+    model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
 
-    async def wrap_done(fn: Awaitable, event: asyncio.Event):
-        """Wrap an awaitable with an event to signal when it's done or an exception is raised."""
-        try:
-            await fn
-        except Exception as e:
-            # TODO: handle exception
-            print(f"Caught exception: {e}")
-        finally:
-            # Signal the aiter to stop.
-            event.set()
-
-    # Begin a task that runs in the background.
-    task = asyncio.create_task(wrap_done(
-        llm_chain.arun(question),
-        callback.done),
+    task = asyncio.create_task(
+        model.arun(question)
     )
 
-    async for token in callback.aiter():
-        # Use server-sent-events to stream the response
-        yield f"data: {token}\n\n"
+    try:
+        async for token in callback.aiter():
+            yield token
+    except Exception as e:
+        print(f"Caught exception: {e}")
+    finally:
+        callback.done.set()
 
     await task
 
 
-class StreamRequest(BaseModel):
-    """Request body for streaming."""
-    message: str
-
-
-@app.post("/stream")
-def stream(body: StreamRequest):
-    return StreamingResponse(send_message(body.message), media_type="text/event-stream")
+@app.post("/stream_chat")
+async def stream_chat(message: Message):
+    generator = send_message(message.content)
+    return StreamingResponse(generator, media_type="text/event-stream")
 
 
 if __name__ == "__main__":
