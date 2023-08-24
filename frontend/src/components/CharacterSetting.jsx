@@ -78,8 +78,6 @@ const CharacterSetting = () => {
             <div className="CharacterSetting_generate_button" onClick={check_test}>
                 check
             </div>
-            <div className="CharacterSetting_generate_button" id="result" dangerouslySetInnerHTML={{ __html: result1 }}>
-            </div>
             {/* <div className="CharacterSetting_setting_letter">Setting</div>
       <div className="CharacterSetting_setting_settings">
         <div className="CharacterSetting_setting_1 CharacterSetting_setting">1</div>

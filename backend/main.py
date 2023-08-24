@@ -115,13 +115,15 @@ async def send_message(content: str) -> AsyncIterable[str]:
 
     prompt = PromptTemplate(template=template, input_variables=["question"])
 
-    llm = LlamaCpp(
-        model_path="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin",
-        callbacks=[callback],
-        verbose=True,
-        streaming=True,
-        max_tokens=25,
-    )
+    # llm = LlamaCpp(
+    #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+    #     callbacks=[callback],
+    #     verbose=True,
+    #     streaming=True,
+    #     max_tokens=25,
+    # )
+    llm = CTransformers(
+        model="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin", model_type="llama", callbacks=[callback], verbose=True)
 
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
