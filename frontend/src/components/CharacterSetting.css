@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
 .CharacterSetting_top_div {
   width: 100vw;
   height: 120vh;
@@ -44,5 +46,6 @@
 }
 
 .stream_token_span {
-  font-size: 18px;
+  font-size: 22px;
+  font-family: 'Black Ops One', cursive;
 }

@@ -16,6 +16,8 @@ const CharacterSetting = () => {
   // stream_token에 있는 값들을 저장하는 ref
   const span_ref = useRef();
 
+  const [test, setTest] = useState([]);
+
   useEffect(() => {
     if (text_div_ref.current) {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + 'px';
@@ -50,7 +52,8 @@ const CharacterSetting = () => {
   };
 
   const stateManager = () => {
-    console.log(span_ref);
+    const testtext = 'asdasdasdasdasdasdasdasdasdasfsgsaSGFHFHJSKWEjraw';
+    setTest([...test, testtext]);
   };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
@@ -64,6 +67,7 @@ const CharacterSetting = () => {
             {token}
           </span>
         ))}
+        <span className="stream_token_span">{test}</span>
       </div>
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
         Generate
