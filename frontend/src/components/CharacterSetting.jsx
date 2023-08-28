@@ -16,6 +16,9 @@ const CharacterSetting = () => {
   // stream_token에 있는 값들을 저장하는 ref
   const span_ref = useRef();
 
+  const [genLoader, SetGenLoader] = useState(false);
+
+  //   테스트용 텍스트
   const [test, setTest] = useState([]);
 
   useEffect(() => {
@@ -25,6 +28,8 @@ const CharacterSetting = () => {
     }
   });
   const sendMessage = async () => {
+    SetGenLoader(true);
+    setStreamToken([]);
     var message = 'generate start';
     var response = await fetch('http://localhost:8000/stream_chat', {
       method: 'POST',
@@ -38,7 +43,7 @@ const CharacterSetting = () => {
     var decoder = new TextDecoder('utf-8');
 
     reader.read().then(function processResult(result) {
-      if (result.done) return;
+      if (result.done) return SetGenLoader(false);
       let token = decoder.decode(result.value);
       if (token.endsWith(':') || token.endsWith('!') || token.endsWith('?')) {
         // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
@@ -54,6 +59,7 @@ const CharacterSetting = () => {
   const stateManager = () => {
     const testtext = 'asdasdasdasdasdasdasdasdasdasfsgsaSGFHFHJSKWEjraw';
     setTest([...test, testtext]);
+    SetGenLoader(!genLoader);
   };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
@@ -67,15 +73,15 @@ const CharacterSetting = () => {
             {token}
           </span>
         ))}
-        <span className="stream_token_span">{test}</span>
+        {/* <span className="stream_token_span">{test}</span> */}
       </div>
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
-        Generate
+        {genLoader ? (
+          <div className="CharacterSetting_generate_loading"></div>
+        ) : (
+          <div className="CharacterSetting_generate_not_loading">Generate</div>
+        )}
       </div>
-      <div className="CharacterSetting_generate_button" onClick={stateManager}>
-        test
-      </div>
-      <div className="CharacterSetting_generate_button">check</div>
     </div>
   );
 };
