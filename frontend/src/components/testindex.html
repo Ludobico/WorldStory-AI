@@ -79,7 +79,7 @@
                 if (token.endsWith('.') || token.endsWith('!') || token.endsWith('?')) {
                     document.getElementById("result").innerHTML += token + "<br>";
                 } else {
-                    document.getElementById("result").innerHTML += token + ' ';
+                    document.getElementById("result").innerHTML += token + '';
                 }
                 return reader.read().then(processResult);
             });

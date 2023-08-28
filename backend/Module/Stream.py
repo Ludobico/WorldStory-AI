@@ -4,7 +4,7 @@ from typing import AsyncIterable
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain import PromptTemplate, LLMChain
 from langchain.llms import CTransformers
-from BaseTemplate import base_template
+from Module.BaseTemplate import base_template
 
 
 async def send_message(content: str) -> AsyncIterable[str]:
@@ -21,9 +21,9 @@ async def send_message(content: str) -> AsyncIterable[str]:
     #     streaming=True,
     #     max_tokens=25,
     # )
-    testconfig = {"max_new_tokens": 25}
+    testconfig = {"max_new_tokens": 256}
     llm = CTransformers(
-        model="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin", model_type="llama", callbacks=[callback], verbose=True, config=testconfig)
+        model="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin", model_type="llama", callbacks=[callback], verbose=True, config=testconfig)
 
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
