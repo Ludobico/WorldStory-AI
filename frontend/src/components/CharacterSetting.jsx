@@ -4,10 +4,6 @@ import Logo from './Header/Logo';
 import axios from 'axios';
 
 const CharacterSetting = () => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [result1, setResult1] = useState('');
-
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
   const [streamToken, setStreamToken] = useState([]);
 
@@ -16,6 +12,9 @@ const CharacterSetting = () => {
 
   // text_div_ref가 늘어나면 전체화면도 늘어남
   const container_div_ref = useRef();
+
+  // stream_token에 있는 값들을 저장하는 ref
+  const span_ref = useRef();
 
   useEffect(() => {
     if (text_div_ref.current) {
@@ -39,18 +38,19 @@ const CharacterSetting = () => {
     reader.read().then(function processResult(result) {
       if (result.done) return;
       let token = decoder.decode(result.value);
-      if (token.endsWith('.') || token.endsWith('!') || token.endsWith('?')) {
-        document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
+      if (token.endsWith(':') || token.endsWith('!') || token.endsWith('?')) {
+        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
+        setStreamToken((streamToken) => [...streamToken, token + '\n']);
       } else {
-        document.getElementById('CharacterSetting_generate_result').innerHTML += token + '';
+        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '';
+        setStreamToken((streamToken) => [...streamToken, token + '']);
       }
       return reader.read().then(processResult);
     });
   };
 
   const stateManager = () => {
-    const text = 'adas';
-    setStreamToken([...streamToken, text]);
+    console.log(span_ref);
   };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
@@ -58,7 +58,13 @@ const CharacterSetting = () => {
         <Logo />
       </div>
       {/* stream 된 텍스트가 출력되는 div */}
-      <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result"></div>
+      <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
+        {streamToken.map((token, index) => (
+          <span key={index} className="stream_token_span" ref={span_ref}>
+            {token}
+          </span>
+        ))}
+      </div>
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
         Generate
       </div>
@@ -66,13 +72,6 @@ const CharacterSetting = () => {
         test
       </div>
       <div className="CharacterSetting_generate_button">check</div>
-      {/* <div className="CharacterSetting_setting_letter">Setting</div>
-      <div className="CharacterSetting_setting_settings">
-        <div className="CharacterSetting_setting_1 CharacterSetting_setting">1</div>
-        <div className="CharacterSetting_setting_2 CharacterSetting_setting">2</div>
-        <div className="CharacterSetting_setting_3 CharacterSetting_setting">3</div>
-        <div className="CharacterSetting_setting_4 CharacterSetting_setting">4</div>
-      </div> */}
     </div>
   );
 };

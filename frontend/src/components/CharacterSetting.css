@@ -42,27 +42,7 @@
   cursor: pointer;
   width: fit-content;
 }
-.CharacterSetting_setting_letter {
-  font-size: 2rem;
-  /* position: relative; */
-  /* top: 25%; */
-  margin-left: 3rem;
-}
-.CharacterSetting_setting_1 {
-  margin-left: 3rem;
-}
-.CharacterSetting_setting_settings {
-  /* position: relative; */
-  /* top: 30%; */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 30vh;
-}
 
-.CharacterSetting_setting {
-  width: 11.25rem;
-  height: 11.25rem;
-  background: gray;
-  font-size: 2rem;
+.stream_token_span {
+  font-size: 18px;
 }
