@@ -40,69 +40,6 @@ app.add_middleware(
 tracemalloc.start()
 
 
-# template = """Question: {question}
-
-# Answer: Let's work this out in a step by step way to be sure we have the right answer."""
-
-# prompt = PromptTemplate(template=template, input_variables=["question"])
-
-
-# Sender = Callable[[Union[str, bytes]], Awaitable[None]]
-
-
-# async def send_message(message: str) -> AsyncIterable[str]:
-#     # Callbacks support token-wise streaming
-#     callback = AsyncIteratorCallbackHandler()
-#     callback_manager = CallbackManager([callback])
-#     # Verbose is required to pass to the callback manager
-
-#     # Make sure the model path is correct for your system!
-#     llm = LlamaCpp(
-#         # replace with your model path
-#         model_path="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin",
-#         callback_manager=callback_manager,
-#         verbose=True,
-#         streaming=True,
-#         max_tokens=25,
-#     )
-
-#     llm_chain = LLMChain(prompt=prompt, llm=llm, verbose=True,)
-
-#     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
-
-#     async def wrap_done(fn: Awaitable, event: asyncio.Event):
-#         """Wrap an awaitable with an event to signal when it's done or an exception is raised."""
-#         try:
-#             await fn
-#         except Exception as e:
-#             # TODO: handle exception
-#             print(f"Caught exception: {e}")
-#         finally:
-#             # Signal the aiter to stop.
-#             event.set()
-
-#     # Begin a task that runs in the background.
-#     task = asyncio.create_task(wrap_done(
-#         llm_chain.arun(question),
-#         callback.done),
-#     )
-
-#     async for token in callback.aiter():
-#         # Use server-sent-events to stream the response
-#         yield f"data: {token}\n\n"
-
-#     await task
-
-
-# class StreamRequest(BaseModel):
-#     """Request body for streaming."""
-#     message: str
-
-
-# @app.post("/stream")
-# def stream(body: StreamRequest):
-#     return StreamingResponse(send_message(body.message), media_type="text/event-stream")
-
 class Message(BaseModel):
     content: str
 
