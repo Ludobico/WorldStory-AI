@@ -1,23 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import LensFlare from "./UltimateLensFlare";
-import "./WorldStory.css";
-import { EffectComposer } from "@react-three/postprocessing";
-import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from "@react-three/drei";
-import lensIMG from "../Static/lensDirtTexture.png";
-import background_1 from "../Static/background1.jpg";
-import background_2 from "../Static/background2.jpg";
-import background_3 from "../Static/background3.jpg";
-import * as THREE from "three";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Canvas, useFrame } from "@react-three/fiber";
-import TransitionShaderMaterial from "../Shaders/TransitionShader";
-import SceneTransitionShader from "../Shaders/SceneTransitionShader";
-import InsideStory from "./InsideStory";
-import Header from "../Header/Header";
-import Logo from "../Header/Logo";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import LensFlare from './UltimateLensFlare';
+import './WorldStory.css';
+import { EffectComposer } from '@react-three/postprocessing';
+import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from '@react-three/drei';
+import lensIMG from '../Static/lensDirtTexture.png';
+import background_1 from '../Static/background1.jpg';
+import background_2 from '../Static/background2.jpg';
+import background_3 from '../Static/background3.jpg';
+import * as THREE from 'three';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Canvas, useFrame } from '@react-three/fiber';
+import TransitionShaderMaterial from '../Shaders/TransitionShader';
+import SceneTransitionShader from '../Shaders/SceneTransitionShader';
+import InsideStory from './InsideStory';
+import Header from '../Header/Header';
+import Logo from '../Header/Logo';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Skybox() {
   const backgroundList = useTexture([background_1, background_2, background_3]);
@@ -75,10 +75,17 @@ function Skybox() {
   });
 
   return (
-    <mesh userData={{ LensFlare: "no-occlusion" }} scale={[-1, 1, 1]} ref={meshRef}>
+    <mesh userData={{ LensFlare: 'no-occlusion' }} scale={[-1, 1, 1]} ref={meshRef}>
       <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
       {/* <meshBasicMaterial toneMapped={false} map={backgroundList[textureIndex]} side={THREE.FrontSide} /> */}
-      <transitionShaderMaterial ref={shaderMaterialRef} uTexture1={backgroundList[0]} uTexture2={backgroundList[2]} uTexture3={backgroundList[1]} uProgress={0} attach="material" />
+      <transitionShaderMaterial
+        ref={shaderMaterialRef}
+        uTexture1={backgroundList[0]}
+        uTexture2={backgroundList[2]}
+        uTexture3={backgroundList[1]}
+        uProgress={0}
+        attach="material"
+      />
     </mesh>
   );
 }
@@ -87,9 +94,9 @@ const Introduce = () => {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    tl.from(".intro_reveal span", 1.8, {
+    tl.from('.intro_reveal span', 1.8, {
       y: 100,
-      ease: "power4.out",
+      ease: 'power4.out',
       delay: 1,
       skewY: 5,
       stagger: {
@@ -112,12 +119,12 @@ const Introduce = () => {
         <span>Characters</span>
       </div>
       <div className="button_container">
+        <div className="intro_button2 button_reveal">Chat with Character</div>
         <div className="intro_button button_reveal">
           <a href="/charsetting" className="Introduce_a">
             Character setting
           </a>
         </div>
-        <div className="intro_button2 button_reveal">Chat with Character</div>
       </div>
     </>
   );
@@ -136,7 +143,18 @@ const WorldStory = () => {
       <EffectComposer>
         {/* 테스트용 */}
         {/* <LensFlare dirtTextureFile={lensIMG} {...lensFlareProps} /> */}
-        <LensFlare dirtTextureFile={lensIMG} colorGain={new THREE.Color(56, 22, 11)} opacity={0.8} flareShape={0.37} flareSize={0.004} flareSpeed={0.4} glareSize={0.01} starPoints={0.1} ghostScale={0.1} haloScale={0.5} />
+        <LensFlare
+          dirtTextureFile={lensIMG}
+          colorGain={new THREE.Color(56, 22, 11)}
+          opacity={0.8}
+          flareShape={0.37}
+          flareSize={0.004}
+          flareSpeed={0.4}
+          glareSize={0.01}
+          starPoints={0.1}
+          ghostScale={0.1}
+          haloScale={0.5}
+        />
       </EffectComposer>
       <directionalLight intensity={1} position={[0, 0, 0]} />
       <Skybox />
