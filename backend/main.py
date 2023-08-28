@@ -1,22 +1,20 @@
 import asyncio
 import os
-from typing import AsyncIterable, Awaitable, Callable, Union, Any
+from typing import AsyncIterable
 
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel
 
-from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
-from langchain.callbacks.manager import CallbackManager
 from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
+from Module.Stream import send_message
 # Load env variables from .env file
 load_dotenv()
 
@@ -44,41 +42,41 @@ class Message(BaseModel):
     content: str
 
 
-async def send_message(content: str) -> AsyncIterable[str]:
-    callback = AsyncIteratorCallbackHandler()
-    template = """Question: {question}
+# async def send_message(content: str) -> AsyncIterable[str]:
+#     callback = AsyncIteratorCallbackHandler()
+#     template = """Question: {question}
 
-    Answer: Let's work this out in a step by step way to be sure we have the right answer."""
+#     Answer: Let's work this out in a step by step way to be sure we have the right answer."""
 
-    prompt = PromptTemplate(template=template, input_variables=["question"])
+#     prompt = PromptTemplate(template=template, input_variables=["question"])
 
-    # llm = LlamaCpp(
-    #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-    #     callbacks=[callback],
-    #     verbose=True,
-    #     streaming=True,
-    #     max_tokens=25,
-    # )
-    llm = CTransformers(
-        model="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin", model_type="llama", callbacks=[callback], verbose=True)
+#     # llm = LlamaCpp(
+#     #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+#     #     callbacks=[callback],
+#     #     verbose=True,
+#     #     streaming=True,
+#     #     max_tokens=25,
+#     # )
+#     llm = CTransformers(
+#         model="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin", model_type="llama", callbacks=[callback], verbose=True)
 
-    model = LLMChain(prompt=prompt, llm=llm, verbose=True)
+#     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
-    question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
+#     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
 
-    task = asyncio.create_task(
-        model.arun(question)
-    )
+#     task = asyncio.create_task(
+#         model.arun(question)
+#     )
 
-    try:
-        async for token in callback.aiter():
-            yield token
-    except Exception as e:
-        print(f"Caught exception: {e}")
-    finally:
-        callback.done.set()
+#     try:
+#         async for token in callback.aiter():
+#             yield token
+#     except Exception as e:
+#         print(f"Caught exception: {e}")
+#     finally:
+#         callback.done.set()
 
-    await task
+#     await task
 
 
 @app.post("/stream_chat")
