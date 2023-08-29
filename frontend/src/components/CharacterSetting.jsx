@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import Logo from './Header/Logo';
+import { Html } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
 
 const CharacterSetting = () => {
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
@@ -61,27 +63,31 @@ const CharacterSetting = () => {
     SetGenLoader(!genLoader);
   };
   return (
-    <div className="CharacterSetting_top_div" ref={container_div_ref}>
-      <div className="CharacterSetting_logo">
-        <Logo />
-      </div>
-      {/* stream 된 텍스트가 출력되는 div */}
-      <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-        {streamToken.map((token, index) => (
-          <span key={index} className="stream_token_span" ref={span_ref}>
-            {token}
-          </span>
-        ))}
-        {/* <span className="stream_token_span">{test}</span> */}
-      </div>
-      <div className="CharacterSetting_generate_button" onClick={sendMessage}>
-        {genLoader ? (
-          <div className="CharacterSetting_generate_loading"></div>
-        ) : (
-          <div className="CharacterSetting_generate_not_loading">Generate</div>
-        )}
-      </div>
-    </div>
+    <Canvas style={{ width: window.innerWidth, height: window.innerHeight }}>
+      <Html fullscreen>
+        <div className="CharacterSetting_top_div" ref={container_div_ref}>
+          <div className="CharacterSetting_logo">
+            <Logo />
+          </div>
+          {/* stream 된 텍스트가 출력되는 div */}
+          <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
+            {streamToken.map((token, index) => (
+              <span key={index} className="stream_token_span" ref={span_ref}>
+                {token}
+              </span>
+            ))}
+            {/* <span className="stream_token_span">{test}</span> */}
+          </div>
+          <div className="CharacterSetting_generate_button" onClick={sendMessage}>
+            {genLoader ? (
+              <div className="CharacterSetting_generate_loading"></div>
+            ) : (
+              <div className="CharacterSetting_generate_not_loading">Generate</div>
+            )}
+          </div>
+        </div>
+      </Html>
+    </Canvas>
   );
 };
 
