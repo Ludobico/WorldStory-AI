@@ -3,12 +3,12 @@
 .CharacterSetting_top_div {
   width: 100vw;
   height: 120vh;
-  background-color: #040d15;
+  background-color: rgb(30 41 59);
   position: absolute;
   color: white;
 }
 
-.CharacterSetting_codeblock {
+/* .CharacterSetting_codeblock {
   position: relative;
   top: 10%;
   margin-left: 3rem;
@@ -19,6 +19,19 @@
   white-space: pre-wrap;
   background-color: transparent;
   word-wrap: break-word;
+} */
+.CharacterSetting_codeblock {
+  position: relative;
+  top: 10%;
+  margin-left: 3rem;
+  width: 70vw;
+  height: 35vh;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border-radius: 0.75rem;
+  border: solid 1px rgba(255, 255, 255, 0.1);
+  background-color: #1a202c;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .CharacterSetting_generate_button {
