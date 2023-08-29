@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import Logo from './Header/Logo';
-import axios from 'axios';
+import Swup from 'https://unpkg.com/swup@4.0.0-rc.21?module';
+import SwupParallelPlugin from 'https://unpkg.com/@swup/parallel-plugin@0.0.2?module';
 
 const CharacterSetting = () => {
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
@@ -20,6 +21,23 @@ const CharacterSetting = () => {
 
   //   테스트용 텍스트
   const [test, setTest] = useState([]);
+
+  const swup = new Swup({
+    containers: ['#swup'],
+    Plugins: [new SwupParallelPlugin()],
+  });
+
+  swup.hooks.on('visit:start', (context) => {
+    let x = 0.5;
+    let y = 0.5;
+    const event = context.trigger.event;
+    if (event && typeof event.clientX === 'number') {
+      x = event.clientX / window.innerWidth;
+      y = event.clientY / window.innerHeight;
+    }
+    document.documentElement.style.setProperty('--click-x', x);
+    document.documentElement.style.setProperty('--click-y', y);
+  });
 
   useEffect(() => {
     if (text_div_ref.current) {
@@ -62,7 +80,7 @@ const CharacterSetting = () => {
     SetGenLoader(!genLoader);
   };
   return (
-    <div className="CharacterSetting_top_div" ref={container_div_ref}>
+    <div className="CharacterSetting_top_div" ref={container_div_ref} id="swup">
       <div className="CharacterSetting_logo">
         <Logo />
       </div>

@@ -6,6 +6,7 @@
     "@react-three/drei": "^9.68.6",
     "@react-three/fiber": "^8.13.0",
     "@react-three/postprocessing": "^2.11.4",
+    "@swup/parallel-plugin": "^0.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -19,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
+    "swup": "^4.3.4",
     "three": "^0.152.2",
     "typescript": "^5.0.4",
     "web-vitals": "^2.1.0"
