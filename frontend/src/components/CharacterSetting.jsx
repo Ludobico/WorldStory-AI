@@ -64,34 +64,29 @@ const CharacterSetting = () => {
     SetGenLoader(!genLoader);
   };
   return (
-    <Canvas style={{ width: window.innerWidth, height: 'auto' }}>
-      <Html fullscreen>
-        <div className="CharacterSetting_top_div" ref={container_div_ref}>
-          <div className="CharacterSetting_logo">
-            <Logo />
-          </div>
-          {/* stream 된 텍스트가 출력되는 div */}
-          <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-            {streamToken.map((token, index) => (
-              <span key={index} className="stream_token_span" ref={span_ref}>
-                {token}
-              </span>
-            ))}
-            {/* <span className="stream_token_span">{test}</span> */}
-          </div>
-          <div className="CharacterSetting_generate_button" onClick={sendMessage}>
-            {genLoader ? (
-              <div className="CharacterSetting_generate_loading"></div>
-            ) : (
-              <div className="CharacterSetting_generate_not_loading">Generate</div>
-            )}
-          </div>
-          <CharracterSettingRange min={-15} max={-5} step={1} value={-7} />
-          <CharracterSettingRange min={5} max={250} step={1} value={170} />
-          <CharracterSettingRange min={10} max={20} step={2} value={15} />
-        </div>
-      </Html>
-    </Canvas>
+    <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.innerHeight }}>
+      <div className="CharacterSetting_logo">
+        <Logo />
+      </div>
+      {/* stream 된 텍스트가 출력되는 div */}
+      <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
+        {streamToken.map((token, index) => (
+          <span key={index} className="stream_token_span" ref={span_ref}>
+            {token}
+          </span>
+        ))}
+        {/* <span className="stream_token_span">{test}</span> */}
+      </div>
+      <div className="CharacterSetting_generate_button" onClick={sendMessage}>
+        {genLoader ? (
+          <div className="CharacterSetting_generate_loading"></div>
+        ) : (
+          <div className="CharacterSetting_generate_not_loading">Generate</div>
+        )}
+      </div>
+      <CharracterSettingRange min={-15} max={-5} step={1} value={-7} />
+      <CharracterSettingRange min={5} max={250} step={1} value={170} />
+    </div>
   );
 };
 

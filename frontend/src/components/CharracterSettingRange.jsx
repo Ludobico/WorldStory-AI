@@ -51,20 +51,21 @@ const CharracterSettingRange = ({ min, max, value, step }) => {
           />
           <small>{max}</small>
         </div>
-      </div>
-      <div className="slider-container">
-        <input
-          type="range"
-          className="slider"
-          onInput={handleSliderInput}
-          value={inputValue}
-          min={min}
-          max={max}
-          ref={sliderRef}
-          step={step}
-        />
-        <div className="slider-thumb" style={{ left: `calc(${sliderRange}% -0.5em)` }}></div>
-        <div className="progress" style={{ width: `${sliderRange}%` }}></div>
+
+        <div className="slider-container">
+          <input
+            type="range"
+            className="slider"
+            onInput={handleSliderInput}
+            value={inputValue}
+            min={min}
+            max={max}
+            ref={sliderRef}
+            step={step}
+          />
+          <div className="slider-thumb" style={{ left: `calc(${sliderRange}% - 0.5em)` }}></div>
+          <div className="progress" style={{ width: `${sliderRange}%` }}></div>
+        </div>
       </div>
     </div>
   );
