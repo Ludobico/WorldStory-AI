@@ -66,6 +66,25 @@ const CharacterSetting = () => {
     });
   };
 
+  const handleTopKChange = (newValue) => {
+    setTop_k(newValue);
+  };
+  const handleTopQChange = (newValue) => {
+    setTop_q(newValue);
+  };
+  const handleTemperatureChange = (newValue) => {
+    setTemperature(newValue);
+  };
+  const handleLastNChange = (newValue) => {
+    setLast_n_tokens(newValue);
+  };
+  const handleMaxNewChange = (newValue) => {
+    setMax_new_tokens(newValue);
+  };
+  const handleGpuLayersChange = (newValue) => {
+    setGpu_layers(newValue);
+  };
+
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.outerHeight }}>
       <div className="CharacterSetting_logo">
@@ -78,8 +97,8 @@ const CharacterSetting = () => {
             {token}
           </span>
         ))}
-        {/* <span className="stream_token_span">{test}</span> */}
       </div>
+      {/* generate 버튼 */}
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
         {genLoader ? (
           <div className="CharacterSetting_generate_loading"></div>
@@ -87,14 +106,44 @@ const CharacterSetting = () => {
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
       </div>
+      {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
+
       <div className="setting_range_container">
-        <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} />
-        <CharracterSettingRange min={0} max={1} step={0.01} value={top_q} name={'top_p'} />
-        <CharracterSettingRange min={0} max={1} step={0.01} value={temperature} name={'temperature'} />
-        <CharracterSettingRange min={0} max={1024} step={1} value={last_n_tokens} name={'last_n_tokens'} />
-        <CharracterSettingRange min={0} max={4096} step={1} value={max_new_toekns} name={'max_new_tokens'} />
-        <CharracterSettingRange min={0} max={16} step={1} value={gpu_layers} name={'gpu_layers'} />
+        <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
+        <CharracterSettingRange min={0} max={1} step={0.01} value={top_q} name={'top_p'} onChange={handleTopQChange} />
+        <CharracterSettingRange
+          min={0}
+          max={1}
+          step={0.01}
+          value={temperature}
+          name={'temperature'}
+          onChange={handleTemperatureChange}
+        />
+        <CharracterSettingRange
+          min={0}
+          max={1024}
+          step={1}
+          value={last_n_tokens}
+          name={'last_n_tokens'}
+          onChange={handleLastNChange}
+        />
+        <CharracterSettingRange
+          min={0}
+          max={4096}
+          step={1}
+          value={max_new_toekns}
+          name={'max_new_tokens'}
+          onChange={handleMaxNewChange}
+        />
+        <CharracterSettingRange
+          min={0}
+          max={16}
+          step={1}
+          value={gpu_layers}
+          name={'gpu_layers'}
+          onChange={handleGpuLayersChange}
+        />
       </div>
     </div>
   );
