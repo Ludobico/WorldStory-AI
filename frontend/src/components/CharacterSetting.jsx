@@ -24,14 +24,18 @@ const CharacterSetting = () => {
   //   테스트용 텍스트
   const [test, setTest] = useState([]);
 
-  const [top_k, setTop_k] = useState();
+  const [top_k, setTop_k] = useState(40);
+  const [top_q, setTop_q] = useState(0.95);
+  const [temperature, setTemperature] = useState(0.8);
+  const [last_n_tokens, setLast_n_tokens] = useState(64);
+  const [max_new_toekns, setMax_new_tokens] = useState(256);
+  const [gpu_layers, setGpu_layers] = useState(0);
 
   useEffect(() => {
     if (text_div_ref.current) {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + 'px';
       container_div_ref.current.style.height = container_div_ref.current.scrollHeight + 'px';
     }
-    generate_setting_config();
   });
   const sendMessage = async () => {
     SetGenLoader(true);
@@ -62,18 +66,6 @@ const CharacterSetting = () => {
     });
   };
 
-  const generate_setting_config = () => {
-    axios.get('http://localhost:8000/generate_setting_config').then((res) => {
-      console.log(res.data);
-      setTop_k(res.data.top_k);
-    });
-  };
-
-  const stateManager = () => {
-    const testtext = 'asdasdasdasdasdasdasdasdasdasfsgsaSGFHFHJSKWEjraw';
-    setTest([...test, testtext]);
-    SetGenLoader(!genLoader);
-  };
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.outerHeight }}>
       <div className="CharacterSetting_logo">
@@ -98,11 +90,11 @@ const CharacterSetting = () => {
       <div className="CharacterSetting_setting_name">Setting</div>
       <div className="setting_range_container">
         <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} />
-        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'top_p'} />
-        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'temperature'} />
-        <CharracterSettingRange min={-15} max={-5} step={1} value={-7} name={'last_n_tokens'} />
-        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'max_new_tokens'} />
-        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'gpu_layers'} />
+        <CharracterSettingRange min={0} max={1} step={0.01} value={top_q} name={'top_p'} />
+        <CharracterSettingRange min={0} max={1} step={0.01} value={temperature} name={'temperature'} />
+        <CharracterSettingRange min={0} max={1024} step={1} value={last_n_tokens} name={'last_n_tokens'} />
+        <CharracterSettingRange min={0} max={4096} step={1} value={max_new_toekns} name={'max_new_tokens'} />
+        <CharracterSettingRange min={0} max={16} step={1} value={gpu_layers} name={'gpu_layers'} />
       </div>
     </div>
   );
