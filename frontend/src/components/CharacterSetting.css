@@ -7,19 +7,6 @@
   position: absolute;
   color: white;
 }
-
-/* .CharacterSetting_codeblock {
-  position: relative;
-  top: 10%;
-  margin-left: 3rem;
-  color: white;
-  width: 70vw;
-  height: 35vh;
-  border: solid 2px white;
-  white-space: pre-wrap;
-  background-color: transparent;
-  word-wrap: break-word;
-} */
 .CharacterSetting_codeblock {
   position: relative;
   top: 10%;
@@ -80,9 +67,50 @@
   font-size: 2rem;
   font-family: 'azonix';
 }
+.CharacterSetting_dropdown {
+  font-family: 'GT-Sectra-Fine';
+  /* position: relative;
+  top: 25%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 2em;
+  min-width: 15em;
+}
+.CharacterSetting_dropdown * {
+  box-sizing: border-box;
+}
+.CharacterSetting_select {
+  background: #2a2f3b;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px #2a2f3b solid;
+  border-radius: 0.5em;
+  padding: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.CharacterSetting_select-clicked {
+  border: 2px #26489a solid;
+  box-shadow: 0 0 0.8em #26489a;
+}
+.CharacterSetting_select:hover {
+  background: #323741;
+}
+.CharacterSetting_select_caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: 0.3s;
+}
 .setting_range_container {
   position: relative;
-  top: 20%;
+  top: 25%;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
