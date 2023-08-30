@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharracterSettingRange.css';
 
-const CharracterSettingRange = ({ min, max, value, step, name }) => {
+const CharracterSettingRange = ({ min, max, value, step, name, onChange }) => {
   const [sliderRange, setSliderRange] = useState(value);
   const [inputValue, setInputValue] = useState(value);
   const sliderRef = useRef(null);
+
+  const handleValueChange = (event) => {
+    const newValue = parseFloat(event.target.value);
+    onChange(newValue); // 값이 변경될 때 부모 컴포넌트에 전달
+  };
 
   function handleSliderInput() {
     const range = max - min;
@@ -15,7 +20,7 @@ const CharracterSettingRange = ({ min, max, value, step, name }) => {
   }
 
   function handleNumberInput(e) {
-    const newValue = parseInt(e.target.value);
+    const newValue = parseFloat(e.target.value);
     if (newValue < min) {
       setInputValue(min);
       setSliderRange(0);
@@ -49,6 +54,7 @@ const CharracterSettingRange = ({ min, max, value, step, name }) => {
             max={max}
             step={step}
             onInput={handleNumberInput}
+            onChange={handleValueChange}
           />
           <small>{max}</small>
         </div>
@@ -58,6 +64,7 @@ const CharracterSettingRange = ({ min, max, value, step, name }) => {
             type="range"
             className="slider"
             onInput={handleSliderInput}
+            onChange={handleValueChange}
             value={inputValue}
             min={min}
             max={max}
