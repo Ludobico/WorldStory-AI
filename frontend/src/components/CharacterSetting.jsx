@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
+import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
@@ -63,7 +64,7 @@ const CharacterSetting = () => {
     SetGenLoader(!genLoader);
   };
   return (
-    <Canvas style={{ width: window.innerWidth, height: window.innerHeight }}>
+    <Canvas style={{ width: window.innerWidth, height: 'auto' }}>
       <Html fullscreen>
         <div className="CharacterSetting_top_div" ref={container_div_ref}>
           <div className="CharacterSetting_logo">
@@ -85,6 +86,9 @@ const CharacterSetting = () => {
               <div className="CharacterSetting_generate_not_loading">Generate</div>
             )}
           </div>
+          <CharracterSettingRange min={-15} max={-5} step={1} value={-7} />
+          <CharracterSettingRange min={5} max={250} step={1} value={170} />
+          <CharracterSettingRange min={10} max={20} step={2} value={15} />
         </div>
       </Html>
     </Canvas>
