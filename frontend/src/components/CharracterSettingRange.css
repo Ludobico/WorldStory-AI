@@ -1,11 +1,12 @@
 .CharracterSettingRange_top_div {
+  background-color: rgb(30 41 59);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  padding: 1em;
   gap: 1em;
-  max-width: 900px;
+  /* max-width: 700px; */
+  font-size: 18px;
 }
 
 .range-slider {
@@ -24,8 +25,8 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  width: 70vw;
-  max-width: 30em;
+  width: 20vw;
+  /* max-width: 30em; */
 }
 
 .slider {

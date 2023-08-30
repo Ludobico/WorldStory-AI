@@ -73,3 +73,19 @@
     transform: rotate(360deg);
   }
 }
+.CharacterSetting_setting_name {
+  position: relative;
+  top: 20%;
+  margin-left: 3rem;
+  font-size: 2rem;
+  font-family: 'azonix';
+}
+.setting_range_container {
+  position: relative;
+  top: 20%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  background-color: rgb(30 41 59);
+}

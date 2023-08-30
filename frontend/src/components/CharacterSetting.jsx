@@ -64,7 +64,7 @@ const CharacterSetting = () => {
     SetGenLoader(!genLoader);
   };
   return (
-    <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.innerHeight }}>
+    <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.outerHeight }}>
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
@@ -84,8 +84,15 @@ const CharacterSetting = () => {
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
       </div>
-      <CharracterSettingRange min={-15} max={-5} step={1} value={-7} />
-      <CharracterSettingRange min={5} max={250} step={1} value={170} />
+      <div className="CharacterSetting_setting_name">Setting</div>
+      <div className="setting_range_container">
+        <CharracterSettingRange min={-15} max={-5} step={1} value={-7} name={'top_k'} />
+        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'top_p'} />
+        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'temperature'} />
+        <CharracterSettingRange min={-15} max={-5} step={1} value={-7} name={'last_n_tokens'} />
+        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'max_new_tokens'} />
+        <CharracterSettingRange min={5} max={250} step={1} value={170} name={'gpu_layers'} />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharracterSettingRange.css';
 
-const CharracterSettingRange = ({ min, max, value, step }) => {
+const CharracterSettingRange = ({ min, max, value, step, name }) => {
   const [sliderRange, setSliderRange] = useState(value);
   const [inputValue, setInputValue] = useState(value);
   const sliderRef = useRef(null);
@@ -38,6 +38,7 @@ const CharracterSettingRange = ({ min, max, value, step }) => {
   return (
     <div className="CharracterSettingRange_top_div">
       <div className="range-slider">
+        <div className="setting-name">{name}</div>
         <div className="slider-values">
           <small>{min}</small>
           <input
