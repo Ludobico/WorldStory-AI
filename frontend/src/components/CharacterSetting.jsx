@@ -4,6 +4,7 @@ import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
+import axios from 'axios';
 
 const CharacterSetting = () => {
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
@@ -23,11 +24,14 @@ const CharacterSetting = () => {
   //   테스트용 텍스트
   const [test, setTest] = useState([]);
 
+  const [top_k, setTop_k] = useState();
+
   useEffect(() => {
     if (text_div_ref.current) {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + 'px';
       container_div_ref.current.style.height = container_div_ref.current.scrollHeight + 'px';
     }
+    generate_setting_config();
   });
   const sendMessage = async () => {
     SetGenLoader(true);
@@ -55,6 +59,13 @@ const CharacterSetting = () => {
         setStreamToken((streamToken) => [...streamToken, token + '']);
       }
       return reader.read().then(processResult);
+    });
+  };
+
+  const generate_setting_config = () => {
+    axios.get('http://localhost:8000/generate_setting_config').then((res) => {
+      console.log(res.data);
+      setTop_k(res.data.top_k);
     });
   };
 
@@ -86,7 +97,7 @@ const CharacterSetting = () => {
       </div>
       <div className="CharacterSetting_setting_name">Setting</div>
       <div className="setting_range_container">
-        <CharracterSettingRange min={-15} max={-5} step={1} value={-7} name={'top_k'} />
+        <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} />
         <CharracterSettingRange min={5} max={250} step={1} value={170} name={'top_p'} />
         <CharracterSettingRange min={5} max={250} step={1} value={170} name={'temperature'} />
         <CharracterSettingRange min={-15} max={-5} step={1} value={-7} name={'last_n_tokens'} />

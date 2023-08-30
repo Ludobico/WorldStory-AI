@@ -76,7 +76,7 @@
 .CharacterSetting_setting_name {
   position: relative;
   top: 20%;
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
   font-size: 2rem;
   font-family: 'azonix';
 }

@@ -15,8 +15,8 @@ import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
 from Module.Stream import send_message
-# Load env variables from .env file
-load_dotenv()
+
+from Config.AxiosConfig import CTransformerConfig
 
 app = FastAPI()
 
@@ -42,47 +42,19 @@ class Message(BaseModel):
     content: str
 
 
-# async def send_message(content: str) -> AsyncIterable[str]:
-#     callback = AsyncIteratorCallbackHandler()
-#     template = """Question: {question}
-
-#     Answer: Let's work this out in a step by step way to be sure we have the right answer."""
-
-#     prompt = PromptTemplate(template=template, input_variables=["question"])
-
-#     # llm = LlamaCpp(
-#     #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
-#     #     callbacks=[callback],
-#     #     verbose=True,
-#     #     streaming=True,
-#     #     max_tokens=25,
-#     # )
-#     llm = CTransformers(
-#         model="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin", model_type="llama", callbacks=[callback], verbose=True)
-
-#     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
-
-#     question = "What NFL team won the Super Bowl in the year Justin Bieber was born?"
-
-#     task = asyncio.create_task(
-#         model.arun(question)
-#     )
-
-#     try:
-#         async for token in callback.aiter():
-#             yield token
-#     except Exception as e:
-#         print(f"Caught exception: {e}")
-#     finally:
-#         callback.done.set()
-
-#     await task
-
-
 @app.post("/stream_chat")
 async def stream_chat(message: Message):
+    # Generate a stream of messages based on the content of the input message
     generator = send_message(message.content)
+    # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
+
+
+@app.get("/generate_setting_config")
+def generate_setting_config():
+    config_instance = CTransformerConfig()
+    top_k, top_q, temperature, last_n_tokens, max_new_tokens, gpu_layers = config_instance.get_config()
+    return {"top_k": top_k, "top_q": top_q, "temperature": temperature, "last_n_tokens": last_n_tokens, "max_new_tokens": max_new_tokens, "gpu_layers": gpu_layers}
 
 
 if __name__ == "__main__":
