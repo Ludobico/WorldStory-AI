@@ -78,7 +78,8 @@
 }
 .Charsetting_dropdown_body {
   display: flex;
-  justify-content: center;
+  position: relative;
+  top: 22%;
 }
 .Charsetting_dropdown {
   min-width: 15em;
@@ -137,7 +138,8 @@
   opacity: 0;
   display: none;
   transition: 0.2s;
-  z-index: 1;
+  /* 하이퍼파라미터 조정하는 버튼이 z-index가 3이므로 더 높아야함 */
+  z-index: 5;
 }
 
 .Charsetting_menu li {

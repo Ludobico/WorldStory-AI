@@ -66,6 +66,16 @@ const CharacterSetting = () => {
     });
   };
   // 드롭다운 관련 함수
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const handleSelectClick = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setMenuOpen(false);
+  };
   useEffect(() => {
     const dropdowns = document.querySelectorAll('.Charsetting_dropdown');
     dropdowns.forEach((dropdown) => {
@@ -141,15 +151,17 @@ const CharacterSetting = () => {
       <div className="Charsetting_dropdown_body">
         <div className="Charsetting_dropdown">
           <div className="Charsetting_select">
-            <span className="Charsetting_selected">Figma</span>
+            <span className="Charsetting_selected">Model select</span>
             <div className="Charsetting_caret"></div>
           </div>
           <ul className="Charsetting_menu">
-            <li className="Charsetting_active">Figma</li>
-            <li>asd</li>
-            <li>qwe</li>
-            <li>zxc</li>
-            <li>123</li>
+            <li className="Charsetting_active">Model select</li>
+            <li>연</li>
+            <li>우</li>
+            <li>씨</li>
+            <li>도</li>
+            <li>와</li>
+            <li>줘</li>
           </ul>
         </div>
       </div>
