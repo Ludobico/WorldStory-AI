@@ -36,7 +36,7 @@ const CharacterSetting = () => {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + 'px';
       container_div_ref.current.style.height = container_div_ref.current.scrollHeight + 'px';
     }
-  });
+  }, [text_div_ref]);
   const sendMessage = async () => {
     SetGenLoader(true);
     setStreamToken([]);
@@ -66,44 +66,20 @@ const CharacterSetting = () => {
     });
   };
   // 드롭다운 관련 함수
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-  const handleSelectClick = () => {
-    setMenuOpen(!isMenuOpen);
+  const [selectedModel, SetSelectedModel] = useState();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('Model select');
+  const options = ['Model select', 'i', 'n', 'd', 'e', 'x'];
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
+  const selectOption = (option) => {
     setSelectedOption(option);
-    setMenuOpen(false);
+    setIsOpen(false);
   };
-  useEffect(() => {
-    const dropdowns = document.querySelectorAll('.Charsetting_dropdown');
-    dropdowns.forEach((dropdown) => {
-      const select = dropdown.querySelector('.Charsetting_select');
-      const caret = dropdown.querySelector('.Charsetting_caret');
-      const menu = dropdown.querySelector('.Charsetting_menu');
-      const options = dropdown.querySelectorAll('.Charsetting_menu li');
-      const selected = dropdown.querySelector('.Charsetting_selected');
-
-      select.addEventListener('click', () => {
-        select.classList.toggle('Charsetting_select-clicked');
-        caret.classList.toggle('Charsetting_caret-rotate');
-        menu.classList.toggle('Charsetting_menu-open');
-      });
-      options.forEach((option) => {
-        option.addEventListener('click', () => {
-          selected.innerText = option.innerText;
-          select.classList.remove('Charsetting_select-clicked');
-          caret.classList.remove('Charsetting_caret-rotate');
-          menu.classList.remove('Charsetting_menu-open');
-          options.forEach((option) => {
-            option.classList.remove('Charsetting_active');
-          });
-          option.classList.add('Charsetting_active');
-        });
-      });
-    });
-  });
 
   const handleTopKChange = (newValue) => {
     setTop_k(newValue);
@@ -123,9 +99,10 @@ const CharacterSetting = () => {
   const handleGpuLayersChange = (newValue) => {
     setGpu_layers(newValue);
   };
-
   return (
-    <div className="CharacterSetting_top_div" ref={container_div_ref} style={{ height: window.outerHeight }}>
+    // <Canvas style={{ height: '140vh', backgroundColor: '#1E293B' }} ref={container_div_ref}>
+    //   <Html fullscreen zIndexRange={[1, 0]}>
+    <div className="CharacterSetting_top_div" ref={container_div_ref}>
       <div className="CharacterSetting_logo">
         <Logo />
       </div>
@@ -150,21 +127,24 @@ const CharacterSetting = () => {
       {/* model select */}
       <div className="Charsetting_dropdown_body">
         <div className="Charsetting_dropdown">
-          <div className="Charsetting_select">
-            <span className="Charsetting_selected">Model select</span>
-            <div className="Charsetting_caret"></div>
+          <div className={`Charsetting_select ${isOpen ? 'Charsetting_select-clicked' : ''}`} onClick={toggleDropdown}>
+            <span className="Charsetting_selected">{selectedOption}</span>
+            <div className={`Charsetting_caret ${isOpen ? 'Charsetting_caret-rotate' : ''}`} />
           </div>
-          <ul className="Charsetting_menu">
-            <li className="Charsetting_active">Model select</li>
-            <li>연</li>
-            <li>우</li>
-            <li>씨</li>
-            <li>도</li>
-            <li>와</li>
-            <li>줘</li>
+          <ul className={`Charsetting_menu ${isOpen ? 'Charsetting_menu-open' : ''}`}>
+            {options.map((option, index) => (
+              <li
+                key={index}
+                className={`Charsetting_active ${selectedOption === option ? 'Charsetting_active' : ''}`}
+                onClick={() => selectOption(option)}
+              >
+                {option}
+              </li>
+            ))}
           </ul>
         </div>
       </div>
+
       {/* 하이퍼파라미터 세팅 */}
       <div className="setting_range_container">
         <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
@@ -203,6 +183,8 @@ const CharacterSetting = () => {
         />
       </div>
     </div>
+    //   </Html>
+    // </Canvas>
   );
 };
 

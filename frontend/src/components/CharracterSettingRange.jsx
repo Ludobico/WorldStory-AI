@@ -71,11 +71,8 @@ const CharracterSettingRange = ({ min, max, value, step, name, onChange }) => {
             ref={sliderRef}
             step={step}
           />
-          <div
-            className="slider-thumb"
-            style={{ left: `calc(${sliderRange}% - 0.5em)`, transition: `left 0.3s ease` }}
-          ></div>
-          <div className="progress" style={{ width: `${sliderRange}%`, transition: `width 0.3s ease` }}></div>
+          <div className="slider-thumb" style={{ left: `calc(${sliderRange}% - 0.5em)` }}></div>
+          <div className="progress" style={{ width: `${sliderRange}%` }}></div>
         </div>
       </div>
     </div>

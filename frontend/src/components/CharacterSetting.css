@@ -79,7 +79,7 @@
 .Charsetting_dropdown_body {
   display: flex;
   position: relative;
-  top: 22%;
+  top: 20%;
 }
 .Charsetting_dropdown {
   min-width: 15em;
