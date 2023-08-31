@@ -78,9 +78,11 @@ const CharacterSetting = () => {
 
   const selectOption = (option) => {
     setSelectedOption(option);
+    SetSelectedModel(option);
     setIsOpen(false);
   };
 
+  // 하이퍼파라미터 관련 함수
   const handleTopKChange = (newValue) => {
     setTop_k(newValue);
   };
@@ -135,7 +137,7 @@ const CharacterSetting = () => {
             {options.map((option, index) => (
               <li
                 key={index}
-                className={`Charsetting_active ${selectedOption === option ? 'Charsetting_active' : ''}`}
+                className={`${selectedOption === option ? 'Charsetting_active' : ''}`}
                 onClick={() => selectOption(option)}
               >
                 {option}

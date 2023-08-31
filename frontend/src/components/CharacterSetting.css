@@ -60,26 +60,30 @@
     transform: rotate(360deg);
   }
 }
+/* setting 폰트 */
 .CharacterSetting_setting_name {
   position: relative;
   top: 20%;
-  /* margin-left: 3rem; */
+  margin-left: 7em;
   font-size: 2rem;
   font-family: 'azonix';
 }
+/* 하이퍼파라미터 top div */
 .setting_range_container {
   position: relative;
-  top: 25%;
+  top: 20%;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
   background-color: rgb(30 41 59);
 }
+/* 드롭다운 메뉴 */
 .Charsetting_dropdown_body {
   display: flex;
   position: relative;
   top: 20%;
+  margin-left: 10em;
 }
 .Charsetting_dropdown {
   min-width: 15em;
