@@ -65,30 +65,31 @@ const CharacterSetting = () => {
       return reader.read().then(processResult);
     });
   };
+  // 드롭다운 관련 함수
   useEffect(() => {
-    const dropdowns = document.querySelectorAll('.dropdown');
+    const dropdowns = document.querySelectorAll('.Charsetting_dropdown');
     dropdowns.forEach((dropdown) => {
-      const select = dropdown.querySelector('.select');
-      const caret = dropdown.querySelector('.caret');
-      const menu = dropdown.querySelector('.menu');
-      const options = dropdown.querySelectorAll('.menu li');
-      const selected = dropdown.querySelector('.selected');
+      const select = dropdown.querySelector('.Charsetting_select');
+      const caret = dropdown.querySelector('.Charsetting_caret');
+      const menu = dropdown.querySelector('.Charsetting_menu');
+      const options = dropdown.querySelectorAll('.Charsetting_menu li');
+      const selected = dropdown.querySelector('.Charsetting_selected');
 
       select.addEventListener('click', () => {
-        select.classList.toggle('select-clicked');
-        caret.classList.toggle('caret-rotate');
-        menu.classList.toggle('menu-open');
+        select.classList.toggle('Charsetting_select-clicked');
+        caret.classList.toggle('Charsetting_caret-rotate');
+        menu.classList.toggle('Charsetting_menu-open');
       });
       options.forEach((option) => {
         option.addEventListener('click', () => {
           selected.innerText = option.innerText;
-          select.classList.remove('select-clicked');
-          caret.classList.remove('caret-rotate');
-          menu.classList.remove('menu-open');
+          select.classList.remove('Charsetting_select-clicked');
+          caret.classList.remove('Charsetting_caret-rotate');
+          menu.classList.remove('Charsetting_menu-open');
           options.forEach((option) => {
-            option.classList.remove('active');
+            option.classList.remove('Charsetting_active');
           });
-          option.classList.add('active');
+          option.classList.add('Charsetting_active');
         });
       });
     });
@@ -137,14 +138,14 @@ const CharacterSetting = () => {
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}
-      <div className="dropdown_body">
-        <div className="dropdown">
-          <div className="select">
-            <span className="selected">Figma</span>
-            <div className="caret"></div>
+      <div className="Charsetting_dropdown_body">
+        <div className="Charsetting_dropdown">
+          <div className="Charsetting_select">
+            <span className="Charsetting_selected">Figma</span>
+            <div className="Charsetting_caret"></div>
           </div>
-          <ul className="menu">
-            <li className="active">Figma</li>
+          <ul className="Charsetting_menu">
+            <li className="Charsetting_active">Figma</li>
             <li>asd</li>
             <li>qwe</li>
             <li>zxc</li>
