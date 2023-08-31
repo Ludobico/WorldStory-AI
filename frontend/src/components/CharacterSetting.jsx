@@ -109,18 +109,6 @@ const CharacterSetting = () => {
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}
-      <div className="CharacterSetting_dropdown">
-        <div className="CharacterSetting_select">
-          <span className="CharacterSetting_selected">Figma</span>
-          <div className="CharacterSetting_caret"></div>
-        </div>
-        <ul className="CharacterSetting_menu">
-          <li>Framer</li>
-          <li>Sketch</li>
-          <li>Invision Studio</li>
-          <li className="CharacterSetting_active">Figma</li>
-        </ul>
-      </div>
       {/* 하이퍼파라미터 세팅 */}
       <div className="setting_range_container">
         <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
