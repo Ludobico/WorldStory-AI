@@ -65,6 +65,34 @@ const CharacterSetting = () => {
       return reader.read().then(processResult);
     });
   };
+  useEffect(() => {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach((dropdown) => {
+      const select = dropdown.querySelector('.select');
+      const caret = dropdown.querySelector('.caret');
+      const menu = dropdown.querySelector('.menu');
+      const options = dropdown.querySelectorAll('.menu li');
+      const selected = dropdown.querySelector('.selected');
+
+      select.addEventListener('click', () => {
+        select.classList.toggle('select-clicked');
+        caret.classList.toggle('caret-rotate');
+        menu.classList.toggle('menu-open');
+      });
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          selected.innerText = option.innerText;
+          select.classList.remove('select-clicked');
+          caret.classList.remove('caret-rotate');
+          menu.classList.remove('menu-open');
+          options.forEach((option) => {
+            option.classList.remove('active');
+          });
+          option.classList.add('active');
+        });
+      });
+    });
+  });
 
   const handleTopKChange = (newValue) => {
     setTop_k(newValue);
@@ -109,6 +137,21 @@ const CharacterSetting = () => {
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}
+      <div className="dropdown_body">
+        <div className="dropdown">
+          <div className="select">
+            <span className="selected">Figma</span>
+            <div className="caret"></div>
+          </div>
+          <ul className="menu">
+            <li className="active">Figma</li>
+            <li>asd</li>
+            <li>qwe</li>
+            <li>zxc</li>
+            <li>123</li>
+          </ul>
+        </div>
+      </div>
       {/* 하이퍼파라미터 세팅 */}
       <div className="setting_range_container">
         <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
