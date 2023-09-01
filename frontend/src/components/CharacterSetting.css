@@ -64,7 +64,8 @@
 .CharacterSetting_setting_name {
   position: relative;
   top: 20%;
-  margin-left: 7em;
+  /* margin-left: 7em; */
+  left: 80%;
   font-size: 2rem;
   font-family: 'azonix';
 }
@@ -83,7 +84,8 @@
   display: flex;
   position: relative;
   top: 20%;
-  margin-left: 10em;
+  /* margin-left: 10em; */
+  left: 78%;
 }
 .Charsetting_dropdown {
   min-width: 15em;
