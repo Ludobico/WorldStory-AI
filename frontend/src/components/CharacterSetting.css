@@ -63,10 +63,11 @@
 /* setting 폰트 */
 .CharacterSetting_setting_name {
   position: relative;
-  top: 20%;
+  top: 25%;
   /* margin-left: 7em; */
-  left: 80%;
-  font-size: 2rem;
+  margin-left: 1.5em;
+  /* left: 80%; */
+  font-size: 2.5rem;
   font-family: 'azonix';
 }
 /* 하이퍼파라미터 top div */
@@ -83,7 +84,7 @@
 .Charsetting_dropdown_body {
   display: flex;
   position: relative;
-  top: 20%;
+  top: 22%;
   /* margin-left: 10em; */
   left: 78%;
 }
