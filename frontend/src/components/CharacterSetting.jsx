@@ -25,10 +25,10 @@ const CharacterSetting = () => {
   const [test, setTest] = useState([]);
 
   const [top_k, setTop_k] = useState(40);
-  const [top_q, setTop_q] = useState(0.95);
+  const [top_p, setTop_p] = useState(0.95);
   const [temperature, setTemperature] = useState(0.8);
   const [last_n_tokens, setLast_n_tokens] = useState(64);
-  const [max_new_toekns, setMax_new_tokens] = useState(256);
+  const [max_new_tokens, setMax_new_tokens] = useState(256);
   const [gpu_layers, setGpu_layers] = useState(0);
 
   useEffect(() => {
@@ -46,7 +46,15 @@ const CharacterSetting = () => {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ content: message }),
+      body: JSON.stringify({
+        top_k: top_k,
+        top_p: top_p,
+        temperature: temperature,
+        last_n_tokens: last_n_tokens,
+        max_new_tokens: max_new_tokens,
+        gpu_layers: gpu_layers,
+        content: message,
+      }),
     });
 
     var reader = response.body.getReader();
@@ -87,7 +95,7 @@ const CharacterSetting = () => {
     setTop_k(newValue);
   };
   const handleTopQChange = (newValue) => {
-    setTop_q(newValue);
+    setTop_p(newValue);
   };
   const handleTemperatureChange = (newValue) => {
     setTemperature(newValue);
@@ -101,6 +109,12 @@ const CharacterSetting = () => {
   const handleGpuLayersChange = (newValue) => {
     setGpu_layers(newValue);
   };
+
+  const tokentest = () => {
+    const test =
+      'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd';
+    setStreamToken([...streamToken, test]);
+  };
   return (
     // <Canvas style={{ height: '140vh', backgroundColor: '#1E293B' }} ref={container_div_ref}>
     //   <Html fullscreen zIndexRange={[1, 0]}>
@@ -110,11 +124,12 @@ const CharacterSetting = () => {
       </div>
       {/* stream 된 텍스트가 출력되는 div */}
       <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-        {streamToken.map((token, index) => (
+        {/* {streamToken.map((token, index) => (
           <span key={index} className="stream_token_span" ref={span_ref}>
             {token}
           </span>
-        ))}
+        ))} */}
+        <span className="stream_token_span">{streamToken}</span>
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
@@ -123,6 +138,9 @@ const CharacterSetting = () => {
         ) : (
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
+      </div>
+      <div className="CharacterSetting_generate_button" onClick={tokentest}>
+        asdasd
       </div>
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
@@ -150,7 +168,7 @@ const CharacterSetting = () => {
       {/* 하이퍼파라미터 세팅 */}
       <div className="setting_range_container">
         <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
-        <CharracterSettingRange min={0} max={1} step={0.01} value={top_q} name={'top_p'} onChange={handleTopQChange} />
+        <CharracterSettingRange min={0} max={1} step={0.01} value={top_p} name={'top_p'} onChange={handleTopQChange} />
         <CharracterSettingRange
           min={0}
           max={1}
@@ -171,7 +189,7 @@ const CharacterSetting = () => {
           min={0}
           max={4096}
           step={1}
-          value={max_new_toekns}
+          value={max_new_tokens}
           name={'max_new_tokens'}
           onChange={handleMaxNewChange}
         />

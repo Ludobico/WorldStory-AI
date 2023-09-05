@@ -7,12 +7,14 @@ from langchain.llms import CTransformers
 from Module.BaseTemplate import base_template
 
 
-async def send_message(content: str) -> AsyncIterable[str]:
+async def send_message(ct_params) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     BaseTemplateResult = base_template()
 
     prompt = PromptTemplate(
         template=BaseTemplateResult['template'], input_variables=["instruct"])
+
+    print(ct_params)
 
     # llm = LlamaCpp(
     #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
@@ -21,7 +23,8 @@ async def send_message(content: str) -> AsyncIterable[str]:
     #     streaming=True,
     #     max_tokens=25,
     # )
-    testconfig = {"max_new_tokens": 256}
+    testconfig = {"top_k": ct_params.top_k, "top_p": ct_params.top_p, "temperature": ct_params.temperature,
+                  "last_n_tokens": ct_params.last_n_tokens, "max_new_tokens": ct_params.max_new_tokens, "gpu_layers": ct_params.gpu_layers}
     llm = CTransformers(
         model="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin", model_type="llama", callbacks=[callback], verbose=True, config=testconfig)
 

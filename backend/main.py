@@ -39,24 +39,30 @@ app.add_middleware(
 tracemalloc.start()
 
 
-class Message(BaseModel):
+class CT_parameters(BaseModel):
     content: str
+    top_k: int
+    top_p: float
+    temperature: float
+    last_n_tokens: int
+    max_new_tokens: int
+    gpu_layers: int
 
 
 @app.post("/stream_chat")
-async def stream_chat(message: Message):
+async def stream_chat(ct_params: CT_parameters):
     # Generate a stream of messages based on the content of the input message
-    generator = send_message(message.content)
+    generator = send_message(ct_params)
     # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
 
 
-@app.post("/stream_chat_open_ai")
-async def stream_chat(message: Message):
-    # Generate a stream of messages based on the content of the input message
-    generator = send_message_open_ai(message.content)
-    # Return a streaming response with the generated messages
-    return StreamingResponse(generator, media_type="text/event-stream")
+# @app.post("/stream_chat_open_ai")
+# async def stream_chat(message: Message):
+#     # Generate a stream of messages based on the content of the input message
+#     generator = send_message_open_ai(message.content)
+#     # Return a streaming response with the generated messages
+#     return StreamingResponse(generator, media_type="text/event-stream")
 
 
 @app.get("/generate_setting_config")
