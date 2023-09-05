@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
-from Module.Stream import send_message
+from Module.CharacterSettingCT import send_message
 
 from Config.AxiosConfig import CTransformerConfig
 
