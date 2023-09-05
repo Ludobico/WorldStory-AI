@@ -120,11 +120,6 @@ const CharacterSetting = () => {
     setGpu_layers(newValue);
   };
 
-  const tokentest = () => {
-    const test =
-      'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd';
-    setStreamToken([...streamToken, test]);
-  };
   return (
     // <Canvas style={{ height: '140vh', backgroundColor: '#1E293B' }} ref={container_div_ref}>
     //   <Html fullscreen zIndexRange={[1, 0]}>
@@ -139,7 +134,6 @@ const CharacterSetting = () => {
             {token}
           </span>
         ))}
-        {/* <span className="stream_token_span">{streamToken}</span> */}
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
@@ -148,9 +142,6 @@ const CharacterSetting = () => {
         ) : (
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
-      </div>
-      <div className="CharacterSetting_generate_button" onClick={tokentest}>
-        asdasd
       </div>
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
