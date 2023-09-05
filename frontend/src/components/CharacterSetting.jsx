@@ -12,9 +12,11 @@ const CharacterSetting = () => {
 
   // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
   const text_div_ref = useRef();
+  const [reset_text_div_ref, setReset_text_div_ref] = useState();
 
   // text_div_ref가 늘어나면 전체화면도 늘어남
   const container_div_ref = useRef();
+  const [reset_container_div_ref, setReset_container_div_ref] = useState();
 
   // stream_token에 있는 값들을 저장하는 ref
   const span_ref = useRef();
@@ -31,13 +33,21 @@ const CharacterSetting = () => {
   const [max_new_tokens, setMax_new_tokens] = useState(256);
   const [gpu_layers, setGpu_layers] = useState(0);
 
+  // 초기 text_div와 container_div의 height 값
+  useEffect(() => {
+    setReset_text_div_ref(text_div_ref.current.style.height);
+    setReset_container_div_ref(container_div_ref.current.style.height);
+  }, []);
+  // llm 모델이 text 생성에 따라 div가 화면을 초과하면 그에맞춰 화면을 늘림
   useEffect(() => {
     if (text_div_ref.current) {
       text_div_ref.current.style.height = text_div_ref.current.scrollHeight + 'px';
       container_div_ref.current.style.height = container_div_ref.current.scrollHeight + 'px';
     }
-  }, [text_div_ref]);
+  }, [streamToken]);
   const sendMessage = async () => {
+    text_div_ref.current.style.height = reset_text_div_ref;
+    container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
     var message = 'generate start';
@@ -124,12 +134,12 @@ const CharacterSetting = () => {
       </div>
       {/* stream 된 텍스트가 출력되는 div */}
       <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-        {/* {streamToken.map((token, index) => (
+        {streamToken.map((token, index) => (
           <span key={index} className="stream_token_span" ref={span_ref}>
             {token}
           </span>
-        ))} */}
-        <span className="stream_token_span">{streamToken}</span>
+        ))}
+        {/* <span className="stream_token_span">{streamToken}</span> */}
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_generate_button" onClick={sendMessage}>
