@@ -14,7 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
-from Module.CharacterSettingCT import send_message
+from Module.CharacterSettingCT_Stream import send_message
+from Module.CharacterSettingOA_Stream import send_message_open_ai
 
 from Config.AxiosConfig import CTransformerConfig
 
@@ -46,6 +47,14 @@ class Message(BaseModel):
 async def stream_chat(message: Message):
     # Generate a stream of messages based on the content of the input message
     generator = send_message(message.content)
+    # Return a streaming response with the generated messages
+    return StreamingResponse(generator, media_type="text/event-stream")
+
+
+@app.post("/stream_chat_open_ai")
+async def stream_chat(message: Message):
+    # Generate a stream of messages based on the content of the input message
+    generator = send_message_open_ai(message.content)
     # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
 
