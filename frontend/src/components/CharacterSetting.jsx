@@ -83,18 +83,51 @@ const CharacterSetting = () => {
       return reader.read().then(processResult);
     });
   };
+  const sendMessage_OAI = async () => {
+    text_div_ref.current.style.height = reset_text_div_ref;
+    container_div_ref.current.style.height = reset_container_div_ref;
+    SetGenLoader(true);
+    setStreamToken([]);
+    var message = 'generate start';
+    var response = await fetch('http://localhost:8000/stream_chat_OAI', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: message,
+      }),
+    });
+
+    var reader = response.body.getReader();
+    var decoder = new TextDecoder('utf-8');
+
+    reader.read().then(function processResult(result) {
+      if (result.done) return SetGenLoader(false);
+      let token = decoder.decode(result.value);
+      if (token.endsWith(':') || token.endsWith('!') || token.endsWith('?')) {
+        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
+        setStreamToken((streamToken) => [...streamToken, token + '\n']);
+      } else {
+        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '';
+        setStreamToken((streamToken) => [...streamToken, token + '']);
+      }
+      return reader.read().then(processResult);
+    });
+  };
   // 드롭다운 관련 함수
   const [selectedModel, SetSelectedModel] = useState();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Model select');
-  const options = ['Model select', 'i', 'n', 'd', 'e', 'x'];
+  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x'];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const selectOption = (option) => {
+    console.log(selectedOption)
     setSelectedOption(option);
     SetSelectedModel(option);
     setIsOpen(false);
@@ -136,7 +169,8 @@ const CharacterSetting = () => {
         ))}
       </div>
       {/* generate 버튼 */}
-      <div className="CharacterSetting_generate_button" onClick={sendMessage}>
+      {/* <div className="CharacterSetting_generate_button" onClick={sendMessage}> */}
+      <div className="CharacterSetting_generate_button" onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}>
         {genLoader ? (
           <div className="CharacterSetting_generate_loading"></div>
         ) : (
