@@ -19,15 +19,14 @@ async def send_message_OAI(content: str) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=BaseTemplateResult['template'], input_variables=["instruct"])
 
-    llm = ChatOpenAI(streaming=True, verbose=True, callbacks=[
-                     callback], openai_api_key=configapi['DEFAULT']['apikey'])
+    llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.DeepAi)
 
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
     question = BaseTemplateResult['instruct']
 
     task = asyncio.create_task(
-        model.agenerate(question)
+        model.arun(question)
     )
 
     try:

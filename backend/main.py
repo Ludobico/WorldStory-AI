@@ -47,6 +47,8 @@ class CT_parameters(BaseModel):
     last_n_tokens: int
     max_new_tokens: int
     gpu_layers: int
+class OAI_Message(BaseModel):
+    content : str
 
 
 @app.post("/stream_chat")
@@ -57,12 +59,12 @@ async def stream_chat(ct_params: CT_parameters):
     return StreamingResponse(generator, media_type="text/event-stream")
 
 
-# @app.post("/stream_chat_open_ai")
-# async def stream_chat(message: Message):
-#     # Generate a stream of messages based on the content of the input message
-#     generator = send_message_open_ai(message.content)
-#     # Return a streaming response with the generated messages
-#     return StreamingResponse(generator, media_type="text/event-stream")
+@app.post("/stream_chat_open_ai")
+async def stream_chat(message: OAI_Message):
+    # Generate a stream of messages based on the content of the input message
+    generator = send_message_OAI(message.content)
+    # Return a streaming response with the generated messages
+    return StreamingResponse(generator, media_type="text/event-stream")
 
 
 @app.get("/generate_setting_config")
