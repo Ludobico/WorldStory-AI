@@ -3,15 +3,16 @@ import asyncio
 from typing import AsyncIterable
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage
 from langchain import PromptTemplate, LLMChain
 from Module.BaseTemplate import base_template
 
+import g4f
+from g4f import Provider, models
+from langchain.llms.base import LLM
+from langchain_g4f import G4FLLM
 
-async def send_message_open_ai(content: str) -> AsyncIterable[str]:
-    configapi = configparser.ConfigParser()
-    configapi.read('config.ini', encoding='UTF-8')
+
+async def send_message_OAI(content: str) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     BaseTemplateResult = base_template()
 

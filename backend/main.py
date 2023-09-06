@@ -15,7 +15,7 @@ import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
 from Module.CharacterSettingCT_Stream import send_message
-from Module.CharacterSettingOA_Stream import send_message_open_ai
+from Module.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 
 from Config.AxiosConfig import CTransformerConfig
 
