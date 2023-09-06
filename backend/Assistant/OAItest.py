@@ -16,7 +16,7 @@ def main():
         template="Where is the best tourist attraction in {location}?",
     )
     chain = LLMChain(llm=llm, prompt=prompt_template)
-    print(chain.run("tokyo"))
+    print(chain.arun("tokyo"))
     # {'location': 'tokyo', 'text': 'Tokyo has many amazing tourist attractions, but one of the most popular is the Tokyo Tower. Standing at 333 meters tall, it offers stunning views of the city skyline. Additionally, the historic Meiji Shrine and the bustling and vibrant neighborhood of Shibuya with its famous scramble crossing are also top attractions.'}
 
 

@@ -14,8 +14,6 @@ async def send_message(ct_params) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=BaseTemplateResult['template'], input_variables=["instruct"])
 
-    print(ct_params)
-
     # llm = LlamaCpp(
     #     model_path="./Models/WizardLM-13B-1.0.ggmlv3.q4_0.bin",
     #     callbacks=[callback],
