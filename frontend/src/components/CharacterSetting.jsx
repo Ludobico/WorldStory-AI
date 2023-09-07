@@ -82,7 +82,7 @@ const CharacterSetting = () => {
     reader.read().then(function processResult(result) {
       if (result.done) return SetGenLoader(false);
       let token = decoder.decode(result.value);
-      if (token.endsWith(':') || token.endsWith('!') || token.endsWith('?')) {
+      if (token.endsWith('!') || token.endsWith('?')) {
         // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
         setStreamToken((streamToken) => [...streamToken, token + '\n']);
       } else {
@@ -111,18 +111,24 @@ const CharacterSetting = () => {
     var reader = response.body.getReader();
     var decoder = new TextDecoder('utf-8');
 
-    reader.read().then(function processResult(result) {
-      if (result.done) return SetGenLoader(false);
-      let token = decoder.decode(result.value);
-      if (token.endsWith(':') || token.endsWith('!') || token.endsWith('?')) {
-        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '<br>';
-        setStreamToken((streamToken) => [...streamToken, token + '\n']);
-      } else {
-        // document.getElementById('CharacterSetting_generate_result').innerHTML += token + '';
-        setStreamToken((streamToken) => [...streamToken, token + '']);
+    async function processText() {
+      while (true) {
+        const result = await reader.read();
+        if (result.done) {
+          SetGenLoader(false);
+          break;
+        }
+        let token = decoder.decode(result.value);
+        if (token.endsWith('!') || token.endsWith('?')) {
+          setStreamToken((streamToken) => [...streamToken, token + '\n']);
+        } else {
+          setStreamToken((streamToken) => [...streamToken, token + '']);
+        }
+        // 일정한 시간(예: 1000밀리초)을 기다립니다.
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      return reader.read().then(processResult);
-    });
+    }
+    processText();
   };
   // 드롭다운 관련 함수
   const [selectedModel, SetSelectedModel] = useState();
@@ -163,8 +169,6 @@ const CharacterSetting = () => {
   };
 
   return (
-    // <Canvas style={{ height: '140vh', backgroundColor: '#1E293B' }} ref={container_div_ref}>
-    //   <Html fullscreen zIndexRange={[1, 0]}>
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
       <div className="CharacterSetting_logo">
         <Logo />

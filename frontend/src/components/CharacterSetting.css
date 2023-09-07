@@ -2,7 +2,7 @@
 
 .CharacterSetting_top_div {
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   background-color: rgb(30 41 59);
   position: absolute;
   color: white;
