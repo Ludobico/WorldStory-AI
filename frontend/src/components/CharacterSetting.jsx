@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
-import { Html } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import axios from 'axios';
 
 const CharacterSetting = () => {
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
@@ -23,9 +20,7 @@ const CharacterSetting = () => {
 
   const [genLoader, SetGenLoader] = useState(false);
 
-  //   테스트용 텍스트
-  const [test, setTest] = useState([]);
-
+  //   하이퍼파라미터
   const [top_k, setTop_k] = useState(40);
   const [top_p, setTop_p] = useState(0.95);
   const [temperature, setTemperature] = useState(0.8);
@@ -124,7 +119,7 @@ const CharacterSetting = () => {
         } else {
           setStreamToken((streamToken) => [...streamToken, token + '']);
         }
-        // 일정한 시간(예: 1000밀리초)을 기다립니다.
+        // 자연스러운 streaming을 위해 제한시간을 걸어둠
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
     }
@@ -149,23 +144,48 @@ const CharacterSetting = () => {
   };
 
   // 하이퍼파라미터 관련 함수
-  const handleTopKChange = (newValue) => {
-    setTop_k(newValue);
-  };
-  const handleTopQChange = (newValue) => {
-    setTop_p(newValue);
-  };
-  const handleTemperatureChange = (newValue) => {
-    setTemperature(newValue);
-  };
-  const handleLastNChange = (newValue) => {
-    setLast_n_tokens(newValue);
-  };
-  const handleMaxNewChange = (newValue) => {
-    setMax_new_tokens(newValue);
-  };
-  const handleGpuLayersChange = (newValue) => {
-    setGpu_layers(newValue);
+  // const handleTopKChange = (newValue) => {
+  //   setTop_k(newValue);
+  // };
+  // const handleTopQChange = (newValue) => {
+  //   setTop_p(newValue);
+  // };
+  // const handleTemperatureChange = (newValue) => {
+  //   setTemperature(newValue);
+  // };
+  // const handleLastNChange = (newValue) => {
+  //   setLast_n_tokens(newValue);
+  // };
+  // const handleMaxNewChange = (newValue) => {
+  //   setMax_new_tokens(newValue);
+  // };
+  // const handleGpuLayersChange = (newValue) => {
+  //   setGpu_layers(newValue);
+  // };
+  const handleChange = (key) => (newValue) => {
+    switch (key) {
+      case 'top_k':
+        setTop_k(newValue);
+        break;
+      case 'top_p':
+        setTop_p(newValue);
+        break;
+      case 'temperature':
+        setTemperature(newValue);
+        break;
+      case 'last_n_tokens':
+        setLast_n_tokens(newValue);
+        break;
+      case 'max_new_tokens':
+        setMax_new_tokens(newValue);
+        break;
+      case 'gpu_layers':
+        setGpu_layers(newValue);
+        break;
+      default:
+        // 예외 처리: 유효한 키가 아닌 경우
+        console.error('Invalid key');
+    }
   };
 
   return (
@@ -226,7 +246,7 @@ const CharacterSetting = () => {
               step={1}
               value={top_k}
               name={'top_k'}
-              onChange={handleTopKChange}
+              onChange={handleChange('top_k')}
             />
             <CharracterSettingRange
               min={0}
@@ -234,7 +254,7 @@ const CharacterSetting = () => {
               step={0.01}
               value={top_p}
               name={'top_p'}
-              onChange={handleTopQChange}
+              onChange={handleChange('top_p')}
             />
             <CharracterSettingRange
               min={0}
@@ -242,7 +262,7 @@ const CharacterSetting = () => {
               step={0.01}
               value={temperature}
               name={'temperature'}
-              onChange={handleTemperatureChange}
+              onChange={handleChange('temperature')}
             />
             <CharracterSettingRange
               min={0}
@@ -250,7 +270,7 @@ const CharacterSetting = () => {
               step={1}
               value={last_n_tokens}
               name={'last_n_tokens'}
-              onChange={handleLastNChange}
+              onChange={handleChange('last_n_tokens')}
             />
             <CharracterSettingRange
               min={0}
@@ -258,7 +278,7 @@ const CharacterSetting = () => {
               step={1}
               value={max_new_tokens}
               name={'max_new_tokens'}
-              onChange={handleMaxNewChange}
+              onChange={handleChange('max_new_tokens')}
             />
             <CharracterSettingRange
               min={0}
@@ -266,7 +286,7 @@ const CharacterSetting = () => {
               step={1}
               value={gpu_layers}
               name={'gpu_layers'}
-              onChange={handleGpuLayersChange}
+              onChange={handleChange('gpu_layers')}
             />
           </>
         )}
