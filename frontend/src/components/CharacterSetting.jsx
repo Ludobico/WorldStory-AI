@@ -46,6 +46,15 @@ const CharacterSetting = () => {
     }
   }, [streamToken]);
   const sendMessage = async () => {
+    /**
+     * Sends a message and retrieves tokens from the server.
+     *
+     * @return {Promise<void>} - Resolves when the message is sent and tokens are retrieved.
+     */
+    if (selectedOption == 'Model select') {
+      console.log('You need to select a model');
+      return;
+    }
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
@@ -127,7 +136,7 @@ const CharacterSetting = () => {
   };
 
   const selectOption = (option) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     setSelectedOption(option);
     SetSelectedModel(option);
     setIsOpen(false);
@@ -170,7 +179,10 @@ const CharacterSetting = () => {
       </div>
       {/* generate 버튼 */}
       {/* <div className="CharacterSetting_generate_button" onClick={sendMessage}> */}
-      <div className="CharacterSetting_generate_button" onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}>
+      <div
+        className="CharacterSetting_generate_button"
+        onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}
+      >
         {genLoader ? (
           <div className="CharacterSetting_generate_loading"></div>
         ) : (
@@ -202,44 +214,60 @@ const CharacterSetting = () => {
 
       {/* 하이퍼파라미터 세팅 */}
       <div className="setting_range_container">
-        <CharracterSettingRange min={5} max={80} step={1} value={top_k} name={'top_k'} onChange={handleTopKChange} />
-        <CharracterSettingRange min={0} max={1} step={0.01} value={top_p} name={'top_p'} onChange={handleTopQChange} />
-        <CharracterSettingRange
-          min={0}
-          max={1}
-          step={0.01}
-          value={temperature}
-          name={'temperature'}
-          onChange={handleTemperatureChange}
-        />
-        <CharracterSettingRange
-          min={0}
-          max={1024}
-          step={1}
-          value={last_n_tokens}
-          name={'last_n_tokens'}
-          onChange={handleLastNChange}
-        />
-        <CharracterSettingRange
-          min={0}
-          max={4096}
-          step={1}
-          value={max_new_tokens}
-          name={'max_new_tokens'}
-          onChange={handleMaxNewChange}
-        />
-        <CharracterSettingRange
-          min={0}
-          max={16}
-          step={1}
-          value={gpu_layers}
-          name={'gpu_layers'}
-          onChange={handleGpuLayersChange}
-        />
+        {selectedOption !== 'GPT3.5' && (
+          <>
+            <CharracterSettingRange
+              min={5}
+              max={80}
+              step={1}
+              value={top_k}
+              name={'top_k'}
+              onChange={handleTopKChange}
+            />
+            <CharracterSettingRange
+              min={0}
+              max={1}
+              step={0.01}
+              value={top_p}
+              name={'top_p'}
+              onChange={handleTopQChange}
+            />
+            <CharracterSettingRange
+              min={0}
+              max={1}
+              step={0.01}
+              value={temperature}
+              name={'temperature'}
+              onChange={handleTemperatureChange}
+            />
+            <CharracterSettingRange
+              min={0}
+              max={1024}
+              step={1}
+              value={last_n_tokens}
+              name={'last_n_tokens'}
+              onChange={handleLastNChange}
+            />
+            <CharracterSettingRange
+              min={0}
+              max={4096}
+              step={1}
+              value={max_new_tokens}
+              name={'max_new_tokens'}
+              onChange={handleMaxNewChange}
+            />
+            <CharracterSettingRange
+              min={0}
+              max={16}
+              step={1}
+              value={gpu_layers}
+              name={'gpu_layers'}
+              onChange={handleGpuLayersChange}
+            />
+          </>
+        )}
       </div>
     </div>
-    //   </Html>
-    // </Canvas>
   );
 };
 

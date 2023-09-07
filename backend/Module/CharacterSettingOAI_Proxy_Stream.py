@@ -31,6 +31,7 @@ async def send_message_OAI(content: str) -> AsyncIterable[str]:
     )
     try:
         async for token in callback.aiter():
+            await asyncio.sleep(0.05)
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
