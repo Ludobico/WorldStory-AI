@@ -1,0 +1,58 @@
+[
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q2_K.bin",
+    "Max RAM required": "5.74 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q3_K_S.bin",
+    "Max RAM required": "5.87 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q3_K_M.bin",
+    "Max RAM required": "6.53 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q3_K_L.bin",
+    "Max RAM required": "7.14 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q4_0.bin",
+    "Max RAM required": "7.32 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q4_K_S.bin",
+    "Max RAM required": "7.56 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q4_K_M.bin",
+    "Max RAM required": "8.06 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q4_1.bin",
+    "Max RAM required": "8.14 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q5_0.bin",
+    "Max RAM required": "8.95 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q5_K_S.bin",
+    "Max RAM required": "9.14 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q5_K_M.bin",
+    "Max RAM required": "9.40 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q5_1.bin",
+    "Max RAM required": "9.76 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q6_K.bin",
+    "Max RAM required": "10.83 GB"
+  },
+  {
+    "model_name": "puddlejumper-13b.ggmlv3.Q8_0.bin",
+    "Max RAM required": "13.83 GB"
+  }
+]
