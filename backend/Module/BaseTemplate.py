@@ -21,16 +21,21 @@ def base_template():
 def few_shot_base_template():
     few_shot_template = """
 ### example
-Name: Luna
+Name: Nora Blackwood
 
-Gender : Female
+Gender: Female
 
-Personality:  Luna is an introverted and enigmatic individual.
-She possesses a deep curiosity about the world around her and tends to be introspective.
-Luna is observant, intelligent, and often lost in her own thoughts.
+Age: 28
 
-Background: Luna works as a librarian in a small town. She has a passion for books and spends her free time exploring ancient legends and folklore.
-She possesses a unique ability to see and communicate with supernatural entities.
+Personality: Nora is an intelligent, ambitious, and determined individual. She is confident in her abilities and has a strong sense of justice. She can be direct and assertive when needed, but also has a compassionate side that she reserves for those she cares about.
+
+Background: Nora grew up in a working-class family in a small town on the outskirts of a bustling city. Despite limited resources, she excelled academically and was determined to create a better life for herself. She worked hard to earn a scholarship and attended a prestigious university, where she studied journalism.
+
+Appearance: Nora is of average height and has short, dark hair that she usually wears in a ponytail. She has a sharp, angular face with prominent cheekbones, and piercing blue eyes. She often wears simple, elegant clothing that complements her features.
+
+Setting: Modern
+
+Additional details: Nora is a journalist who works for a major newspaper. She is passionate about uncovering the truth and exposing corruption, even if it means putting herself in harm's way. She is also an advocate for social justice and often uses her platform to shed light on important issues affecting vulnerable communities. Despite her tough exterior, she struggles with anxiety and often seeks solace in yoga and meditation. Nora's ultimate goal is to become a renowned investigative journalist and make a lasting impact on the world.
 ###
 """
     return few_shot_template

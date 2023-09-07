@@ -4,7 +4,7 @@ from typing import AsyncIterable, Optional, List, Mapping, Any
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain import PromptTemplate, LLMChain
-from Module.BaseTemplate import base_template
+from Module.BaseTemplate import base_template, few_shot_base_template
 from langchain.schema import HumanMessage
 
 import g4f
@@ -16,9 +16,10 @@ from Module.G4FLLM import G4FLLM
 async def send_message_OAI(content: str) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     BaseTemplateResult = base_template()
+    FewShotTemplateResult = few_shot_base_template()
 
     prompt = PromptTemplate(
-        template=BaseTemplateResult['template'], input_variables=["instruct"])
+        template=BaseTemplateResult['template']+FewShotTemplateResult, input_variables=["instruct"])
 
     llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.DeepAi, callbacks=[callback], verbose=True)
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
@@ -31,7 +32,6 @@ async def send_message_OAI(content: str) -> AsyncIterable[str]:
     )
     try:
         async for token in callback.aiter():
-            await asyncio.sleep(0.05)
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
