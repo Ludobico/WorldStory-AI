@@ -41,11 +41,6 @@ const CharacterSetting = () => {
     }
   }, [streamToken]);
   const sendMessage = async () => {
-    /**
-     * Sends a message and retrieves tokens from the server.
-     *
-     * @return {Promise<void>} - Resolves when the message is sent and tokens are retrieved.
-     */
     if (selectedOption == 'Model select') {
       console.log('You need to select a model');
       return;
