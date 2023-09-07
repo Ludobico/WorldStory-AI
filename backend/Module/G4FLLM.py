@@ -35,7 +35,6 @@ class G4FLLM(LLM):
 
         text = ChatCompletion.create(
             messages=[{"role": "user", "content": prompt}],
-            stream=True,
             **create_kwargs,
         )
 
@@ -48,6 +47,11 @@ class G4FLLM(LLM):
     async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
         create_kwargs = {} if self.create_kwargs is None else self.create_kwargs.copy()
         create_kwargs["model"] = self.model
+        if self.provider is not None:
+            create_kwargs["provider"] = self.provider
+        if self.auth is not None:
+            create_kwargs["auth"] = self.auth
+
         text_callback = None
         if run_manager:
             text_callback = partial(run_manager.on_llm_new_token)
