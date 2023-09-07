@@ -5,7 +5,12 @@ import os
 def exec():
   cur_dir = os.getcwd()
   destination_path = os.path.join(cur_dir,'backend', 'Config', 'CTransformersModelList.json')
-  html = urlopen("https://huggingface.co/TheBloke/PuddleJumper-13B-GGML")
+  site_url = "https://huggingface.co/TheBloke/Kimiko-7B-GGML"
+  existing_data = []
+  if os.path.exists(destination_path):
+      with open(destination_path, 'r', encoding='utf-8') as f:
+          existing_data = json.load(f)
+  html = urlopen(site_url)
   soup = BeautifulSoup(html, "lxml")
 
   target_div = soup.find("div", {"class": "max-w-full overflow-auto"})
@@ -22,8 +27,10 @@ def exec():
             "Max RAM required": td_elements[3].get_text(),
         }
         result.append(data)
+
+  combined_data = existing_data + result
   with open(destination_path, 'w', encoding='utf-8') as f:
-    json.dump(result, f, ensure_ascii=False, indent=2)
+    json.dump(combined_data, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
   exec()

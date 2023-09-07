@@ -1,5 +1,61 @@
 [
   {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q2_K.bin",
+    "Max RAM required": "5.54 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q3_K_S.bin",
+    "Max RAM required": "5.69 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q3_K_M.bin",
+    "Max RAM required": "6.35 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q3_K_L.bin",
+    "Max RAM required": "6.97 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q4_0.bin",
+    "Max RAM required": "7.41 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q4_K_S.bin",
+    "Max RAM required": "7.41 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q4_K_M.bin",
+    "Max RAM required": "7.91 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q4_1.bin",
+    "Max RAM required": "8.21 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q5_0.bin",
+    "Max RAM required": "9.02 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q5_K_S.bin",
+    "Max RAM required": "9.02 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q5_K_M.bin",
+    "Max RAM required": "9.27 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q5_1.bin",
+    "Max RAM required": "9.82 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q6_K.bin",
+    "Max RAM required": "10.73 GB"
+  },
+  {
+    "model_name": "openbuddy-llama2-13b-v11.1.ggmlv3.Q8_0.bin",
+    "Max RAM required": "13.85 GB"
+  },
+  {
     "model_name": "puddlejumper-13b.ggmlv3.Q2_K.bin",
     "Max RAM required": "5.74 GB"
   },
@@ -54,5 +110,117 @@
   {
     "model_name": "puddlejumper-13b.ggmlv3.Q8_0.bin",
     "Max RAM required": "13.83 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q2_K.bin",
+    "Max RAM required": "5.43 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q3_K_L.bin",
+    "Max RAM required": "6.87 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q3_K_M.bin",
+    "Max RAM required": "6.25 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q3_K_S.bin",
+    "Max RAM required": "5.59 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q4_0.bin",
+    "Max RAM required": "7.32 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q4_1.bin",
+    "Max RAM required": "8.14 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q4_K_M.bin",
+    "Max RAM required": "7.82 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q4_K_S.bin",
+    "Max RAM required": "7.32 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q5_0.bin",
+    "Max RAM required": "8.95 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q5_1.bin",
+    "Max RAM required": "9.76 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q5_K_M.bin",
+    "Max RAM required": "9.21 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q5_K_S.bin",
+    "Max RAM required": "8.95 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q6_K.bin",
+    "Max RAM required": "10.68 GB"
+  },
+  {
+    "model_name": "WizardLM-13B-1.0.ggmlv3.q8_0.bin",
+    "Max RAM required": "13.83 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q2_K.bin",
+    "Max RAM required": "2.87 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q3_K_S.bin",
+    "Max RAM required": "2.95 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q3_K_M.bin",
+    "Max RAM required": "3.28 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q3_K_L.bin",
+    "Max RAM required": "3.60 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q4_0.bin",
+    "Max RAM required": "3.79 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q4_K_S.bin",
+    "Max RAM required": "3.83 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q4_K_M.bin",
+    "Max RAM required": "4.08 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q4_1.bin",
+    "Max RAM required": "4.21 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q5_0.bin",
+    "Max RAM required": "4.63 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q5_K_S.bin",
+    "Max RAM required": "4.65 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q5_K_M.bin",
+    "Max RAM required": "4.78 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q5_1.bin",
+    "Max RAM required": "5.06 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q6_K.bin",
+    "Max RAM required": "5.53 GB"
+  },
+  {
+    "model_name": "kimiko-7b.ggmlv3.q8_0.bin",
+    "Max RAM required": "7.16 GB"
   }
 ]
