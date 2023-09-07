@@ -5,7 +5,7 @@ import os
 def exec():
   cur_dir = os.getcwd()
   destination_path = os.path.join(cur_dir,'backend', 'Config', 'CTransformersModelList.json')
-  site_url = "https://huggingface.co/TheBloke/Kimiko-7B-GGML"
+  site_url = "https://huggingface.co/TheBloke/Kimiko-v2-13B-GGML"
   existing_data = []
   if os.path.exists(destination_path):
       with open(destination_path, 'r', encoding='utf-8') as f:
