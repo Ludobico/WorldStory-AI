@@ -208,6 +208,7 @@ const CharacterSetting = () => {
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
       </div>
+      <div className="CharacterSetting_generate_save">Save Setting</div>
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}

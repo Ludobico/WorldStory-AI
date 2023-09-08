@@ -22,6 +22,8 @@
 }
 
 .CharacterSetting_generate_button {
+  display: inline-block;
+  justify-content: space-between;
   font-size: 1.5rem;
   position: relative;
   top: 15%;
@@ -39,6 +41,31 @@
   cursor: pointer;
   width: 7rem;
   transition: 300ms ease-in-out;
+}
+.CharacterSetting_generate_save {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.5rem;
+  position: relative;
+  top: 15%;
+  padding: 12px 36px;
+  margin: 10px 0;
+  margin-left: 3rem;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  background-image: linear-gradient(30deg, #0162c8, #7a36da 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: 700px;
+  background-position: 0%;
+  border: 1px solid transparent;
+  cursor: pointer;
+  width: 12rem;
+  transition: 300ms ease-in-out;
+}
+.CharacterSetting_generate_save:hover {
+  background-position: 100%;
+  border: 1px solid #fff;
+  color: #7a36da;
 }
 
 .CharacterSetting_generate_button:hover {
