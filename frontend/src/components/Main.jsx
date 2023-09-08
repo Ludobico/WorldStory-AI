@@ -1,10 +1,10 @@
 import { Canvas } from '@react-three/fiber';
-import { React, useState } from 'react';
+import { React } from 'react';
 import WorldStory from './Canvas/WorldStory';
 import Header from './Header/Header';
 import './Main.css';
 import './Header/Header.css';
-import { Html, PerformanceMonitor, Scroll, ScrollControls } from '@react-three/drei';
+import { Html, PerformanceMonitor, Stats } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LoaderTransition from './Loader/LoaderTransition';
@@ -26,6 +26,7 @@ const Main = () => {
           <Logo /> */}
         </Html>
         <WorldStory />
+        <Stats />
       </Canvas>
       <div className="inside">
         <InsideStory />
