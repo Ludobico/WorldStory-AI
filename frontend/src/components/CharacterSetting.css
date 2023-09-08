@@ -20,9 +20,8 @@
   background-color: #1a202c;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
-
 .CharacterSetting_generate_button {
-  display: flex;
+  display: inline-flex;
   position: relative;
   top: 15%;
   padding: 12px 36px;
@@ -42,7 +41,7 @@
   transition: 300ms ease-in-out;
 }
 .CharacterSetting_generate_save {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   font-size: 1.5rem;
   position: relative;
