@@ -28,6 +28,13 @@ const CharacterSetting = () => {
   const [max_new_tokens, setMax_new_tokens] = useState(256);
   const [gpu_layers, setGpu_layers] = useState(0);
 
+  // 드롭다운 관련 함수
+  const [selectedModel, SetSelectedModel] = useState();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('Model select');
+  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x'];
+
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
     setReset_text_div_ref(text_div_ref.current.style.height);
@@ -120,12 +127,6 @@ const CharacterSetting = () => {
     }
     processText();
   };
-  // 드롭다운 관련 함수
-  const [selectedModel, SetSelectedModel] = useState();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Model select');
-  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x'];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -183,6 +184,10 @@ const CharacterSetting = () => {
     }
   };
 
+  const generating = () => {
+    SetGenLoader(!genLoader);
+  };
+
   return (
     <div className="CharacterSetting_top_div" ref={container_div_ref}>
       <div className="CharacterSetting_logo">
@@ -197,18 +202,20 @@ const CharacterSetting = () => {
         ))}
       </div>
       {/* generate 버튼 */}
-      {/* <div className="CharacterSetting_generate_button" onClick={sendMessage}> */}
       <div
         className="CharacterSetting_generate_button"
         onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}
       >
         {genLoader ? (
-          <div className="CharacterSetting_generate_loading"></div>
+          <div className="CharacterSetting_generate_not_loading loading_active"></div>
         ) : (
           <div className="CharacterSetting_generate_not_loading">Generate</div>
         )}
       </div>
-      <div className="CharacterSetting_generate_save">Save Setting</div>
+      {/* save 버튼 */}
+      <div className="CharacterSetting_generate_save" onClick={generating}>
+        Save Setting
+      </div>
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}

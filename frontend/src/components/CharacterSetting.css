@@ -22,14 +22,12 @@
 }
 
 .CharacterSetting_generate_button {
-  display: inline-block;
-  justify-content: space-between;
-  font-size: 1.5rem;
+  display: flex;
   position: relative;
   top: 15%;
   padding: 12px 36px;
-  margin: 10px 0;
   margin-left: 3rem;
+  margin-top: 5px;
   letter-spacing: 2px;
   border-radius: 40px;
   /* background: linear-gradient(90deg, #0162c8, #55e7fc); */
@@ -40,17 +38,19 @@
   border: 1px solid transparent;
   cursor: pointer;
   width: 7rem;
+  height: 32px;
   transition: 300ms ease-in-out;
 }
 .CharacterSetting_generate_save {
-  display: inline-block;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   font-size: 1.5rem;
   position: relative;
   top: 15%;
   padding: 12px 36px;
-  margin: 10px 0;
+  /* margin: 15px 3px; */
   margin-left: 3rem;
+  margin-top: 5px;
   letter-spacing: 2px;
   border-radius: 40px;
   background-image: linear-gradient(30deg, #0162c8, #7a36da 50%, transparent 50%);
@@ -79,15 +79,14 @@
   font-family: 'Black Ops One', cursive;
 }
 .CharacterSetting_generate_not_loading {
-  display: flex;
-  justify-content: center;
+  font-size: 1.5rem;
 }
 /* 스트리밍 중 generate 버튼 로딩 */
-.CharacterSetting_generate_loading {
-  margin: auto;
+.loading_active {
+  margin: 0 auto;
   width: 1.5rem;
   height: 1.5rem;
-  border: 4.5px solid rgba(255, 255, 255, 0.2);
+  border: 4px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   border-top-color: #fff;
   animation: spin 1s linear infinite;
