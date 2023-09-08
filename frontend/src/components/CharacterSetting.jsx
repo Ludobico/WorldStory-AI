@@ -13,6 +13,7 @@ const CharacterSetting = () => {
 
   // text_div_ref가 늘어나면 전체화면도 늘어남
   const container_div_ref = useRef();
+  const [container_div_state, Setcontainer_div_state] = useState();
   const [reset_container_div_ref, setReset_container_div_ref] = useState();
 
   // stream_token에 있는 값들을 저장하는 ref
@@ -30,10 +31,11 @@ const CharacterSetting = () => {
 
   // 드롭다운 관련 함수
   const [selectedModel, SetSelectedModel] = useState();
+  const dropboxHeightRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Model select');
-  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x'];
+  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x', 'a', 'b', 'c', 'a', 'b', 'c', 'd'];
 
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
@@ -223,7 +225,7 @@ const CharacterSetting = () => {
       <div className="CharacterSetting_setting_name">Setting</div>
       {/* model select */}
       <div className="Charsetting_dropdown_body">
-        <div className="Charsetting_dropdown">
+        <div className="Charsetting_dropdown" ref={dropboxHeightRef}>
           <div className={`Charsetting_select ${isOpen ? 'Charsetting_select-clicked' : ''}`} onClick={toggleDropdown}>
             <span className="Charsetting_selected">{selectedOption}</span>
             <div className={`Charsetting_caret ${isOpen ? 'Charsetting_caret-rotate' : ''}`} />
