@@ -38,7 +38,8 @@ const CharacterSetting = () => {
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
     setReset_text_div_ref(text_div_ref.current.style.height);
-    setReset_container_div_ref(container_div_ref.current.style.height);
+    // setReset_container_div_ref(container_div_ref.current.style.height);
+    setReset_container_div_ref(container_div_ref.current.scrollHeight);
   }, []);
   // llm 모델이 text 생성에 따라 div가 화면을 초과하면 그에맞춰 화면을 늘림
   useEffect(() => {
@@ -202,19 +203,21 @@ const CharacterSetting = () => {
         ))}
       </div>
       {/* generate 버튼 */}
-      <div
-        className="CharacterSetting_generate_button"
-        onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}
-      >
-        {genLoader ? (
-          <div className="CharacterSetting_generate_not_loading loading_active"></div>
-        ) : (
-          <div className="CharacterSetting_generate_not_loading">Generate</div>
-        )}
-      </div>
-      {/* save 버튼 */}
-      <div className="CharacterSetting_generate_save" onClick={generating}>
-        Save Setting
+      <div className="CharacterSetting_button">
+        <div
+          className="CharacterSetting_generate_button"
+          onClick={selectedOption === 'GPT3.5' ? sendMessage_OAI : sendMessage}
+        >
+          {genLoader ? (
+            <div className="CharacterSetting_generate_not_loading loading_active"></div>
+          ) : (
+            <div className="CharacterSetting_generate_not_loading">Generate</div>
+          )}
+        </div>
+        {/* save 버튼 */}
+        <div className="CharacterSetting_generate_save" onClick={generating}>
+          Save Setting
+        </div>
       </div>
       {/* setting 글자 */}
       <div className="CharacterSetting_setting_name">Setting</div>
