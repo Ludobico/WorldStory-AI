@@ -76,7 +76,7 @@ function Skybox() {
 
   return (
     <mesh userData={{ LensFlare: 'no-occlusion' }} scale={[-1, 1, 1]} ref={meshRef}>
-      <sphereBufferGeometry castShadow={false} receiveShadow={false} args={[5, 64, 64]} />
+      <sphereBufferGeometry args={[5, 64, 64]} />
       {/* <meshBasicMaterial toneMapped={false} map={backgroundList[textureIndex]} side={THREE.FrontSide} /> */}
       <transitionShaderMaterial
         ref={shaderMaterialRef}
@@ -136,9 +136,11 @@ const WorldStory = () => {
   const cameraHandler = () => {
     console.log(cameraRef.current);
   };
+  const MemoOrbitControl = React.memo(OrbitControls)
   return (
     <>
-      <OrbitControls ref={OrbitcameraRef} autoRotate enableZoom={false} />
+      {/* <OrbitControls ref={OrbitcameraRef} autoRotate enableZoom={false} /> */}
+      <MemoOrbitControl ref={OrbitcameraRef} autoRotate enableZoom={false} />
       <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
       <EffectComposer>
         {/* 테스트용 */}
