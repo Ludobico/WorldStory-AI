@@ -2,7 +2,7 @@
 
 .CharacterSetting_top_div {
   width: 100vw;
-  height: 100vh;
+  height: auto;
   background-color: rgb(30 41 59);
   position: absolute;
   color: white;
@@ -20,10 +20,15 @@
   background-color: #1a202c;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
-.CharacterSetting_generate_button {
-  display: inline-flex;
+.CharacterSetting_button {
   position: relative;
   top: 15%;
+  display: flex;
+}
+.CharacterSetting_generate_button {
+  display: flex;
+  /* position: relative;
+  top: 15%; */
   padding: 12px 36px;
   margin-left: 3rem;
   margin-top: 5px;
@@ -41,11 +46,11 @@
   transition: 300ms ease-in-out;
 }
 .CharacterSetting_generate_save {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   font-size: 1.5rem;
-  position: relative;
-  top: 15%;
+  /* position: relative;
+  top: 15%; */
   padding: 12px 36px;
   /* margin: 15px 3px; */
   margin-left: 3rem;
