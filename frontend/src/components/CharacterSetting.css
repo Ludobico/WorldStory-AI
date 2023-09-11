@@ -115,7 +115,7 @@
 /* 하이퍼파라미터 top div */
 .setting_range_container {
   position: relative;
-  top: 20%;
+  top: 15%;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -129,7 +129,11 @@
   position: relative;
   top: 20%;
   /* margin-left: 10em; */
-  left: 60%;
+  left: 50%;
+}
+.Charsetting_ram {
+  display: flex;
+  align-items: center;
 }
 .Charsetting_dropdown {
   min-width: 15em;

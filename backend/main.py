@@ -18,6 +18,7 @@ from Module.CharacterSettingCT_Stream import send_message
 from Module.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 
 from Config.AxiosConfig import CTransformerConfig
+from Config.LLMCheck import LLMCheck
 
 app = FastAPI()
 
@@ -47,6 +48,7 @@ class CT_parameters(BaseModel):
     last_n_tokens: int
     max_new_tokens: int
     gpu_layers: int
+    model_name : str
 class OAI_Message(BaseModel):
     content : str
 
@@ -72,6 +74,12 @@ def generate_setting_config():
     config_instance = CTransformerConfig()
     top_k, top_q, temperature, last_n_tokens, max_new_tokens, gpu_layers = config_instance.get_config()
     return {"top_k": top_k, "top_q": top_q, "temperature": temperature, "last_n_tokens": last_n_tokens, "max_new_tokens": max_new_tokens, "gpu_layers": gpu_layers}
+
+@app.get("/LLM_model_list")
+def LLM_model_list():
+    LC = LLMCheck()
+    model_list = LC.json_read()
+    return model_list
 
 
 if __name__ == "__main__":

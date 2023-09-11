@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
+import axios from 'axios';
 import { Select, select } from 'antd';
 
 const CharacterSetting = () => {
@@ -38,11 +39,34 @@ const CharacterSetting = () => {
     },
     {
       label: 'Local Models',
-      options: [
-        { label: 'openbuddy-llama2-13b-v11.1.ggmlv3.Q2_K.bin', value: 'openbuddy-llama2-13b-v11.1.ggmlv3.Q2_K.bin' },
-      ],
+      options: [],
     },
   ]);
+  const [modelRam, setModelRam] = useState([]);
+  const [showRam, setShowRam] = useState(0);
+  //   models 폴더에있는 파일들을 select box로 표시
+  useEffect(() => {
+    axios.get('http://localhost:8000/LLM_model_list').then((res) => {
+      const LLM_model_list = res.data.map((item) => ({
+        label: item.label,
+        value: item.value,
+        RAM: item.RAM,
+      }));
+      setModelList((prevModelList) => {
+        const localModelsIndex = prevModelList.findIndex((item) => item.label === 'Local Models');
+        if (localModelsIndex !== -1) {
+          const updatedLocalModels = [...prevModelList[localModelsIndex].options, ...LLM_model_list];
+          prevModelList[localModelsIndex].options = updatedLocalModels;
+        }
+        return [...prevModelList];
+      });
+      const ramValueArray = LLM_model_list.map((item) => ({
+        value: item.value,
+        RAM: item.RAM,
+      }));
+      setModelRam(ramValueArray);
+    });
+  }, []);
 
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
@@ -81,6 +105,7 @@ const CharacterSetting = () => {
         last_n_tokens: last_n_tokens,
         max_new_tokens: max_new_tokens,
         gpu_layers: gpu_layers,
+        model_name: selectedOption,
         content: message,
       }),
     });
@@ -145,7 +170,6 @@ const CharacterSetting = () => {
   // ant design 에서 모델을 선택할때
   const model_Select = (value) => {
     setSelectedOption(value);
-    console.log(selectedOption);
   };
 
   // 하이퍼파라미터 관련 함수
@@ -195,6 +219,7 @@ const CharacterSetting = () => {
 
   const generating = () => {
     SetGenLoader(!genLoader);
+    console.log(modelRam);
   };
 
   return (
@@ -243,6 +268,7 @@ const CharacterSetting = () => {
 
         {/* model select */}
         <div className="Charsetting_dropdown_body">
+          <p className="Charsetting_ram">Max RAM required : {showRam}</p>
           <Select
             defaultValue="Model select"
             options={modelList}

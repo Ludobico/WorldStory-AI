@@ -24,7 +24,7 @@ async def send_message(ct_params) -> AsyncIterable[str]:
     testconfig = {"top_k": ct_params.top_k, "top_p": ct_params.top_p, "temperature": ct_params.temperature,
                   "last_n_tokens": ct_params.last_n_tokens, "max_new_tokens": ct_params.max_new_tokens, "gpu_layers": ct_params.gpu_layers}
     llm = CTransformers(
-        model="./Models/puddlejumper-13b.ggmlv3.Q2_K.bin", model_type="llama", callbacks=[callback], verbose=True, config=testconfig)
+        model=f"./Models/{ct_params.model_name}", model_type="llama", callbacks=[callback], verbose=True, config=testconfig)
 
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
