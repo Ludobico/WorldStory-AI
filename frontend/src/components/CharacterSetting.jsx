@@ -182,24 +182,6 @@ const CharacterSetting = () => {
   };
 
   // 하이퍼파라미터 관련 함수
-  // const handleTopKChange = (newValue) => {
-  //   setTop_k(newValue);
-  // };
-  // const handleTopQChange = (newValue) => {
-  //   setTop_p(newValue);
-  // };
-  // const handleTemperatureChange = (newValue) => {
-  //   setTemperature(newValue);
-  // };
-  // const handleLastNChange = (newValue) => {
-  //   setLast_n_tokens(newValue);
-  // };
-  // const handleMaxNewChange = (newValue) => {
-  //   setMax_new_tokens(newValue);
-  // };
-  // const handleGpuLayersChange = (newValue) => {
-  //   setGpu_layers(newValue);
-  // };
   const handleChange = (key) => (newValue) => {
     switch (key) {
       case 'top_k':
