@@ -9,6 +9,7 @@
 }
 .CharacterSetting_codeblock {
   position: relative;
+  display: flex;
   top: 10%;
   margin-left: 3rem;
   width: 70vw;
@@ -20,6 +21,8 @@
   background-color: #1a202c;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
+.CharacterSetting_codeblock div {
+}
 .CharacterSetting_button {
   position: relative;
   top: 15%;
@@ -27,8 +30,6 @@
 }
 .CharacterSetting_generate_button {
   display: flex;
-  /* position: relative;
-  top: 15%; */
   padding: 12px 36px;
   margin-left: 3rem;
   margin-top: 5px;
@@ -104,7 +105,7 @@
 /* setting 폰트 */
 .CharacterSetting_setting_name {
   position: relative;
-  top: 25%;
+  /* top: 50%; */
   /* margin-left: 7em; */
   margin-left: 1.5em;
   /* left: 80%; */
@@ -120,14 +121,15 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
   background-color: rgb(30 41 59);
+  /* height: 550px; */
 }
 /* 드롭다운 메뉴 */
 .Charsetting_dropdown_body {
-  display: flex;
+  display: inline-flex;
   position: relative;
-  top: 22%;
+  top: 20%;
   /* margin-left: 10em; */
-  left: 78%;
+  left: 60%;
 }
 .Charsetting_dropdown {
   min-width: 15em;
@@ -137,74 +139,4 @@
 
 .Charsetting_dropdown * {
   box-sizing: border-box;
-}
-
-.Charsetting_select {
-  background: #2a2f3b;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px #2a2f3b solid;
-  border-radius: 0.5em;
-  padding: 1em;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.Charsetting_select-clicked {
-  border: 2px #26489a solid;
-  box-shadow: 0 0 0.8em #26489a;
-}
-
-.Charsetting_select:hover {
-  background: #323741;
-}
-.Charsetting_caret {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid #fff;
-  transition: 0.3s;
-}
-.Charsetting_caret-rotate {
-  transform: rotate(180deg);
-}
-.Charsetting_menu {
-  list-style: none;
-  padding: 0.2em 0.5em;
-  background: #323741;
-  border: 1px #363a43 solid;
-  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-  border-radius: 0.5em;
-  color: #9fa5b5;
-  position: absolute;
-  top: 3em;
-  left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
-  opacity: 0;
-  display: none;
-  transition: 0.2s;
-  /* 하이퍼파라미터 조정하는 버튼이 z-index가 3이므로 더 높아야함 */
-  z-index: 5;
-}
-
-.Charsetting_menu li {
-  padding: 0.7em 0.5em;
-  margin: 0.3em 0;
-  border-radius: 0.5em;
-  cursor: pointer;
-}
-
-.Charsetting_menu li:hover {
-  background: #2a2d35;
-}
-
-.Charsetting_active {
-  background: #23242a;
-}
-.Charsetting_menu-open {
-  display: block;
-  opacity: 1;
 }

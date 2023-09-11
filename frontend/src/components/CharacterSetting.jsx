@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
+import { Select, select } from 'antd';
 
 const CharacterSetting = () => {
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
@@ -13,7 +14,6 @@ const CharacterSetting = () => {
 
   // text_div_ref가 늘어나면 전체화면도 늘어남
   const container_div_ref = useRef();
-  const [container_div_state, Setcontainer_div_state] = useState();
   const [reset_container_div_ref, setReset_container_div_ref] = useState();
 
   // stream_token에 있는 값들을 저장하는 ref
@@ -30,12 +30,19 @@ const CharacterSetting = () => {
   const [gpu_layers, setGpu_layers] = useState(0);
 
   // 드롭다운 관련 함수
-  const [selectedModel, SetSelectedModel] = useState();
-  const dropboxHeightRef = useRef();
-
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Model select');
-  const options = ['Model select', 'GPT3.5', 'n', 'd', 'e', 'x', 'a', 'b', 'c', 'a', 'b', 'c', 'd'];
+  const [modelList, setModelList] = useState([
+    {
+      label: 'GPT API',
+      options: [{ label: 'GPT3.5', value: 'GPT3.5' }],
+    },
+    {
+      label: 'Local Models',
+      options: [
+        { label: 'openbuddy-llama2-13b-v11.1.ggmlv3.Q2_K.bin', value: 'openbuddy-llama2-13b-v11.1.ggmlv3.Q2_K.bin' },
+      ],
+    },
+  ]);
 
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
@@ -59,6 +66,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     var message = 'generate start';
     var response = await fetch('http://localhost:8000/stream_chat', {
       method: 'POST',
@@ -97,6 +106,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     var message = 'generate start';
     var response = await fetch('http://localhost:8000/stream_chat_OAI', {
       method: 'POST',
@@ -131,15 +142,10 @@ const CharacterSetting = () => {
     processText();
   };
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const selectOption = (option) => {
+  // ant design 에서 모델을 선택할때
+  const model_Select = (value) => {
+    setSelectedOption(value);
     console.log(selectedOption);
-    setSelectedOption(option);
-    SetSelectedModel(option);
-    setIsOpen(false);
   };
 
   // 하이퍼파라미터 관련 함수
@@ -198,11 +204,13 @@ const CharacterSetting = () => {
       </div>
       {/* stream 된 텍스트가 출력되는 div */}
       <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-        {streamToken.map((token, index) => (
-          <span key={index} className="stream_token_span" ref={span_ref}>
-            {token}
-          </span>
-        ))}
+        <div style={{ margin: '30px' }}>
+          {streamToken.map((token, index) => (
+            <span key={index} className="stream_token_span" ref={span_ref}>
+              {token}
+            </span>
+          ))}
+        </div>
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_button">
@@ -221,26 +229,26 @@ const CharacterSetting = () => {
           Save Setting
         </div>
       </div>
-      {/* setting 글자 */}
-      <div className="CharacterSetting_setting_name">Setting</div>
-      {/* model select */}
-      <div className="Charsetting_dropdown_body">
-        <div className="Charsetting_dropdown" ref={dropboxHeightRef}>
-          <div className={`Charsetting_select ${isOpen ? 'Charsetting_select-clicked' : ''}`} onClick={toggleDropdown}>
-            <span className="Charsetting_selected">{selectedOption}</span>
-            <div className={`Charsetting_caret ${isOpen ? 'Charsetting_caret-rotate' : ''}`} />
-          </div>
-          <ul className={`Charsetting_menu ${isOpen ? 'Charsetting_menu-open' : ''}`}>
-            {options.map((option, index) => (
-              <li
-                key={index}
-                className={`${selectedOption === option ? 'Charsetting_active' : ''}`}
-                onClick={() => selectOption(option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
+      <div
+        style={{
+          height: '150px',
+          alignItems: 'center',
+          position: 'relative',
+          top: '20%',
+          justifyContent: 'space-between',
+        }}
+      >
+        {/* setting 글자 */}
+        <span className="CharacterSetting_setting_name">Setting</span>
+
+        {/* model select */}
+        <div className="Charsetting_dropdown_body">
+          <Select
+            defaultValue="Model select"
+            options={modelList}
+            onChange={model_Select}
+            className="Charsetting_dropdown"
+          />
         </div>
       </div>
 
