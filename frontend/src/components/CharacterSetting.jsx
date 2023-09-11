@@ -67,6 +67,15 @@ const CharacterSetting = () => {
       setModelRam(ramValueArray);
     });
   }, []);
+  useEffect(() => {
+    modelRam.map((option, index) => {
+      if (option.value == selectedOption) {
+        setShowRam(option.RAM);
+      } else if (selectedOption == 'GPT3.5') {
+        setShowRam(0);
+      }
+    });
+  }, [selectedOption]);
 
   // 초기 text_div와 container_div의 height 값
   useEffect(() => {
@@ -90,7 +99,7 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
 
     var message = 'generate start';
     var response = await fetch('http://localhost:8000/stream_chat', {
@@ -132,7 +141,7 @@ const CharacterSetting = () => {
     SetGenLoader(true);
     setStreamToken([]);
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
     var message = 'generate start';
     var response = await fetch('http://localhost:8000/stream_chat_OAI', {
       method: 'POST',
