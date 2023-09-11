@@ -5,15 +5,23 @@ import Main from './components/Main';
 import LoaderTransition from './components/Loader/LoaderTransition';
 import CharacterSetting from './components/CharacterSetting';
 import LoaderCSS from './components/Loader/LoaderCSS';
+import { positions, Provider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 function App() {
+  const options = {
+    timeout: 5000,
+    position: positions.BOTTOM_CENTER,
+  };
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/charsetting" element={<CharacterSetting />} />
-        <Route path="loader" element={<LoaderCSS />} />
-      </Routes>
+      <Provider template={AlertTemplate} {...options}>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/charsetting" element={<CharacterSetting />} />
+          <Route path="loader" element={<LoaderCSS />} />
+        </Routes>
+      </Provider>
     </div>
   );
 }

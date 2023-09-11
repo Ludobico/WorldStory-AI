@@ -4,8 +4,10 @@ import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import axios from 'axios';
 import { Select, select } from 'antd';
+import { useAlert } from 'react-alert';
 
 const CharacterSetting = () => {
+  const alert = useAlert();
   // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
   const [streamToken, setStreamToken] = useState([]);
 
@@ -92,7 +94,7 @@ const CharacterSetting = () => {
   }, [streamToken]);
   const sendMessage = async () => {
     if (selectedOption == 'Model select') {
-      console.log('You need to select a model');
+      alert.error('Choose the Model');
       return;
     }
     text_div_ref.current.style.height = reset_text_div_ref;
@@ -240,6 +242,7 @@ const CharacterSetting = () => {
             <div className="CharacterSetting_generate_not_loading">Generate</div>
           )}
         </div>
+
         {/* save 버튼 */}
         <div className="CharacterSetting_generate_save" onClick={generating}>
           Save Setting

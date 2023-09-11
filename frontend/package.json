@@ -20,6 +20,8 @@
     "leva": "^0.9.34",
     "postprocessing": "^6.31.0",
     "react": "^18.2.0",
+    "react-alert": "^7.0.3",
+    "react-alert-template-basic": "^1.0.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
