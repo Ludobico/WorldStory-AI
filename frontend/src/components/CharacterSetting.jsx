@@ -46,15 +46,13 @@ const CharacterSetting = () => {
     },
   ]);
   const [modelRam, setModelRam] = useState([]);
-  const [showRam, setShowRam] = useState(0);
+  const [showRam, setShowRam] = useState(0.0);
 
   // save setting 버튼 관련 함수
   const [settingPrompt, setSettingPrompt] = useState();
   const [settingName, setSettingName] = useState();
-  const [countTest, setCounterTest] = useState(0);
 
   const upDateGeneratedText = () => {
-    setCounterTest(countTest + 0.1);
     const spans = text_div_ref.current.querySelectorAll('span');
     const textArray = Array.from(spans).map((span) => span.textContent);
     const allText = textArray.join('');
@@ -307,9 +305,8 @@ const CharacterSetting = () => {
         <div className="Charsetting_dropdown_body">
           {/* <p className="Charsetting_ram">Max RAM required : {showRam}</p> */}
           <div className="Charsetting_ram">
-            {' '}
-            Max RAM required
-            <AnimatedCounter value={showRam} />
+            &nbsp; Max RAM required &nbsp;
+            <AnimatedCounter value={showRam} color="#fff" />
             GB
           </div>
 
