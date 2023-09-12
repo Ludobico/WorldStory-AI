@@ -49,6 +49,7 @@ const CharacterSetting = () => {
 
   // save setting 버튼 관련 함수
   const [settingPrompt, setSettingPrompt] = useState('');
+  const [settingName, setSettingName] = useState('');
   const upDateGeneratedText = () => {
     if (text_div_ref.current) {
       const spans = text_div_ref.current.querySelectorAll('span');
@@ -56,6 +57,17 @@ const CharacterSetting = () => {
       const allText = textArray.join('');
       setSettingPrompt(allText);
       console.log(settingPrompt);
+    }
+  };
+  const extractName = () => {
+    const nameMatch = /Name: (.+)/i.exec(settingPrompt);
+
+    if (nameMatch) {
+      const extractedName = nameMatch[1];
+      setSettingName(extractedName);
+      console.log(settingName);
+    } else {
+      alert.error('No name found');
     }
   };
 
@@ -226,6 +238,7 @@ const CharacterSetting = () => {
   const generating = () => {
     SetGenLoader(!genLoader);
     upDateGeneratedText();
+    extractName();
   };
 
   return (
