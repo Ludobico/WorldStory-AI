@@ -19,6 +19,7 @@ from Module.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
+from Module.MakeCharacter import make_char_folder
 
 app = FastAPI()
 
@@ -81,6 +82,13 @@ def LLM_model_list():
     model_list = LC.json_read()
     return model_list
 
+class MakeCharacter(BaseModel):
+    name : str
+    prompt : str
+
+@app.post("/make_character")
+def make_character(make_character : MakeCharacter):
+    make_char_folder(name=make_character.name, prompt=make_character.prompt)
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app)
