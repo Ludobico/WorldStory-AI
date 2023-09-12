@@ -5,6 +5,7 @@ import Logo from './Header/Logo';
 import axios from 'axios';
 import { Select, select } from 'antd';
 import { useAlert } from 'react-alert';
+import { AnimatedCounter } from 'react-animated-counter';
 
 const CharacterSetting = () => {
   const alert = useAlert();
@@ -50,8 +51,10 @@ const CharacterSetting = () => {
   // save setting 버튼 관련 함수
   const [settingPrompt, setSettingPrompt] = useState();
   const [settingName, setSettingName] = useState();
+  const [countTest, setCounterTest] = useState(0);
 
   const upDateGeneratedText = () => {
+    setCounterTest(countTest + 0.1);
     const spans = text_div_ref.current.querySelectorAll('span');
     const textArray = Array.from(spans).map((span) => span.textContent);
     const allText = textArray.join('');
@@ -109,8 +112,10 @@ const CharacterSetting = () => {
   useEffect(() => {
     modelRam.map((option, index) => {
       if (option.value == selectedOption) {
-        setShowRam(option.RAM);
+        const extractedNumber = parseFloat(option.RAM.match(/[\d.]+/)[0]);
+        setShowRam(extractedNumber);
       } else if (selectedOption == 'GPT3.5') {
+        window.scrollTo({ top: 0 });
         setShowRam(0);
       }
     });
@@ -300,7 +305,14 @@ const CharacterSetting = () => {
 
         {/* model select */}
         <div className="Charsetting_dropdown_body">
-          <p className="Charsetting_ram">Max RAM required : {showRam}</p>
+          {/* <p className="Charsetting_ram">Max RAM required : {showRam}</p> */}
+          <div className="Charsetting_ram">
+            {' '}
+            Max RAM required
+            <AnimatedCounter value={showRam} />
+            GB
+          </div>
+
           <Select
             defaultValue="Model select"
             options={modelList}
