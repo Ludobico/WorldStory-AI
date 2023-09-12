@@ -50,13 +50,13 @@ const CharacterSetting = () => {
   // save setting 버튼 관련 함수
   const [settingPrompt, setSettingPrompt] = useState('');
   const [settingName, setSettingName] = useState('');
+
   const upDateGeneratedText = () => {
     if (text_div_ref.current) {
       const spans = text_div_ref.current.querySelectorAll('span');
       const textArray = Array.from(spans).map((span) => span.textContent);
       const allText = textArray.join('');
       setSettingPrompt(allText);
-      console.log(settingPrompt);
     }
   };
   const extractName = () => {
@@ -65,10 +65,21 @@ const CharacterSetting = () => {
     if (nameMatch) {
       const extractedName = nameMatch[1];
       setSettingName(extractedName);
-      console.log(settingName);
     } else {
       alert.error('No name found');
     }
+  };
+  const generating = () => {
+    // 로딩 테스트용
+    // SetGenLoader(!genLoader);
+
+    upDateGeneratedText();
+    extractName();
+
+    axios.post('http://localhost:8000/make_character', {
+      name: settingName,
+      prompt: settingPrompt,
+    });
   };
 
   //   models 폴더에있는 파일들을 select box로 표시
@@ -110,6 +121,7 @@ const CharacterSetting = () => {
     // setReset_container_div_ref(container_div_ref.current.style.height);
     setReset_container_div_ref(container_div_ref.current.scrollHeight);
   }, []);
+
   // llm 모델이 text 생성에 따라 div가 화면을 초과하면 그에맞춰 화면을 늘림
   useEffect(() => {
     if (text_div_ref.current) {
@@ -126,6 +138,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
+    setSettingPrompt('');
+    setSettingName('');
     window.scrollTo({ top: 0 });
 
     var message = 'generate start';
@@ -167,6 +181,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
+    setSettingPrompt('');
+    setSettingName('');
 
     window.scrollTo({ top: 0 });
     var message = 'generate start';
@@ -233,12 +249,6 @@ const CharacterSetting = () => {
         // 예외 처리: 유효한 키가 아닌 경우
         console.error('Invalid key');
     }
-  };
-
-  const generating = () => {
-    SetGenLoader(!genLoader);
-    upDateGeneratedText();
-    extractName();
   };
 
   return (
