@@ -62,16 +62,24 @@ const CharacterSetting = () => {
       const extractedName = nameMatch[1];
       setSettingName(extractedName);
     } else {
-      alert.error('No name found');
+      // alert.error('No name found');
+      alert.error(<div style={{ textTransform: 'initial' }}>No name found</div>);
     }
   };
   // 프롬프트랑 텍스트 업데이트되면 axios 요청해라
   useEffect(() => {
     if (settingPrompt && settingName) {
-      axios.post('http://localhost:8000/make_character', {
-        name: settingName,
-        prompt: settingPrompt,
-      });
+      axios
+        .post('http://localhost:8000/make_character', {
+          name: settingName,
+          prompt: settingPrompt,
+        })
+        .then(() => {
+          // alert.success('Character Generated in your backend/Characters folder');
+          alert.success(
+            <div style={{ textTransform: 'initial' }}>Character Generated in your backend/Characters folder</div>
+          );
+        });
     }
   }, [settingPrompt, settingName]);
 
@@ -124,7 +132,8 @@ const CharacterSetting = () => {
   }, [streamToken]);
   const sendMessage = async () => {
     if (selectedOption == 'Model select') {
-      alert.error('Choose the Model');
+      // alert.error('Choose the Model');
+      alert.error(<div style={{ textTransform: 'initial' }}>Choose the Model</div>);
       return;
     }
     text_div_ref.current.style.height = reset_text_div_ref;
