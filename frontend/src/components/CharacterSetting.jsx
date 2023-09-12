@@ -46,6 +46,19 @@ const CharacterSetting = () => {
   ]);
   const [modelRam, setModelRam] = useState([]);
   const [showRam, setShowRam] = useState(0);
+
+  // save setting 버튼 관련 함수
+  const [settingPrompt, setSettingPrompt] = useState('');
+  const upDateGeneratedText = () => {
+    if (text_div_ref.current) {
+      const spans = text_div_ref.current.querySelectorAll('span');
+      const textArray = Array.from(spans).map((span) => span.textContent);
+      const allText = textArray.join('');
+      setSettingPrompt(allText);
+      console.log(settingPrompt);
+    }
+  };
+
   //   models 폴더에있는 파일들을 select box로 표시
   useEffect(() => {
     axios.get('http://localhost:8000/LLM_model_list').then((res) => {
@@ -212,7 +225,7 @@ const CharacterSetting = () => {
 
   const generating = () => {
     SetGenLoader(!genLoader);
-    console.log(modelRam);
+    upDateGeneratedText();
   };
 
   return (

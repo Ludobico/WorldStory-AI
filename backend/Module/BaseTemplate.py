@@ -11,7 +11,6 @@ def base_template():
     create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
     Let's think step by step.
     Feel free to elaborate on each point to create a comprehensive portrayal of your character.
-    Provide a JSON-formatted response with information
 
     writer :
 """
