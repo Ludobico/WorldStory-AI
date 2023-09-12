@@ -48,19 +48,15 @@ const CharacterSetting = () => {
   const [showRam, setShowRam] = useState(0);
 
   // save setting 버튼 관련 함수
-  const [settingPrompt, setSettingPrompt] = useState('');
-  const [settingName, setSettingName] = useState('');
+  const [settingPrompt, setSettingPrompt] = useState();
+  const [settingName, setSettingName] = useState();
 
   const upDateGeneratedText = () => {
-    if (text_div_ref.current) {
-      const spans = text_div_ref.current.querySelectorAll('span');
-      const textArray = Array.from(spans).map((span) => span.textContent);
-      const allText = textArray.join('');
-      setSettingPrompt(allText);
-    }
-  };
-  const extractName = () => {
-    const nameMatch = /Name: (.+)/i.exec(settingPrompt);
+    const spans = text_div_ref.current.querySelectorAll('span');
+    const textArray = Array.from(spans).map((span) => span.textContent);
+    const allText = textArray.join('');
+    setSettingPrompt(allText);
+    const nameMatch = /Name: (.+)/i.exec(allText);
 
     if (nameMatch) {
       const extractedName = nameMatch[1];
@@ -69,18 +65,15 @@ const CharacterSetting = () => {
       alert.error('No name found');
     }
   };
-  const generating = () => {
-    // 로딩 테스트용
-    // SetGenLoader(!genLoader);
-
-    upDateGeneratedText();
-    extractName();
-
-    axios.post('http://localhost:8000/make_character', {
-      name: settingName,
-      prompt: settingPrompt,
-    });
-  };
+  // 프롬프트랑 텍스트 업데이트되면 axios 요청해라
+  useEffect(() => {
+    if (settingPrompt && settingName) {
+      axios.post('http://localhost:8000/make_character', {
+        name: settingName,
+        prompt: settingPrompt,
+      });
+    }
+  }, [settingPrompt, settingName]);
 
   //   models 폴더에있는 파일들을 select box로 표시
   useEffect(() => {
@@ -138,8 +131,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
-    setSettingPrompt('');
-    setSettingName('');
+    // setSettingPrompt('');
+    // setSettingName('');
     window.scrollTo({ top: 0 });
 
     var message = 'generate start';
@@ -181,8 +174,8 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
-    setSettingPrompt('');
-    setSettingName('');
+    // setSettingPrompt('');
+    // setSettingName('');
 
     window.scrollTo({ top: 0 });
     var message = 'generate start';
@@ -280,7 +273,7 @@ const CharacterSetting = () => {
         </div>
 
         {/* save 버튼 */}
-        <div className="CharacterSetting_generate_save" onClick={generating}>
+        <div className="CharacterSetting_generate_save" onClick={upDateGeneratedText}>
           Save Setting
         </div>
       </div>
