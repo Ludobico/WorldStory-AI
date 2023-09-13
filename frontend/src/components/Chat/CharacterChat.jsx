@@ -49,7 +49,7 @@ const CharacterChat = () => {
               ]}
             />
           </Sider>
-          <Layout>
+          <Layout style={{background : 'black'}}>
             <Header style={{ padding: 0, background: colorBgContainer }}>
               <Button
                 type="text"

@@ -1,3 +1,8 @@
 .CharacterChat_top_div {
   background-color: rgb(30 41 59);
 }
+.CharacterChat_logo{
+  position: relative;
+  top: -2%;
+  left : 10%;
+}
