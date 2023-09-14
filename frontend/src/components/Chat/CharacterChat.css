@@ -28,10 +28,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #424242;
-  /* background-image: url('../Static/lensDirtTexture.png');
+  /* background-color: #424242; */
+  background-image: url('../Static/background3.jpg');
   background-repeat: no-repeat;
-  background-size: cover; */
+  background-size: cover;
 }
 .chat_header {
   color: white;
@@ -49,4 +49,5 @@
   height: calc(100% - 60px);
   margin: 30px 30px 30px 30px;
   padding: 10px;
+  overflow: auto;
 }
