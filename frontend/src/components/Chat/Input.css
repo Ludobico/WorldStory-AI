@@ -1,0 +1,37 @@
+.chat_input {
+  width: 50%;
+  height: 50px;
+  padding: 10px;
+  margin-bottom: 50px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.chat_input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  color: #2f2d52;
+  font-size: 18px;
+
+  &::placeholder {
+    color: lightgray;
+  }
+}
+
+.chat_send {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat_send button {
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  background-color: #424242;
+  border-radius: 10px;
+}

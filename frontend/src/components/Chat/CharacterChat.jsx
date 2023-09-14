@@ -4,6 +4,8 @@ import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutl
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import './CharacterChat.css';
+import Input from './Input';
+import ChatMessage from './ChatMessage';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -49,7 +51,10 @@ const CharacterChat = () => {
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background">
-            <div className="chat_content"></div>
+            <div className="chat_content">
+              <ChatMessage />
+            </div>
+            <Input />
           </div>
         </Content>
       </Layout>
