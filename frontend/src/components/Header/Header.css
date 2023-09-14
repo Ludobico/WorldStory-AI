@@ -1,4 +1,4 @@
-header {
+/* header {
   margin: 0;
   padding: 0;
   font-family: 'azonix';
@@ -34,7 +34,6 @@ header {
   color: transparent;
   -webkit-text-stroke: 1px #fff;
   letter-spacing: 0.25em;
-  /* visibility: hidden; */
   overflow: hidden;
 }
 .intro span {
@@ -49,4 +48,4 @@ header {
   top: 0;
   transform: translateY(-110%);
   color: #fff;
-}
+} */

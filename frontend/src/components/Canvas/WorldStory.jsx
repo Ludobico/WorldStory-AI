@@ -16,7 +16,7 @@ import SceneTransitionShader from '../Shaders/SceneTransitionShader';
 import InsideStory from './InsideStory';
 import Header from '../Header/Header';
 import Logo from '../Header/Logo';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function Skybox() {
@@ -25,6 +25,7 @@ function Skybox() {
   const tl = gsap.timeline();
   const [texture_change_trigger, set_texture_change_trigger] = useState(0);
   const [texture_change_trigger_flag, set_texture_change_trigger_flag] = useState(false);
+
   // 머터리얼에 적용하는 ref
   const shaderMaterialRef = useRef();
 
@@ -119,7 +120,11 @@ const Introduce = () => {
         <span>Characters</span>
       </div>
       <div className="button_container">
-        <div className="intro_button2 button_reveal">Chat with Character</div>
+        <div className="intro_button2 button_reveal">
+          <a href="/chat" className="Introduce_a">
+            Chat with Character
+          </a>
+        </div>
         <div className="intro_button button_reveal">
           <a href="/charsetting" className="Introduce_a">
             Character setting
@@ -136,7 +141,7 @@ const WorldStory = () => {
   const cameraHandler = () => {
     console.log(cameraRef.current);
   };
-  const MemoOrbitControl = React.memo(OrbitControls)
+  const MemoOrbitControl = React.memo(OrbitControls);
   return (
     <>
       {/* <OrbitControls ref={OrbitcameraRef} autoRotate enableZoom={false} /> */}
