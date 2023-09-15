@@ -75,11 +75,11 @@ const CharacterChat = () => {
   };
   const [llmSetting, setLlmSetting] = useState([
     getItem('Setting', 'sub2', <SettingOutlined />, [
-      getItem('top_k', 'top_k', null, [
+      getItem('top_k', top_k, null, [
         getItem(<Slider defaultValue={top_k} onChange={handleChange_top_k} min={5} max={80} />, 'top_k_key'),
       ]),
       getItem('top_p', 'top_p', null, [
-        getItem(<Slider defaultValue={top_p} onChange={handleChange_top_k} min={0} max={1} step={0.01} />, 'top_p_key'),
+        getItem(<Slider defaultValue={top_p} onChange={handleChange_top_p} min={0} max={1} step={0.01} />, 'top_p_key'),
       ]),
       getItem('temperature', 'temperature', null, [
         getItem(
