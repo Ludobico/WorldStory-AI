@@ -16,13 +16,6 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [getItem('Tom', '3'), getItem('Bill', '4'), getItem('Alex', '5')]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
-];
 
 const CharacterChat = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -36,6 +29,24 @@ const CharacterChat = () => {
     navigate('/');
   };
 
+  const [selectedModelItem, setSelectedModelItem] = useState([getItem('Model select', null, <PieChartOutlined />)]);
+
+  // modelItems 상태
+  const [modelItems, setModelItems] = useState([
+    getItem('GPT3.5', 'GPT3.5', <PieChartOutlined />),
+    getItem('LlamaCPP', 'LlamaCPP', <DesktopOutlined />, [getItem('model1', 'model1')]),
+  ]);
+
+  // CharacterItems 상태
+  const [characterItems, setCharacterItems] = useState([
+    getItem('Character', 'sub1', <UserOutlined />, [getItem('Tom', '3'), getItem('Bill', '4'), getItem('Alex', '5')]),
+    getItem('Setting', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+  ]);
+
+  const handleModelSelet = (item) => {
+    setSelectedModelItem([getItem(item.key, item.key)]);
+  };
+
   return (
     <div className="chat_top_div">
       <Layout
@@ -47,7 +58,9 @@ const CharacterChat = () => {
           <div className="demo-logo-vertical" onClick={handleButtonClick}>
             <span>{collapsed ? 'WS' : 'WORLD STORY AI'}</span>
           </div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+          <Menu theme="dark" mode="inline" items={selectedModelItem} />
+          <Menu theme="dark" mode="inline" items={modelItems} onClick={handleModelSelet} />
+          <Menu theme="dark" mode="inline" items={characterItems} />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background">
