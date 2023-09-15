@@ -76,29 +76,38 @@ const CharacterChat = () => {
   const [llmSetting, setLlmSetting] = useState([
     getItem('Setting', 'sub2', <SettingOutlined />, [
       getItem('top_k', 'top_k', null, [
-        getItem(<Slider defaultValue={top_k} onChange={handleChange_top_k} min={5} max={80} />),
+        getItem(<Slider defaultValue={top_k} onChange={handleChange_top_k} min={5} max={80} />, 'top_k_key'),
       ]),
       getItem('top_p', 'top_p', null, [
-        getItem(<Slider defaultValue={top_p} onChange={handleChange_top_k} min={0} max={1} step={0.01} />),
+        getItem(<Slider defaultValue={top_p} onChange={handleChange_top_k} min={0} max={1} step={0.01} />, 'top_p_key'),
       ]),
       getItem('temperature', 'temperature', null, [
-        getItem(<Slider defaultValue={temperature} onChange={handleChange_temperature} min={0} max={1} step={0.01} />),
+        getItem(
+          <Slider defaultValue={temperature} onChange={handleChange_temperature} min={0} max={1} step={0.01} />,
+          'temperature_key'
+        ),
       ]),
       getItem('last_n_tokens', 'last_n_tokens', null, [
         getItem(
-          <Slider defaultValue={last_n_tokens} onChange={handleChange_last_n_tokens} min={0} max={1024} step={12} />
+          <Slider defaultValue={last_n_tokens} onChange={handleChange_last_n_tokens} min={0} max={1024} step={12} />,
+          'last_n_tokens_key'
         ),
       ]),
       getItem('max_new_tokens', 'max_new_tokens', null, [
         getItem(
-          <Slider defaultValue={max_new_tokens} onChange={handleChange_max_new_tokens} min={0} max={4096} step={256} />
+          <Slider defaultValue={max_new_tokens} onChange={handleChange_max_new_tokens} min={0} max={4096} step={256} />,
+          'max_new_tokens_key'
         ),
       ]),
       getItem('gpu_layers', 'gpu_layers', null, [
-        getItem(<Slider defaultValue={gpu_layers} onChange={handleChange_gpu_layers} min={0} max={16} />),
+        getItem(
+          <Slider defaultValue={gpu_layers} onChange={handleChange_gpu_layers} min={0} max={16} step={1} />,
+          'gpu_layers_key'
+        ),
       ]),
     ]),
   ]);
+
   // 선택된 모델
   const handleModelSelet = (item) => {
     setSelectedModelItem([getItem(item.key, item.key, <SELECT_MODEL_LOGO />)]);
