@@ -46,7 +46,7 @@ const CharacterChat = () => {
     getItem('GPT3.5', 'GPT3.5', <OPENAI_LOGO />),
     getItem('LocalModel', 'LocalModel', <LLMLOGO />, null),
   ]);
-  // 유저의 LLM list를 출력해 modelItems 에 업데이트
+  // LLM list를 출력해 modelItems 에 업데이트
   useEffect(() => {
     axios.get('http://localhost:8000/LLM_model_list').then((res) => {
       const LLM_model_list = res.data.map((item) => ({
@@ -55,8 +55,6 @@ const CharacterChat = () => {
         RAM: item.RAM,
       }));
       const modelItemsForLLM = LLM_model_list.map((model) => getItem(model.label, model.label, null, null));
-      // console.log(modelItemsForLLM);
-      // console.log(modelItems[1].children);
 
       setModelItems((prevModelItems) => {
         const updatedModelItems = [...prevModelItems];
@@ -68,10 +66,22 @@ const CharacterChat = () => {
     });
   }, []);
 
-  // CharacterItems 상태
-  const [characterItems, setCharacterItems] = useState([
-    getItem('Character', 'sub1', <UserOutlined />, [getItem('Tom', '3'), getItem('Bill', '4'), getItem('Alex', '5')]),
-  ]);
+  // Character list
+  const [characterItems, setCharacterItems] = useState([getItem('Character', 'sub1', <UserOutlined />, null)]);
+  const [selectedCharacter, setSeletedCharacter] = useState();
+  useEffect(() => {
+    axios.get('http://localhost:8000/char_list_check').then((res) => {
+      const charracter_list = res.data.map((item) => getItem(item, item, null, null));
+
+      setCharacterItems((prevCharItems) => {
+        const updatedCharItems = [...prevCharItems];
+        if (updatedCharItems.length >= 1) {
+          updatedCharItems[0].children = charracter_list;
+        }
+        return updatedCharItems;
+      });
+    });
+  }, []);
 
   // LLM setting
   const [top_k, setTop_k] = useState(40);
@@ -138,7 +148,11 @@ const CharacterChat = () => {
   const handleModelSelet = (item) => {
     setSelectedModelItem([getItem(item.key, item.key, <SELECT_MODEL_LOGO />)]);
   };
-
+  // 선택된 캐릭처
+  const handleCharacterSelet = (item) => {
+    setSeletedCharacter(item.key);
+    console.log(item.key);
+  };
   // light, dark 모드
   const [lightTheme, setLightTheme] = useState('dark');
   const changeTheme = (value) => {
@@ -187,7 +201,7 @@ const CharacterChat = () => {
           </div>
           <Menu theme={lightTheme} mode="inline" items={selectedModelItem} selectable={false} />
           <Menu theme={lightTheme} mode="inline" items={modelItems} onClick={handleModelSelet} />
-          <Menu theme={lightTheme} mode="inline" items={characterItems} />
+          <Menu theme={lightTheme} mode="inline" items={characterItems} onClick={handleCharacterSelet} />
           <Menu theme={lightTheme} mode="inline" items={llmSetting} selectable={false} />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>

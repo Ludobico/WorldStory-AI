@@ -20,6 +20,7 @@ from Module.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
 from Module.MakeCharacter import MakeCharacter
+from Module.CharacterCheck import Character_folder_check
 
 app = FastAPI()
 
@@ -90,6 +91,12 @@ class MakeCharacterPrompt(BaseModel):
 def make_character(make_character : MakeCharacterPrompt):
     MC = MakeCharacter()
     MC.make_char_folder(name=make_character.name, prompt=make_character.prompt)
+
+@app.get("/char_list_check")
+def char_list_check():
+    char_list = Character_folder_check()
+    print(char_list)
+    return char_list
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app)
