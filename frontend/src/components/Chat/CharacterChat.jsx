@@ -8,6 +8,10 @@ import Input from './Input';
 import ChatMessage from './ChatMessage';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
 import axios from 'axios';
+import './ChatMessage.scss';
+import giga from '../Static/maxresdefault.jpg';
+import './Input.scss';
+import { SendOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -141,6 +145,24 @@ const CharacterChat = () => {
     setLightTheme(value ? 'dark' : 'light');
   };
 
+  // chatting state
+  const [isUser, setIsUser] = useState(true);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+
+  const handleInputChange = (e) => {
+    setInputMessage(e.target.value);
+  };
+
+  const handleSendMessage = () => {
+    if (inputMessage.trim() !== '') {
+      const newMessage = { content: inputMessage, isUser }; // Assuming user sends the message
+      setMessages([...messages, newMessage]);
+      setInputMessage(''); // Clear the input after sending the message
+      setIsUser((prevIsUser) => !prevIsUser);
+    }
+  };
+
   return (
     <div className="chat_top_div">
       <Layout
@@ -170,10 +192,31 @@ const CharacterChat = () => {
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background">
-            <div className="chat_content">
-              <ChatMessage />
+            <>
+              {/* 메시지 */}
+              <div className="chat_content">
+                {messages.map((message, index) => (
+                  <div key={index} className={`chat_message ${message.isUser ? 'chat_owner' : 'chat_message'}`}>
+                    <div className="chat_message_info">
+                      <img src={giga} alt="" />
+                      <span>just now</span>
+                    </div>
+                    <div className="chat_message_content">
+                      <p>{message.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+            <div className="chat_input">
+              {/* 버튼 */}
+              <input type="text" placeholder="Type something..." onChange={handleInputChange} value={inputMessage} />
+              <div className="chat_send">
+                <button onClick={handleSendMessage}>
+                  <SendOutlined />
+                </button>
+              </div>
             </div>
-            <Input />
           </div>
         </Content>
       </Layout>
