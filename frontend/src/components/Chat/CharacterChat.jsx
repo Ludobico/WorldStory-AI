@@ -7,6 +7,7 @@ import './CharacterChat.css';
 import Input from './Input';
 import ChatMessage from './ChatMessage';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
+import axios from 'axios';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -39,8 +40,29 @@ const CharacterChat = () => {
   const [selectedModelItem, setSelectedModelItem] = useState([getItem('Model select', null, <SELECT_MODEL_LOGO />)]);
   const [modelItems, setModelItems] = useState([
     getItem('GPT3.5', 'GPT3.5', <OPENAI_LOGO />),
-    getItem('LocalModel', 'LocalModel', <LLMLOGO />, [getItem('model1', 'model1')]),
+    getItem('LocalModel', 'LocalModel', <LLMLOGO />, null),
   ]);
+  // 유저의 LLM list를 출력해 modelItems 에 업데이트
+  useEffect(() => {
+    axios.get('http://localhost:8000/LLM_model_list').then((res) => {
+      const LLM_model_list = res.data.map((item) => ({
+        label: item.label,
+        value: item.value,
+        RAM: item.RAM,
+      }));
+      const modelItemsForLLM = LLM_model_list.map((model) => getItem(model.label, model.label, null, null));
+      // console.log(modelItemsForLLM);
+      // console.log(modelItems[1].children);
+
+      setModelItems((prevModelItems) => {
+        const updatedModelItems = [...prevModelItems];
+        if (updatedModelItems.length > 1) {
+          updatedModelItems[1].children = modelItemsForLLM;
+        }
+        return updatedModelItems;
+      });
+    });
+  }, []);
 
   // CharacterItems 상태
   const [characterItems, setCharacterItems] = useState([
