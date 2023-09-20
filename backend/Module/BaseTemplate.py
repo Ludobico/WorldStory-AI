@@ -1,3 +1,4 @@
+import os
 def base_template():
     template = """
     {instruct}
@@ -39,3 +40,23 @@ Additional details: Nora is a journalist who works for a major newspaper. She is
 ###
 """
     return few_shot_template
+
+def chat_base_template(char_prompt_path):
+    cur_dir = os.getcwd()
+    char_path = os.path.join(cur_dir, 'Characters', char_prompt_path, 'prompt.txt')
+    with open(char_path, 'r') as f:
+        char_prompt = f.read()
+
+    chat_template = """
+    You are a Fictional Character that talks to a user through the ###character prompt### below.
+    ###character prompt###
+    {char_prompt}
+
+    Ensure your responses are consistent with the world and setting of your story
+    Let's think step by step.
+
+    User : {message}
+    You : 
+"""
+
+    return {"chat_template": chat_template, "char_prompt": char_prompt}

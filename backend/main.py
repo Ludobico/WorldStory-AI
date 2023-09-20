@@ -21,6 +21,7 @@ from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
 from Module.MakeCharacter import MakeCharacter
 from Module.CharacterCheck import Character_folder_check
+from Module.CharacterChatOAI_Proxy_Stream import chat_with_OAI
 
 app = FastAPI()
 
@@ -53,6 +54,7 @@ class CT_parameters(BaseModel):
     model_name : str
 class OAI_Message(BaseModel):
     content : str
+    char_prompt_path : str
 
 
 @app.post("/stream_chat")
@@ -64,7 +66,7 @@ async def stream_chat(ct_params: CT_parameters):
 
 
 @app.post("/stream_chat_OAI")
-async def stream_chat_OAI(message: OAI_Message):
+async def stream_chat_OAI(message: OAI_Message.content):
     # Generate a stream of messages based on the content of the input message
     generator = send_message_OAI(message.content)
     # Return a streaming response with the generated messages
@@ -97,6 +99,11 @@ def char_list_check():
     char_list = Character_folder_check()
     print(char_list)
     return char_list
+
+@app.post("/character_chat_OAI")
+def character_chat_OAI(message: OAI_Message, char_prompt_path: OAI_Message):
+    generator = chat_with_OAI(content=message.content, char_prompt_path=char_prompt_path.char_prompt_path)
+    return StreamingResponse(generator, media_type="text/event-stream")
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app)
