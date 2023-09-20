@@ -13,7 +13,7 @@ import giga from '../Static/maxresdefault.jpg';
 import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,
