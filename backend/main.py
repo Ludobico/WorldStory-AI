@@ -52,9 +52,9 @@ class CT_parameters(BaseModel):
     max_new_tokens: int
     gpu_layers: int
     model_name : str
+
 class OAI_Message(BaseModel):
     content : str
-    char_prompt_path : str
 
 
 @app.post("/stream_chat")
@@ -66,7 +66,7 @@ async def stream_chat(ct_params: CT_parameters):
 
 
 @app.post("/stream_chat_OAI")
-async def stream_chat_OAI(message: OAI_Message.content):
+async def stream_chat_OAI(message: OAI_Message):
     # Generate a stream of messages based on the content of the input message
     generator = send_message_OAI(message.content)
     # Return a streaming response with the generated messages
@@ -100,9 +100,13 @@ def char_list_check():
     print(char_list)
     return char_list
 
+class OAI_Message_chat(BaseModel):
+    content : str
+    prompt : str
+
 @app.post("/character_chat_OAI")
-def character_chat_OAI(message: OAI_Message, char_prompt_path: OAI_Message):
-    generator = chat_with_OAI(content=message.content, char_prompt_path=char_prompt_path.char_prompt_path)
+def character_chat_OAI(message: OAI_Message_chat):
+    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt)
     return StreamingResponse(generator, media_type="text/event-stream")
 
 if __name__ == "__main__":

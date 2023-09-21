@@ -15,7 +15,7 @@ from Module.G4FLLM import G4FLLM
 
 async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
-    chat_base_template_result = chat_base_template_result(char_prompt_path)
+    chat_base_template_result = chat_base_template(char_prompt_path)
 
     prompt = PromptTemplate(
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message"])
@@ -23,11 +23,12 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.DeepAi, callbacks=[callback], verbose=True)
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
-    char_prompt = chat_base_template_result['char_prompt']
-    question = chat_base_template_result['message']
+    # char_prompt = chat_base_template_result['char_prompt']
+    char_prompt = "your name is GIGA"
+    question = content
   
     task = asyncio.create_task(
-        model.arun(char_prompt = char_prompt, question = question)
+        model.arun(char_prompt = char_prompt, message = question)
     )
     try:
         async for token in callback.aiter():

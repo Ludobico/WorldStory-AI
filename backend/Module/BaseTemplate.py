@@ -56,7 +56,7 @@ def chat_base_template(char_prompt_path):
     Let's think step by step.
 
     User : {message}
-    You : 
+    Answer : 
 """
 
     return {"chat_template": chat_template, "char_prompt": char_prompt}
