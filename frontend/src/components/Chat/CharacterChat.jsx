@@ -162,7 +162,6 @@ const CharacterChat = () => {
 
   // chatting state
   const [isUser, setIsUser] = useState(true);
-  const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [streamToken, setStreamToken] = useState([]);
 
@@ -170,50 +169,7 @@ const CharacterChat = () => {
     setInputMessage(e.target.value);
   };
 
-  const handleSendMessage = async () => {
-    if (inputMessage.trim() !== '') {
-      const newMessage = { content: inputMessage, isUser }; // Assuming user sends the message
-      setInputMessage(''); // Clear the input after sending the message
-      setIsUser((prevIsUser) => !prevIsUser);
-
-      setMessages([...messages, newMessage]);
-      console.log(messages);
-
-      var message = newMessage;
-      var response = await fetch('http://localhost:8000/character_chat_OAI', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: message.content,
-          prompt: selectedCharacter,
-        }),
-      });
-
-      var reader = response.body.getReader();
-      var decoder = new TextDecoder('utf-8');
-
-      async function processText() {
-        while (true) {
-          const result = await reader.read();
-          if (result.done) {
-            setIsUser((prevIsUser) => !prevIsUser);
-            break;
-          }
-          let token = decoder.decode(result.value);
-          if (token.endsWith('!') || token.endsWith('?')) {
-            setMessages((messages) => [...messages, token + '\n']);
-          } else {
-            setMessages((messages) => [...messages, token + '']);
-          }
-          // 자연스러운 streaming을 위해 제한시간을 걸어둠
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        }
-      }
-      processText();
-    }
-  };
+  const handleSendMessage = async () => {};
 
   return (
     <div className="chat_top_div">
@@ -246,7 +202,7 @@ const CharacterChat = () => {
           <div className="chat_background">
             <>
               {/* 메시지 */}
-              <div className="chat_content">
+              {/* <div className="chat_content">
                 {messages.map((message, index) => (
                   <div key={index} className={`chat_message ${message.isUser ? 'chat_owner' : 'chat_message'}`}>
                     <div className="chat_message_info">
@@ -258,6 +214,17 @@ const CharacterChat = () => {
                     </div>
                   </div>
                 ))}
+              </div> */}
+              <div className={`chat_message ${isUser ? 'chat_owner' : 'chat_message'}`}>
+                <div className="chat_message_info">
+                  <img src={giga} alt="" />
+                  <span>just now</span>
+                </div>
+                <div className="chat_message_content">
+                  {streamToken.map((token, index) => (
+                    <span key={index}>{token}</span>
+                  ))}
+                </div>
               </div>
             </>
             <div className="chat_input">
