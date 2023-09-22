@@ -160,16 +160,24 @@ const CharacterChat = () => {
     setLightTheme(value ? 'dark' : 'light');
   };
 
-  // chatting state
+  // 채팅
   const [isUser, setIsUser] = useState(true);
   const [inputMessage, setInputMessage] = useState('');
+  const [userToken, setUserToken] = useState('');
   const [streamToken, setStreamToken] = useState([]);
 
   const handleInputChange = (e) => {
     setInputMessage(e.target.value);
   };
 
-  const handleSendMessage = async () => {};
+  const handleSendMessage = async () => {
+    if (isUser) {
+      setUserToken('asdadasd');
+      setIsUser(false);
+      console.log(userToken);
+      setInputMessage('');
+    }
+  };
 
   return (
     <div className="chat_top_div">
@@ -215,16 +223,30 @@ const CharacterChat = () => {
                   </div>
                 ))}
               </div> */}
-              <div className={`chat_message ${isUser ? 'chat_owner' : 'chat_message'}`}>
-                <div className="chat_message_info">
-                  <img src={giga} alt="" />
-                  <span>just now</span>
-                </div>
-                <div className="chat_message_content">
-                  {streamToken.map((token, index) => (
-                    <span key={index}>{token}</span>
-                  ))}
-                </div>
+              <div className="chat_content">
+                {isUser ? (
+                  <div className="chat_message chat_owner">
+                    <div className="chat_message_info">
+                      <img src={giga} alt="" />
+                      <span>just now</span>
+                    </div>
+                    <div className="chat_message_content">
+                      <p>{userToken}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="chat_message">
+                    <div className="chat_message_info">
+                      <img src={giga} alt="" />
+                      <span>just now</span>
+                    </div>
+                    <div className="chat_message_content">
+                      {streamToken.map((token, index) => (
+                        <span key={index}>{token}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </>
             <div className="chat_input">
