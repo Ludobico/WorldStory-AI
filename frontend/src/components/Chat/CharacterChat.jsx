@@ -158,8 +158,8 @@ const CharacterChat = () => {
   };
 
   // 채팅
-  const [inputMessage, setInputMessage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [inputMessage, setInputMessage] = useState('');
+  const [message, setMessage] = useState([]);
   const [previsousMessage, setPrevisousMessage] = useState([]);
   const [currentTitle, setCurrentTitle] = useState([]);
 
@@ -167,7 +167,47 @@ const CharacterChat = () => {
   //   setInputMessage(e.target.value);
   // };
 
-  const handleSendMessage = () => {};
+  useEffect(() => {
+    console.log(message);
+  }, [message, currentTitle]);
+
+  const handleSendMessage = async () => {
+    // setMessage([]);
+
+    var req_data = {
+      content: inputMessage,
+      prompt: selectedCharacter,
+    };
+
+    var response = await fetch('http://localhost:8000/character_chat_OAI', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(req_data),
+    });
+
+    var reader = response.body.getReader();
+    var decoder = new TextDecoder('utf-8');
+
+    async function processText() {
+      while (true) {
+        const result = await reader.read();
+        if (result.done) {
+          break;
+        }
+        let token = decoder.decode(result.value);
+        if (token.endsWith('!') || token.endsWith('?')) {
+          setMessage((streamToken) => [...streamToken, token + '\n']);
+        } else {
+          setMessage((streamToken) => [...streamToken, token + '']);
+        }
+        // 자연스러운 streaming을 위해 제한시간을 걸어둠
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    }
+    processText();
+  };
 
   return (
     <div className="chat_top_div">
