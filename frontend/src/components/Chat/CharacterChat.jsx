@@ -4,11 +4,8 @@ import Icon, { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Switch, Slider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import './CharacterChat.css';
-import Input from './Input';
-import ChatMessage from './ChatMessage';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
 import axios from 'axios';
-import './ChatMessage.scss';
 import giga from '../Static/maxresdefault.jpg';
 import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
@@ -161,23 +158,16 @@ const CharacterChat = () => {
   };
 
   // 채팅
-  const [isUser, setIsUser] = useState(true);
-  const [inputMessage, setInputMessage] = useState('');
-  const [userToken, setUserToken] = useState('');
-  const [streamToken, setStreamToken] = useState([]);
+  const [inputMessage, setInputMessage] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [previsousMessage, setPrevisousMessage] = useState([]);
+  const [currentTitle, setCurrentTitle] = useState([]);
 
-  const handleInputChange = (e) => {
-    setInputMessage(e.target.value);
-  };
+  // const handleInputChange = (e) => {
+  //   setInputMessage(e.target.value);
+  // };
 
-  const handleSendMessage = async () => {
-    if (isUser) {
-      setUserToken('asdadasd');
-      setIsUser(false);
-      console.log(userToken);
-      setInputMessage('');
-    }
-  };
+  const handleSendMessage = () => {};
 
   return (
     <div className="chat_top_div">
@@ -210,48 +200,18 @@ const CharacterChat = () => {
           <div className="chat_background">
             <>
               {/* 메시지 */}
-              {/* <div className="chat_content">
-                {messages.map((message, index) => (
-                  <div key={index} className={`chat_message ${message.isUser ? 'chat_owner' : 'chat_message'}`}>
-                    <div className="chat_message_info">
-                      <img src={giga} alt="" />
-                      <span>just now</span>
-                    </div>
-                    <div className="chat_message_content">
-                      <p>{message.content}</p>
-                    </div>
-                  </div>
-                ))}
-              </div> */}
-              <div className="chat_content">
-                {isUser ? (
-                  <div className="chat_message chat_owner">
-                    <div className="chat_message_info">
-                      <img src={giga} alt="" />
-                      <span>just now</span>
-                    </div>
-                    <div className="chat_message_content">
-                      <p>{userToken}</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="chat_message">
-                    <div className="chat_message_info">
-                      <img src={giga} alt="" />
-                      <span>just now</span>
-                    </div>
-                    <div className="chat_message_content">
-                      {streamToken.map((token, index) => (
-                        <span key={index}>{token}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <div className="chat_content"></div>
             </>
             <div className="chat_input">
               {/* 버튼 */}
-              <input type="text" placeholder="Type something..." onChange={handleInputChange} value={inputMessage} />
+              <input
+                type="text"
+                placeholder="Type something..."
+                onChange={(e) => {
+                  setInputMessage(e.target.value);
+                }}
+                value={inputMessage}
+              />
               <div className="chat_send">
                 <button onClick={handleSendMessage}>
                   <SendOutlined />
