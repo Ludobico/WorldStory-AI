@@ -21,7 +21,7 @@ async def send_message_OAI(content: str) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=BaseTemplateResult['template']+FewShotTemplateResult, input_variables=["instruct"])
 
-    llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.DeepAi,  verbose=True)
+    llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.Aivvm,  verbose=True)
     model = LLMChain(prompt=prompt, llm=llm, callbacks=[callback],verbose=True)
 
     question = BaseTemplateResult['instruct']

@@ -191,7 +191,7 @@ const CharacterSetting = () => {
 
     window.scrollTo({ top: 0 });
     var message = 'generate start';
-    var response = await fetch('http://localhost:8000/stream_chat_OAI', {
+    var response = await fetch('http://localhost:8000/char_setting_OAI', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

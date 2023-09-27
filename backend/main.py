@@ -65,7 +65,7 @@ async def stream_chat(ct_params: CT_parameters):
     return StreamingResponse(generator, media_type="text/event-stream")
 
 
-@app.post("/stream_chat_OAI")
+@app.post("/char_setting_OAI")
 async def stream_chat_OAI(message: OAI_Message):
     # Generate a stream of messages based on the content of the input message
     generator = send_message_OAI(message.content)
