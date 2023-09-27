@@ -3,7 +3,7 @@ import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import axios from 'axios';
-import { Select, select } from 'antd';
+import { Select } from 'antd';
 import { useAlert } from 'react-alert';
 import { AnimatedCounter } from 'react-animated-counter';
 
@@ -109,10 +109,10 @@ const CharacterSetting = () => {
   }, []);
   useEffect(() => {
     modelRam.map((option, index) => {
-      if (option.value == selectedOption) {
+      if (option.value === selectedOption) {
         const extractedNumber = parseFloat(option.RAM.match(/[\d.]+/)[0]);
         setShowRam(extractedNumber);
-      } else if (selectedOption == 'GPT3.5') {
+      } else if (selectedOption === 'GPT3.5') {
         window.scrollTo({ top: 0 });
         setShowRam(0);
       }
@@ -134,7 +134,7 @@ const CharacterSetting = () => {
     }
   }, [streamToken]);
   const sendMessage = async () => {
-    if (selectedOption == 'Model select') {
+    if (selectedOption === 'Model select') {
       // alert.error('Choose the Model');
       alert.error(<div style={{ textTransform: 'initial' }}>Choose the Model</div>);
       return;
