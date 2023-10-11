@@ -1,6 +1,7 @@
 import asyncio
 import os
 from typing import AsyncIterable
+import g4f
 
 import uvicorn
 from dotenv import load_dotenv
@@ -67,9 +68,7 @@ async def stream_chat(ct_params: CT_parameters):
 
 @app.post("/char_setting_OAI")
 async def stream_chat_OAI(message: OAI_Message):
-    # Generate a stream of messages based on the content of the input message
     generator = send_message_OAI(message.content)
-    # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
 
 
@@ -110,4 +109,4 @@ def character_chat_OAI(message: OAI_Message_chat):
     return StreamingResponse(generator, media_type="text/event-stream")
 
 if __name__ == "__main__":
-    uvicorn.run(host="0.0.0.0", port=8000, app=app)
+    uvicorn.run(host="0.0.0.0", port=8000, app=app, loop='asyncio')
