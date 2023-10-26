@@ -32,7 +32,6 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     )
     try:
         async for token in callback.aiter():
-            print(token)
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
