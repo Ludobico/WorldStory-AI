@@ -3,7 +3,9 @@ import asyncio
 from typing import AsyncIterable, Optional, List, Mapping, Any
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from langchain import PromptTemplate, LLMChain
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+# from langchain import PromptTemplate, LLMChain
 from Module.BaseTemplate import chat_base_template
 from langchain.schema import HumanMessage
 
@@ -19,7 +21,7 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message"])
 
-    llm: LLM = G4FLLM(model=models.gpt_35_turbo, provider=Provider.Acytoo, callbacks=[callback], verbose=True)
+    llm: LLM = G4FLLM(model=models.gpt_35_turbo_16k, provider=Provider.GptGo, callbacks=[callback], verbose=True)
     model = LLMChain(prompt=prompt, llm=llm, verbose=True)
 
     char_prompt = chat_base_template_result['char_prompt']
@@ -30,6 +32,7 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     )
     try:
         async for token in callback.aiter():
+            print(token)
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
