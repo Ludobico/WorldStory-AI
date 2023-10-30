@@ -16,7 +16,9 @@ import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
 from Module.CharacterSettingCT_Stream import send_message
-from Module.CharacterSettingOAI_Proxy_Stream import send_message_OAI
+
+# Legacy
+from backend.Legacy.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
@@ -65,11 +67,11 @@ async def stream_chat(ct_params: CT_parameters):
     # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
 
-
-@app.post("/char_setting_OAI")
-async def stream_chat_OAI(message: OAI_Message):
-    generator = send_message_OAI(message.content)
-    return StreamingResponse(generator, media_type="text/event-stream")
+# Legacy
+# @app.post("/char_setting_OAI")
+# async def stream_chat_OAI(message: OAI_Message):
+#     generator = send_message_OAI(message.content)
+#     return StreamingResponse(generator, media_type="text/event-stream")
 
 
 @app.get("/generate_setting_config")
