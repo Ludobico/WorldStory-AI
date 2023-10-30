@@ -1,14 +1,10 @@
-from typing import Optional, List, Mapping, Any, AsyncIterable
+from typing import Optional, List, Any
 from langchain.llms.base import LLM
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 
 import g4f
 
 from functools import partial
 from langchain.callbacks.manager import AsyncCallbackManagerForLLMRun
-from langchain.callbacks import AsyncIteratorCallbackHandler
-import asyncio
 
 class CustomLLM(LLM):
   def __init__(self):
@@ -19,7 +15,7 @@ class CustomLLM(LLM):
   def _llm_type(self) -> str:
     return "custom"
   
-  def _call(self, prompt: str, stop: Optional[list[str]] = None) -> str:
+  def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
     out = g4f.ChatCompletion.create(
       model=self.model,
       messages=[{"role": "user", "content": prompt}],
@@ -32,7 +28,7 @@ class CustomLLM(LLM):
         out = out[:min_stop]
     return out
   
-  async def _acall(self, prompt: str, stop: Optional[list[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
+  async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
     if run_manager:
       text_callback = partial(run_manager.on_llm_new_token)
