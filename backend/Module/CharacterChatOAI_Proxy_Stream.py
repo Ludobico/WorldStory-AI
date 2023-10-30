@@ -12,7 +12,7 @@ from langchain.schema import HumanMessage
 import g4f
 from g4f import Provider, models
 from langchain.llms.base import LLM
-from Module.G4FLLM import G4FLLM
+from backend.Legacy.G4FLLM import G4FLLM
 
 
 async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:

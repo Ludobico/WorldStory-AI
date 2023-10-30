@@ -1,5 +1,5 @@
 import g4f
-from G4FLLM import G4FLLM
+from backend.Legacy.G4FLLM import G4FLLM
 from typing import AsyncIterable, Optional, List, Mapping, Any
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
