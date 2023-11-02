@@ -19,12 +19,13 @@ async def character_setting_gpt_stream(content : str):
 
   prompt = PromptTemplate(template=BaseTemplateResult['template'] + FewShotTemplateResult, input_variables=["instruct"])
 
-  chain = LLMChain(llm=llm, prompt=prompt)
+  chain = LLMChain(llm=llm, prompt=prompt, callbacks=[callback])
   question = BaseTemplateResult['instruct']
 
   task = asyncio.create_task(
       chain.arun(question)
   )
+
   try:
       async for token in callback.aiter():
           yield token
@@ -34,5 +35,6 @@ async def character_setting_gpt_stream(content : str):
       callback.done.set()
 
   await task
+
   # tasks = [async_generate(chain, question)]
   # await asyncio.gather(*tasks)

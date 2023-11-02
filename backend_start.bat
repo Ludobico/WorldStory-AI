@@ -1,0 +1,1 @@
+start cmd /k "cd ./backend && cd ./worldstory_backend/Scripts && activate && cd ../../ && uvicorn main:app --reload"
