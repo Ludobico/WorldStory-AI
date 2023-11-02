@@ -3,14 +3,16 @@ from typing import AsyncIterable
 
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
+from langchain.callbacks import AsyncIteratorCallbackHandler
 from Module.BaseTemplate import base_template, few_shot_base_template
 
-from CustomLLM import CustomLLM
+from Module.CustomLLM import CustomLLM
 async def async_generate(chain, question):
   resp = await chain.arun(question)
   return resp
 
 async def character_setting_gpt_stream(content : str):
+  callback = AsyncIteratorCallbackHandler()
   llm = CustomLLM()
   BaseTemplateResult = base_template()
   FewShotTemplateResult = few_shot_base_template()
@@ -19,5 +21,18 @@ async def character_setting_gpt_stream(content : str):
 
   chain = LLMChain(llm=llm, prompt=prompt)
   question = BaseTemplateResult['instruct']
-  tasks = [async_generate(chain, question)]
-  await asyncio.gather(*tasks)
+
+  task = asyncio.create_task(
+      chain.arun(question)
+  )
+  try:
+      async for token in callback.aiter():
+          yield token
+  except Exception as e:
+      print(f"Caught exception: {e}")
+  finally:
+      callback.done.set()
+
+  await task
+  # tasks = [async_generate(chain, question)]
+  # await asyncio.gather(*tasks)

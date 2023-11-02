@@ -12,7 +12,7 @@ from langchain.schema import HumanMessage
 import g4f
 from g4f import Provider, models
 from langchain.llms.base import LLM
-from backend.Legacy.G4FLLM import G4FLLM
+from Legacy.G4FLLM import G4FLLM
 
 
 async def send_message_OAI(content: str) -> AsyncIterable[str]:

@@ -90,6 +90,7 @@ async def generate_concurrently():
   await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-  loop = asyncio.get_event_loop()
-  loop.run_until_complete(generate_concurrently())
-  loop.close
+  # loop = asyncio.get_event_loop()
+  # loop.run_until_complete(generate_concurrently())
+  # loop.close
+  asyncio.run(generate_concurrently())

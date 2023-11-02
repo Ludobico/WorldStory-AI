@@ -7,17 +7,14 @@ from functools import partial
 from langchain.callbacks.manager import AsyncCallbackManagerForLLMRun
 
 class CustomLLM(LLM):
-  def __init__(self):
-    self.model = g4f.models.gpt_35_turbo
-    self.proriver = g4f.Provider.GptGo
-
   @property
   def _llm_type(self) -> str:
     return "custom"
   
   def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
+    model = g4f.models.gpt_35_turbo
     out = g4f.ChatCompletion.create(
-      model=self.model,
+      model=model,
       messages=[{"role": "user", "content": prompt}],
     )
 
@@ -30,11 +27,13 @@ class CustomLLM(LLM):
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
+    model = g4f.models.gpt_35_turbo
+    provider = g4f.Provider.GptGo
     if run_manager:
       text_callback = partial(run_manager.on_llm_new_token)
     
     text = ""
-    for token in g4f.ChatCompletion.create(model=self.model,provider=self.proriver,messages=[{"role": "user", "content": prompt}], stream=True):
+    for token in g4f.ChatCompletion.create(model=model,provider=provider,messages=[{"role": "user", "content": prompt}], stream=True):
       if text_callback:
         await text_callback(token)
       text += token
