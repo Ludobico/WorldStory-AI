@@ -11,7 +11,7 @@ async def async_generate(chain, question):
   resp = await chain.arun(question)
   return resp
 
-async def character_setting_gpt_stream(content : str):
+async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   callback = AsyncIteratorCallbackHandler()
   llm = CustomLLM()
   BaseTemplateResult = base_template()
@@ -22,19 +22,18 @@ async def character_setting_gpt_stream(content : str):
   chain = LLMChain(llm=llm, prompt=prompt, callbacks=[callback])
   question = BaseTemplateResult['instruct']
 
-  task = asyncio.create_task(
-      chain.arun(question)
-  )
+  # task = asyncio.create_task(chain.arun(question))
+  # task = chain.arun(question)
 
-  try:
-      async for token in callback.aiter():
-          yield token
-  except Exception as e:
-      print(f"Caught exception: {e}")
-  finally:
-      callback.done.set()
+  # try:
+  #     async for token in callback.aiter():
+  #         yield token
+  # except Exception as e:
+  #     print(f"Caught exception: {e}")
+  # finally:
+  #     callback.done.set()
 
-  await task
+  # await task
 
-  # tasks = [async_generate(chain, question)]
-  # await asyncio.gather(*tasks)
+  tasks = [async_generate(chain, question)]
+  await asyncio.gather(*tasks)

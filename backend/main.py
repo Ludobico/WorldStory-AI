@@ -74,13 +74,18 @@ async def stream_chat(ct_params: CT_parameters):
 #     generator = send_message_OAI(message.content)
 #     return StreamingResponse(generator, media_type="text/event-stream")
 
-@app.post("/char_setting_OAI")
-async def char_setting_OAI(message : OAI_Message):
-    generator = character_setting_gpt_stream(message.content)
-    # return asyncio.run(generator)
-    return StreamingResponse(generator, media_type="text/event-stream")
+# token별 스트리밍
+# @app.post("/char_setting_OAI")
+# async def char_setting_OAI(message : OAI_Message):
+#     generator = character_setting_gpt_stream(message.content)
+#     # return asyncio.run(generator)
+#     return StreamingResponse(generator, media_type="text/event-stream")
     # return await StreamingResponse(character_setting_gpt_stream(message.content), media_type="text/event-stream")
 
+@app.post("/char_setting_OAI")
+def char_setting_OAI(message : OAI_Message):
+    generator = character_setting_gpt_stream(message.content)
+    return asyncio.run(generator)
 
 
 @app.get("/generate_setting_config")
