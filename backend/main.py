@@ -10,7 +10,9 @@ from fastapi.responses import StreamingResponse
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from pydantic import BaseModel
 
-from langchain import PromptTemplate, LLMChain
+# from langchain import PromptTemplate, LLMChain
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
@@ -85,7 +87,7 @@ async def stream_chat(ct_params: CT_parameters):
 @app.post("/char_setting_OAI")
 def char_setting_OAI(message : OAI_Message):
     generator = character_setting_gpt_stream(message.content)
-    return asyncio.run(generator)
+    return StreamingResponse(generator, media_type="text/event-stream")
 
 
 @app.get("/generate_setting_config")

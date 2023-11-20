@@ -22,18 +22,14 @@ async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   chain = LLMChain(llm=llm, prompt=prompt, callbacks=[callback])
   question = BaseTemplateResult['instruct']
 
-  # task = asyncio.create_task(chain.arun(question))
-  # task = chain.arun(question)
+  task = asyncio.create_task(chain.arun(question))
+  
+  try:
+      async for token in callback.aiter():
+          yield token
+  except Exception as e:
+      print(f"Caught exception: {e}")
+  finally:
+      callback.done.set()
 
-  # try:
-  #     async for token in callback.aiter():
-  #         yield token
-  # except Exception as e:
-  #     print(f"Caught exception: {e}")
-  # finally:
-  #     callback.done.set()
-
-  # await task
-
-  tasks = [async_generate(chain, question)]
-  await asyncio.gather(*tasks)
+  await task
