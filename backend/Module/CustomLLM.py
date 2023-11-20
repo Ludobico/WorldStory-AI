@@ -28,7 +28,7 @@ class CustomLLM(LLM):
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
     model = g4f.models.gpt_35_turbo
-    provider = g4f.Provider.GptGo
+    provider = g4f.Provider.GeekGpt
     if run_manager:
       text_callback = partial(run_manager.on_llm_new_token)
     

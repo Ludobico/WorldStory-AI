@@ -19,10 +19,10 @@ async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
 
   prompt = PromptTemplate(template=BaseTemplateResult['template'] + FewShotTemplateResult, input_variables=["instruct"])
 
-  chain = LLMChain(llm=llm, prompt=prompt, callbacks=[callback])
+  chain = LLMChain(llm=llm, prompt=prompt)
   question = BaseTemplateResult['instruct']
 
-  task = asyncio.create_task(chain.arun(question))
+  task = asyncio.create_task(chain.arun(question, callbacks=[callback]))
   
   try:
       async for token in callback.aiter():
