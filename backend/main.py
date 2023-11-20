@@ -88,7 +88,7 @@ def char_setting_OAI(message : OAI_Message):
     return StreamingResponse(generator, media_type="text/event-stream")
 
 @app.post("/char_setting_OAI_beta")
-def char_setting_OAI(message : OAI_Message):
+def char_setting_OAI_beta(message : OAI_Message):
     generator = character_setting_gpt4_stream(message.content)
     return StreamingResponse(generator, media_type="text/event-stream")
 
