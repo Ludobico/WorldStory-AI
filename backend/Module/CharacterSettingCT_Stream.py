@@ -4,7 +4,7 @@ from typing import AsyncIterable
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from langchain.llms import CTransformers
+from langchain.llms.ctransformers import CTransformers
 from Module.BaseTemplate import base_template
 
 
