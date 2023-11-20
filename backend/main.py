@@ -18,7 +18,7 @@ import tracemalloc
 import uvicorn
 from langchain.llms import CTransformers
 from Module.CharacterSettingCT_Stream import send_message
-from Module.CharacterSettingGPT_Stream import character_setting_gpt_stream
+from Module.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
 
 # Legacy
 from Legacy.CharacterSettingOAI_Proxy_Stream import send_message_OAI
@@ -65,9 +65,7 @@ class OAI_Message(BaseModel):
 
 @app.post("/stream_chat")
 async def stream_chat(ct_params: CT_parameters):
-    # Generate a stream of messages based on the content of the input message
     generator = send_message(ct_params)
-    # Return a streaming response with the generated messages
     return StreamingResponse(generator, media_type="text/event-stream")
 
 # Legacy
@@ -87,6 +85,11 @@ async def stream_chat(ct_params: CT_parameters):
 @app.post("/char_setting_OAI")
 def char_setting_OAI(message : OAI_Message):
     generator = character_setting_gpt_stream(message.content)
+    return StreamingResponse(generator, media_type="text/event-stream")
+
+@app.post("/char_setting_OAI_beta")
+def char_setting_OAI(message : OAI_Message):
+    generator = character_setting_gpt4_stream(message.content)
     return StreamingResponse(generator, media_type="text/event-stream")
 
 

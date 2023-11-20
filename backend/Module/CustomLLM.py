@@ -38,3 +38,22 @@ class CustomLLM(LLM):
         await text_callback(token)
       text += token
     return text
+
+class CustomLLM_BETA(LLM):
+  @property
+  def _llm_type(self) -> str:
+    return "custom_beta"
+  
+  async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
+    text_callback = None
+    model = g4f.models.gpt_4
+    provider = g4f.Provider.GeekGpt
+    if run_manager:
+      text_callback = partial(run_manager.on_llm_new_token)
+    
+    text = ""
+    for token in g4f.ChatCompletion.create(model=model,provider=provider,messages=[{"role": "user", "content": prompt}], stream=True):
+      if text_callback:
+        await text_callback(token)
+      text += token
+    return text

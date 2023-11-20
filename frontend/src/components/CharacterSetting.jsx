@@ -78,7 +78,9 @@ const CharacterSetting = () => {
         .then(() => {
           // alert.success('Character Generated in your backend/Characters folder');
           alert.success(
-            <div style={{ textTransform: 'initial' }}>Character Generated in your backend/Characters folder</div>
+            <div style={{ textTransform: 'initial' }}>
+              The Character was Generated in your backend/Characters folder
+            </div>
           );
         });
     }
