@@ -1,0 +1,29 @@
+.chat_message_log {
+  padding: 24px;
+  text-align: left;
+  /* display: flex; */
+  color: white;
+}
+
+.chat_message_chat_message {
+  padding: 12px;
+  display: flex;
+  /* max-width: 480px; */
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+}
+
+.chat_message_avatar {
+  background: white;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+.chat_message_message {
+  padding-left: 12px;
+}
+
+.chat_message_log .chatbot {
+  background-color: rgba(255, 255, 255, 0.1);
+}

@@ -9,7 +9,8 @@ import axios from 'axios';
 import giga from '../Static/maxresdefault.jpg';
 import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
-import ChatMessage from './ChatMessage';
+import './ChatMessage.css';
+import '../normal.css';
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -160,51 +161,16 @@ const CharacterChat = () => {
 
   // 채팅
   const [inputMessage, setInputMessage] = useState('');
-  const [message, setMessage] = useState([]);
-  const [is_human, setIs_human] = useState(true);
-  const [previsousMessage, setPrevisousMessage] = useState([]);
-  const [currentTitle, setCurrentTitle] = useState([]);
-
-  // const handleInputChange = (e) => {
-  //   setInputMessage(e.target.value);
-  // };
+  const [chatLog, setChatLog] = useState([
+    {
+      user: 'chatbot',
+      message: 'how can i today?',
+    },
+  ]);
 
   const handleSendMessage = async () => {
-    // setMessage([]);
-
-    var req_data = {
-      content: inputMessage,
-      prompt: selectedCharacter,
-    };
-
-    var response = await fetch('http://localhost:8000/character_chat_OAI', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(req_data),
-    });
-
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder('utf-8');
-
-    async function processText() {
-      while (true) {
-        const result = await reader.read();
-        if (result.done) {
-          break;
-        }
-        let token = decoder.decode(result.value);
-        if (token.endsWith('!') || token.endsWith('?')) {
-          setMessage((streamToken) => [...streamToken, token + '\n']);
-        } else {
-          setMessage((streamToken) => [...streamToken, token + '']);
-        }
-        // 자연스러운 streaming을 위해 제한시간을 걸어둠
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    }
-    processText();
+    setChatLog([...chatLog, { user: 'me', message: `${inputMessage}` }]);
+    setInputMessage('');
   };
 
   return (
@@ -238,7 +204,19 @@ const CharacterChat = () => {
           <div className="chat_background">
             <>
               {/* 메시지 */}
-              <div className="chat_content">{}</div>
+              <div className="chat_content">
+                <div className="chat_message_top_div">
+                  <div className="chat_message_log">
+                    {chatLog.map((message, index) => (
+                      <ChatMessages key={index} message={message} />
+                    ))}
+                    <div className="chat_message_chat_message chatbot">
+                      <div className="chat_message_avatar chatbot_avatar"></div>
+                      <div className="chat_message_message">I am an AI</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </>
             <div className="chat_input">
               {/* 버튼 */}
@@ -251,8 +229,7 @@ const CharacterChat = () => {
                 value={inputMessage}
               />
               <div className="chat_send">
-                {/* <button onClick={handleSendMessage}> */}
-                <button>
+                <button onClick={handleSendMessage}>
                   <SendOutlined />
                 </button>
               </div>
@@ -262,6 +239,13 @@ const CharacterChat = () => {
       </Layout>
     </div>
   );
+};
+
+const ChatMessages = ({ message }) => {
+  <div className={`chat_message_chat_message ${message.user === 'chatbot'}`}>
+    <div className={`chat_message_avatar ${message.user === 'chatbot'}`}>Me</div>
+    <div className="chat_message_message">{message.message}</div>
+  </div>;
 };
 
 export default CharacterChat;
