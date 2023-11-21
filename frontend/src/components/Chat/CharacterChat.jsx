@@ -11,6 +11,7 @@ import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
 import './ChatMessage.css';
 import '../normal.css';
+import { useAlert } from 'react-alert';
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -23,6 +24,8 @@ function getItem(label, key, icon, children) {
 }
 
 const CharacterChat = () => {
+  // 알림
+  const alert = useAlert();
   // 슬라이드 setting
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -68,7 +71,7 @@ const CharacterChat = () => {
   // Character list
   const [characterItems, setCharacterItems] = useState([getItem('Character', 'sub1', <UserOutlined />, null)]);
   // 선택된 캐릭터
-  const [selectedCharacter, setSeletedCharacter] = useState();
+  const [selectedCharacter, setSeletedCharacter] = useState(false);
   useEffect(() => {
     axios.get('http://localhost:8000/char_list_check').then((res) => {
       const charracter_list = res.data.map((item) => getItem(item, item, null, null));
@@ -160,17 +163,70 @@ const CharacterChat = () => {
   };
 
   // 채팅
+  // 인풋메시지
   const [inputMessage, setInputMessage] = useState('');
+  // 유저, 챗봇 구분
+  const [isUser, SetisUser] = useState(true);
+  // 전체로그
   const [chatLog, setChatLog] = useState([
     {
       user: 'chatbot',
-      message: 'how can i today?',
+      name: 'chatbot',
+      message: ['How can i help you?'],
+    },
+    {
+      user: 'me',
+      name: 'me',
+      message: 'I want to use Chatbot',
     },
   ]);
-
+  // 챗봇의 답변은 streaming 형식이기때문에 계속 페이지가 렌더링되는것을 막기위해 다른 state 값 필요
+  const [chatbot_res, setChatbot_res] = useState([]);
+  // 채팅 보내기
   const handleSendMessage = async () => {
-    setChatLog([...chatLog, { user: 'me', message: `${inputMessage}` }]);
+    if (selectedCharacter === false) {
+      alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
+      return;
+    }
+    if (isUser === true) {
+      setChatLog([...chatLog, { user: 'me', name: 'me', message: `${inputMessage}` }]);
+    }
+    var response = await fetch('http://localhost:8000/character_chat_OAI', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: inputMessage,
+        prompt: selectedCharacter,
+      }),
+    });
     setInputMessage('');
+    var reader = response.body.getReader();
+    var decoder = new TextDecoder('utf-8');
+    // setChatLog([...chatLog, { user: 'chatbot', name: 'chatbot', message: [''] }]);
+    async function processText() {
+      while (true) {
+        const result = await reader.read();
+        console.log(result);
+        if (result.done) {
+          break;
+        }
+        let token = decoder.decode(result.value);
+        console.log(token);
+        // setChatLog((prevChatLog) => [
+        //   ...prevChatLog,
+        //   {
+        //     user: 'chatbot',
+        //     name: 'chatbot',
+        //     message: token.endsWith('!') || token.endsWith('?') ? [token + '\n'] : [token + ''],
+        //   },
+        // ]);
+        // 자연스러운 streaming을 위해 제한시간을 걸어둠
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    }
+    processText();
   };
 
   return (
@@ -210,10 +266,6 @@ const CharacterChat = () => {
                     {chatLog.map((message, index) => (
                       <ChatMessages key={index} message={message} />
                     ))}
-                    <div className="chat_message_chat_message chatbot">
-                      <div className="chat_message_avatar chatbot_avatar"></div>
-                      <div className="chat_message_message">I am an AI</div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -242,10 +294,32 @@ const CharacterChat = () => {
 };
 
 const ChatMessages = ({ message }) => {
-  <div className={`chat_message_chat_message ${message.user === 'chatbot'}`}>
-    <div className={`chat_message_avatar ${message.user === 'chatbot'}`}>Me</div>
-    <div className="chat_message_message">{message.message}</div>
-  </div>;
+  return (
+    <>
+      <div className={`chat_message_name`}>{message.name}</div>
+      <div className="chat_message_chat_message">
+        <div className="chat_message_avatar_wrapper">
+          {message.user === 'chatbot' ? (
+            <div className={`chat_message_avatar chatbot`}></div>
+          ) : (
+            <div className={`chat_message_avatar user`}></div>
+          )}
+        </div>
+        {message.user === 'chatbot' ? (
+          <div className="chat_message_message chatbot">
+            {message.message.map((token, index) => (
+              <span key={index} className="">
+                {token}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div className="chat_message_message user">{message.message}</div>
+        )}
+        {/* <div className="chat_message_message">{message.message}</div> */}
+      </div>
+    </>
+  );
 };
 
 export default CharacterChat;
