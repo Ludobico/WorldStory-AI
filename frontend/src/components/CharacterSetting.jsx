@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
+import TestImage from './Static/test.png';
 import axios from 'axios';
 import { Select } from 'antd';
 import { useAlert } from 'react-alert';
@@ -9,8 +10,11 @@ import { AnimatedCounter } from 'react-animated-counter';
 
 const CharacterSetting = () => {
   const alert = useAlert();
-  // llamaCPP에서 받은 chunk 단위로 나누어진 텍스트데이터
+  // LLM에서 받은 chunk 단위로 나누어진 텍스트데이터
   const [streamToken, setStreamToken] = useState([]);
+
+  // (beta) 텍스트데이터가 끝날때 나오는 image flag
+  const [imageFlag, setImageFlag] = useState(false);
 
   // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
   const text_div_ref = useRef();
@@ -272,6 +276,7 @@ const CharacterSetting = () => {
             </span>
           ))}
         </div>
+        {imageFlag ? <img src={TestImage} className="CharacterSetting_generate_image" /> : null}
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_button">

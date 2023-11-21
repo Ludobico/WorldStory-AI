@@ -9,6 +9,7 @@ import axios from 'axios';
 import giga from '../Static/maxresdefault.jpg';
 import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
+import ChatMessage from './ChatMessage';
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -146,7 +147,7 @@ const CharacterChat = () => {
   const handleModelSelet = (item) => {
     setSelectedModelItem([getItem(item.key, item.key, <SELECT_MODEL_LOGO />)]);
   };
-  // 선택된 캐릭처
+  // 선택된 캐릭터
   const handleCharacterSelet = (item) => {
     setSeletedCharacter(item.key);
     console.log(item.key);
@@ -166,10 +167,6 @@ const CharacterChat = () => {
   // const handleInputChange = (e) => {
   //   setInputMessage(e.target.value);
   // };
-
-  useEffect(() => {
-    console.log(message);
-  }, [message, currentTitle]);
 
   const handleSendMessage = async () => {
     // setMessage([]);
@@ -207,6 +204,11 @@ const CharacterChat = () => {
       }
     }
     processText();
+  };
+
+  const ChatMessageComponents = (inputMessage) => {
+    console.log(inputMessage);
+    return <ChatMessage />;
   };
 
   return (
@@ -253,7 +255,8 @@ const CharacterChat = () => {
                 value={inputMessage}
               />
               <div className="chat_send">
-                <button onClick={handleSendMessage}>
+                {/* <button onClick={handleSendMessage}> */}
+                <button onClick={() => ChatMessageComponents(inputMessage)}>
                   <SendOutlined />
                 </button>
               </div>

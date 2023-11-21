@@ -51,7 +51,7 @@ def chat_base_template(char_prompt_path):
     You are a Fictional Character that talks to a user through the ###character prompt### below.
     ###character prompt###
     {char_prompt}
-
+    ######
     Ensure your responses are consistent with the world and setting of your story
     Let's think step by step.
 
@@ -60,3 +60,8 @@ def chat_base_template(char_prompt_path):
 """
 
     return {"chat_template": chat_template, "char_prompt": char_prompt}
+
+def image_generate_prompt(text_gen_prompt):
+    image_gen_template = """
+    
+"""
