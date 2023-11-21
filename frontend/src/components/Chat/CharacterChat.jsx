@@ -161,6 +161,7 @@ const CharacterChat = () => {
   // 채팅
   const [inputMessage, setInputMessage] = useState('');
   const [message, setMessage] = useState([]);
+  const [is_human, setIs_human] = useState(true);
   const [previsousMessage, setPrevisousMessage] = useState([]);
   const [currentTitle, setCurrentTitle] = useState([]);
 
@@ -206,11 +207,6 @@ const CharacterChat = () => {
     processText();
   };
 
-  const ChatMessageComponents = (inputMessage) => {
-    console.log(inputMessage);
-    return <ChatMessage />;
-  };
-
   return (
     <div className="chat_top_div">
       <Layout
@@ -242,7 +238,7 @@ const CharacterChat = () => {
           <div className="chat_background">
             <>
               {/* 메시지 */}
-              <div className="chat_content"></div>
+              <div className="chat_content">{}</div>
             </>
             <div className="chat_input">
               {/* 버튼 */}
@@ -256,7 +252,7 @@ const CharacterChat = () => {
               />
               <div className="chat_send">
                 {/* <button onClick={handleSendMessage}> */}
-                <button onClick={() => ChatMessageComponents(inputMessage)}>
+                <button>
                   <SendOutlined />
                 </button>
               </div>
