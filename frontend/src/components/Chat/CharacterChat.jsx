@@ -170,18 +170,18 @@ const CharacterChat = () => {
   // 전체로그
   const [chatLog, setChatLog] = useState([
     {
-      user: 'chatbot',
+      user: isUser,
       name: 'chatbot',
       message: ['How can i help you?'],
     },
     {
-      user: 'me',
+      user: isUser,
       name: 'me',
       message: 'I want to use Chatbot',
     },
   ]);
   // 챗봇의 답변은 streaming 형식이기때문에 계속 페이지가 렌더링되는것을 막기위해 다른 state 값 필요
-  const [chatbot_res, setChatbot_res] = useState([]);
+  const [chatbotRes, setChatbotRes] = useState([]);
   // 채팅 보내기
   const handleSendMessage = async () => {
     if (selectedCharacter === false) {
@@ -204,29 +204,39 @@ const CharacterChat = () => {
     setInputMessage('');
     var reader = response.body.getReader();
     var decoder = new TextDecoder('utf-8');
-    // setChatLog([...chatLog, { user: 'chatbot', name: 'chatbot', message: [''] }]);
+
     async function processText() {
       while (true) {
         const result = await reader.read();
-        console.log(result);
         if (result.done) {
+          setChatLog([...chatLog, { user: 'chatbot', name: 'chatbot', message: chatbotRes }]);
           break;
         }
-        let token = decoder.decode(result.value);
-        console.log(token);
-        // setChatLog((prevChatLog) => [
-        //   ...prevChatLog,
-        //   {
-        //     user: 'chatbot',
-        //     name: 'chatbot',
-        //     message: token.endsWith('!') || token.endsWith('?') ? [token + '\n'] : [token + ''],
-        //   },
-        // ]);
+        let Bot_token = decoder.decode(result.value);
+        if (Bot_token.endsWith('!') || Bot_token.endsWith('?')) {
+          setChatbotRes((ChatbotRes) => [...ChatbotRes, Bot_token + '\n']);
+        } else {
+          setChatbotRes((ChatbotRes) => [...ChatbotRes, Bot_token + '']);
+        }
+        console.log(chatbotRes);
         // 자연스러운 streaming을 위해 제한시간을 걸어둠
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
     }
     processText();
+  };
+
+  const test_handle = async () => {
+    if (selectedCharacter === false) {
+      alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
+      return;
+    }
+    if (isUser === true) {
+      setChatLog([...chatLog, { user: isUser, name: 'me', message: `${inputMessage}` }]);
+      SetisUser(false);
+      setChatLog([...chatLog, { user: isUser, name: 'chatbot', message: `I'm bot` }]);
+      SetisUser(true);
+    }
   };
 
   return (
@@ -266,6 +276,9 @@ const CharacterChat = () => {
                     {chatLog.map((message, index) => (
                       <ChatMessages key={index} message={message} />
                     ))}
+                    {/* {chatLog.map((message, index) => (
+                      <ChatMessages key={index} message={message} />
+                    ))} */}
                   </div>
                 </div>
               </div>
@@ -281,7 +294,8 @@ const CharacterChat = () => {
                 value={inputMessage}
               />
               <div className="chat_send">
-                <button onClick={handleSendMessage}>
+                {/* <button onClick={handleSendMessage}> */}
+                <button onClick={test_handle}>
                   <SendOutlined />
                 </button>
               </div>
@@ -299,24 +313,24 @@ const ChatMessages = ({ message }) => {
       <div className={`chat_message_name`}>{message.name}</div>
       <div className="chat_message_chat_message">
         <div className="chat_message_avatar_wrapper">
-          {message.user === 'chatbot' ? (
-            <div className={`chat_message_avatar chatbot`}></div>
-          ) : (
+          {message.user ? (
             <div className={`chat_message_avatar user`}></div>
+          ) : (
+            <div className={`chat_message_avatar chatbot`}></div>
           )}
         </div>
-        {message.user === 'chatbot' ? (
-          <div className="chat_message_message chatbot">
-            {message.message.map((token, index) => (
-              <span key={index} className="">
-                {token}
-              </span>
-            ))}
-          </div>
-        ) : (
+        {message.user ? (
+          // <div className="chat_message_message chatbot">
+          //   {message.message.map((token, index) => (
+          //     <span key={index} className="">
+          //       {token}
+          //     </span>
+          //   ))}
+          // </div>
           <div className="chat_message_message user">{message.message}</div>
+        ) : (
+          <div className="chat_message_message chatbot">{message.message}</div>
         )}
-        {/* <div className="chat_message_message">{message.message}</div> */}
       </div>
     </>
   );

@@ -224,7 +224,7 @@ const CharacterSetting = () => {
           setStreamToken((streamToken) => [...streamToken, token + '']);
         }
         // 자연스러운 streaming을 위해 제한시간을 걸어둠
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     }
     processText();
