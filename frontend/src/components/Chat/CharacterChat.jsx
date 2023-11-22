@@ -168,74 +168,57 @@ const CharacterChat = () => {
   // 유저, 챗봇 구분
   const [isUser, SetisUser] = useState(true);
   // 전체로그
-  const [chatLog, setChatLog] = useState([
-    {
-      user: isUser,
-      name: 'chatbot',
-      message: ['How can i help you?'],
-    },
-    {
-      user: isUser,
-      name: 'me',
-      message: 'I want to use Chatbot',
-    },
-  ]);
-  // 챗봇의 답변은 streaming 형식이기때문에 계속 페이지가 렌더링되는것을 막기위해 다른 state 값 필요
-  const [chatbotRes, setChatbotRes] = useState([]);
+  const [chatLog, setChatLog] = useState([{}]);
+  // 챗봇의 답변은 streaming 형식이기때문에 계속 페이지가 렌더링되는것을 막기위해 map함수의 key값 조정이 필요
+  const [chatMessagesKeys, setChatMessagesKeys] = useState(0);
   // 채팅 보내기
-  const handleSendMessage = async () => {
-    if (selectedCharacter === false) {
-      alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
-      return;
-    }
-    if (isUser === true) {
-      setChatLog([...chatLog, { user: 'me', name: 'me', message: `${inputMessage}` }]);
-    }
-    var response = await fetch('http://localhost:8000/character_chat_OAI', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        content: inputMessage,
-        prompt: selectedCharacter,
-      }),
-    });
-    setInputMessage('');
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder('utf-8');
-
-    async function processText() {
-      while (true) {
-        const result = await reader.read();
-        if (result.done) {
-          setChatLog([...chatLog, { user: 'chatbot', name: 'chatbot', message: chatbotRes }]);
-          break;
-        }
-        let Bot_token = decoder.decode(result.value);
-        if (Bot_token.endsWith('!') || Bot_token.endsWith('?')) {
-          setChatbotRes((ChatbotRes) => [...ChatbotRes, Bot_token + '\n']);
-        } else {
-          setChatbotRes((ChatbotRes) => [...ChatbotRes, Bot_token + '']);
-        }
-        console.log(chatbotRes);
-        // 자연스러운 streaming을 위해 제한시간을 걸어둠
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    }
-    processText();
-  };
-
   const test_handle = async () => {
     if (selectedCharacter === false) {
       alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
       return;
     }
-    if (isUser === true) {
-      setChatLog([...chatLog, { user: isUser, name: 'me', message: `${inputMessage}` }]);
-      SetisUser(false);
-      setChatLog([...chatLog, { user: isUser, name: 'chatbot', message: `I'm bot` }]);
-      SetisUser(true);
+    if (inputMessage.trim() !== '') {
+      setChatLog((prevChatLog) => [
+        ...prevChatLog,
+        { user: isUser, name: isUser ? 'me' : selectedCharacter, message: inputMessage },
+      ]);
+      var response = await fetch('http://localhost:8000/character_chat_OAI', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: inputMessage,
+          prompt: selectedCharacter,
+        }),
+      });
+      var reader = response.body.getReader();
+      var decoder = new TextDecoder('utf-8');
+      async function processText() {
+        // Toggle isUser state
+        SetisUser((prevIsUser) => !prevIsUser);
+        while (true) {
+          const result = await reader.read();
+          if (result.done) {
+            SetisUser((prevIsUser) => !prevIsUser);
+            break;
+          }
+          let Bot_token = decoder.decode(result.value);
+          setChatLog((prevChatLog) => [
+            ...prevChatLog,
+            {
+              user: 'chatbot',
+              name: selectedCharacter,
+              message: Bot_token + (Bot_token.endsWith('!') || Bot_token.endsWith('?') ? '\n' : ''),
+            },
+          ]);
+          // 자연스러운 streaming을 위해 제한시간을 걸어둠
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
+      processText();
+
+      setInputMessage('');
     }
   };
 
@@ -268,21 +251,14 @@ const CharacterChat = () => {
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background">
-            <>
-              {/* 메시지 */}
-              <div className="chat_content">
-                <div className="chat_message_top_div">
-                  <div className="chat_message_log">
-                    {chatLog.map((message, index) => (
-                      <ChatMessages key={index} message={message} />
-                    ))}
-                    {/* {chatLog.map((message, index) => (
-                      <ChatMessages key={index} message={message} />
-                    ))} */}
-                  </div>
-                </div>
+            {/* 메시지 */}
+            <div className="chat_content">
+              <div className="chat_message_log">
+                {chatLog.map((message, index) => {
+                  return <ChatMessages key={index} message={message} isUser={isUser} />;
+                })}
               </div>
-            </>
+            </div>
             <div className="chat_input">
               {/* 버튼 */}
               <input
@@ -292,9 +268,13 @@ const CharacterChat = () => {
                   setInputMessage(e.target.value);
                 }}
                 value={inputMessage}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    test_handle();
+                  }
+                }}
               />
               <div className="chat_send">
-                {/* <button onClick={handleSendMessage}> */}
                 <button onClick={test_handle}>
                   <SendOutlined />
                 </button>
@@ -307,32 +287,18 @@ const CharacterChat = () => {
   );
 };
 
-const ChatMessages = ({ message }) => {
+const ChatMessages = ({ message, isUser }) => {
+  console.log(message);
   return (
-    <>
+    <div className="chat_message_top_div">
       <div className={`chat_message_name`}>{message.name}</div>
       <div className="chat_message_chat_message">
         <div className="chat_message_avatar_wrapper">
-          {message.user ? (
-            <div className={`chat_message_avatar user`}></div>
-          ) : (
-            <div className={`chat_message_avatar chatbot`}></div>
-          )}
+          <div className={`chat_message_avatar ${isUser ? 'user' : 'chatbot'}`}></div>
         </div>
-        {message.user ? (
-          // <div className="chat_message_message chatbot">
-          //   {message.message.map((token, index) => (
-          //     <span key={index} className="">
-          //       {token}
-          //     </span>
-          //   ))}
-          // </div>
-          <div className="chat_message_message user">{message.message}</div>
-        ) : (
-          <div className="chat_message_message chatbot">{message.message}</div>
-        )}
+        <div className={`chat_message_message ${isUser ? 'user' : 'chatbot'}`}>{message.message}</div>
       </div>
-    </>
+    </div>
   );
 };
 
