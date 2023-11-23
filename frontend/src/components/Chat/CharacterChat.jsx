@@ -178,6 +178,7 @@ const CharacterChat = () => {
   // 유저 이미지 확인
   useEffect(() => {
     axios.get('http://localhost:8000/user_image_check').then((res) => {
+      // base64로 인코딩된 이미지를 디코딩할때는 무적권 아래와 같은 형식으로 받아야함
       setUserImage(`data:image/png;base64, ${res.data}`);
     });
   }, [userImage]);

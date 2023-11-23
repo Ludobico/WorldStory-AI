@@ -13,7 +13,8 @@ def Character_folder_check():
     for folder_name in os.listdir(char_path):
       folder_path = os.path.join(char_path, folder_name)
       if os.path.isdir(folder_path):
-        char_folder_names.append(folder_name)
+          if folder_name != 'User':
+            char_folder_names.append(folder_name)
   return char_folder_names
 
 def user_config_parser():
