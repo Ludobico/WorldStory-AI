@@ -10,11 +10,14 @@ def test():
       image_files.append(os.path.join(user_image_path, filename))
 
   if len(image_files) > 1:
-    return random.choice(image_files)
+    image_files = str(random.choice(image_files))
   elif len(image_files) == 1:
-    return image_files[0]
+    image_files = str(image_files[0])
   else:
-    return None
+    image_files = None
+  
+  print(image_files)
+  print(type(image_files))
 
 if __name__ == "__main__":
   test()

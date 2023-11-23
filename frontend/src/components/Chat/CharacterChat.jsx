@@ -174,17 +174,13 @@ const CharacterChat = () => {
     axios.get('http://localhost:8000/user_name_check').then((res) => {
       setUserName(res.data);
     });
-    axios.get('http://localhost:8000/user_image_check').then((res) => {
-      console.log(res.data);
-    });
   }, [userName]);
   // 유저 이미지 확인
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/user_image').then((res) => {
-  //     const base64Image = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-  //     setUserImage(`data:image/jpg;base64,${base64Image}`);
-  //   });
-  // }, [userImage]);
+  useEffect(() => {
+    axios.get('http://localhost:8000/user_image_check').then((res) => {
+      setUserImage(`data:image/png;base64, ${res.data}`);
+    });
+  }, [userImage]);
 
   const chat_start_count = () => {
     setChatLog((prevLog) => [
@@ -238,9 +234,6 @@ const CharacterChat = () => {
             {/* 메시지 */}
             <div className="chat_content">
               <div className="chat_message_log">{dynamicChatComponents}</div>
-            </div>
-            <div>
-              <img src={userImage} />
             </div>
             <div className="chat_input">
               {/* 버튼 */}

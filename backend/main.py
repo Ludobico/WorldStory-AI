@@ -1,7 +1,7 @@
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.responses import StreamingResponse, FileResponse, Response
 from pydantic import BaseModel
 
 
@@ -127,10 +127,10 @@ def user_name_check():
     user_name = user_config_parser()
     return user_name
 
-@app.get("/user_image_check_ver1")
-def test_check():
-    test = "test"
-    return test
+@app.get("/user_image_check")
+def user_image_check():
+    user_image = user_image_parser()
+    return user_image
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app, loop='asyncio')

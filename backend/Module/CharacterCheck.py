@@ -2,6 +2,7 @@ import os
 import json
 import configparser
 import random
+import base64
 
 def Character_folder_check():
   cur_dir = os.getcwd()
@@ -36,9 +37,16 @@ def user_image_parser():
       image_files.append(os.path.join(user_image_path, filename))
 
   if len(image_files) > 1:
-    return random.choice(image_files)
+    image_files = str(random.choice(image_files))
   elif len(image_files) == 1:
-    return image_files[0]
+    image_files = str(image_files[0])
   else:
-    return None
+    image_files = None
+  
+  with open(image_files, 'rb') as f:
+    base64image = base64.b64encode(f.read())
+  
+  return base64image
+
+
 
