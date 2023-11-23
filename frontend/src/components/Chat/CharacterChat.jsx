@@ -23,7 +23,6 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-
 const CharacterChat = () => {
   // 알림
   const alert = useAlert();
@@ -167,61 +166,46 @@ const CharacterChat = () => {
   // 인풋메시지
   const [inputMessage, setInputMessage] = useState('');
   const [chatLog, setChatLog] = useState([{}]);
+  const [userName, setUserName] = useState();
+  const [userImage, setUserImage] = useState();
   const [chatComponent, setChatComponent] = useState(0);
-  // 채팅 보내기
-  const test_handle = async () => {
-    if (selectedCharacter === false) {
-      alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
-      return;
-    }
-    var response = await fetch('http://localhost:8000/character_chat_OAI', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        content: inputMessage,
-        prompt: selectedCharacter,
-      }),
+  // 유저 이름 확인
+  useEffect(() => {
+    axios.get('http://localhost:8000/user_name_check').then((res) => {
+      setUserName(res.data);
     });
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder('utf-8');
-    async function processText() {
-      while (true) {
-        const result = await reader.read();
-        if (result.done) {
-          break;
-        }
-        let Bot_token = decoder.decode(result.value);
-        setChatLog([
-          {
-            user: 'chatbot',
-            name: selectedCharacter,
-            message: Bot_token + (Bot_token.endsWith('!') || Bot_token.endsWith('?') ? '\n' : ''),
-          },
-        ]);
-        // 자연스러운 streaming을 위해 제한시간을 걸어둠
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    }
-    processText();
+    axios.get('http://localhost:8000/user_image_check').then((res) => {
+      console.log(res.data);
+    });
+  }, [userName]);
+  // 유저 이미지 확인
+  // useEffect(() => {
+  //   axios.get('http://localhost:8000/user_image').then((res) => {
+  //     const base64Image = btoa(new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  //     setUserImage(`data:image/jpg;base64,${base64Image}`);
+  //   });
+  // }, [userImage]);
 
-    setInputMessage('');
-  };
   const chat_start_count = () => {
-    // setChatComponent(chatComponent + 1);
     setChatLog((prevLog) => [
       ...prevLog,
       {
         index: prevLog.length,
-        name: selectedCharacter,
+        character_name: selectedCharacter,
+        user_name: userName,
         message: inputMessage,
       },
     ]);
   };
-  const create_dynamic_chat_component = Array.from({ length: chatLog.length }, (_, index) => (
-    <ChatTest key={index} inputMessage={chatLog[index].message} selectedCharacter={chatLog[index].name} />
-  ));
+  const createDynamicChatComponent = (chatLog) => {
+    return chatLog.map(
+      (chat, index) =>
+        index !== 0 && (
+          <ChatTest key={index} inputMessage={chat.message} selectedCharacter={chat.name} userName={chat.user_name} />
+        )
+    );
+  };
+  const dynamicChatComponents = createDynamicChatComponent(chatLog);
   return (
     <div className="chat_top_div">
       <Layout
@@ -253,7 +237,10 @@ const CharacterChat = () => {
           <div className="chat_background">
             {/* 메시지 */}
             <div className="chat_content">
-              <div className="chat_message_log">{create_dynamic_chat_component}</div>
+              <div className="chat_message_log">{dynamicChatComponents}</div>
+            </div>
+            <div>
+              <img src={userImage} />
             </div>
             <div className="chat_input">
               {/* 버튼 */}

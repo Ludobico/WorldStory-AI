@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ChatTest = ({ chatComponent, inputMessage, selectedCharacter }) => {
+const ChatTest = ({ inputMessage, selectedCharacter, userName }) => {
   // chatComponent, inputMessage, selectedCharacter 등의 값 사용
   return (
     <div className="chat_message_top_div">
       {/* <div className={`chat_message_name`}>{message.name}</div> */}
-      <div className="chat_message_name">{selectedCharacter}</div>
+      <div className="chat_message_name">{userName}</div>
       <div className="chat_message_chat_message">
         <div className="chat_message_avatar_wrapper">
           {/* <div className={`chat_message_avatar ${isUser ? 'user' : 'chatbot'}`}></div> */}
