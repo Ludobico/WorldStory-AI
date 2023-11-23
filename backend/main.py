@@ -1,32 +1,26 @@
-import asyncio
-import os
-from typing import AsyncIterable
-import g4f
-
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
-from langchain.callbacks import AsyncIteratorCallbackHandler
+from fastapi.responses import StreamingResponse, FileResponse, Response
 from pydantic import BaseModel
 
-# from langchain import PromptTemplate, LLMChain
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+
 from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
-from langchain.llms import CTransformers
 from Module.CharacterSettingCT_Stream import send_message
 from Module.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
 
 # Legacy
+# ----------------------------
 from Legacy.CharacterSettingOAI_Proxy_Stream import send_message_OAI
+# ----------------------------
 
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
 from Module.MakeCharacter import MakeCharacter
-from Module.CharacterCheck import Character_folder_check
+from Module.CharacterCheck import Character_folder_check, user_config_parser, user_image_parser
+from pathlib import Path
 from Module.CharacterChatOAI_Proxy_Stream import chat_with_OAI
 
 app = FastAPI()
@@ -117,7 +111,6 @@ def make_character(make_character : MakeCharacterPrompt):
 @app.get("/char_list_check")
 def char_list_check():
     char_list = Character_folder_check()
-    print(char_list)
     return char_list
 
 class OAI_Message_chat(BaseModel):
@@ -128,6 +121,16 @@ class OAI_Message_chat(BaseModel):
 def character_chat_OAI(message: OAI_Message_chat):
     generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt)
     return StreamingResponse(generator, media_type="text/event-stream")
+
+@app.get("/user_name_check")
+def user_name_check():
+    user_name = user_config_parser()
+    return user_name
+
+@app.get("/user_image_check")
+def user_image_check():
+    user_image = user_image_parser()
+    return user_image
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app, loop='asyncio')
