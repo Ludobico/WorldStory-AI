@@ -183,6 +183,9 @@ const CharacterChat = () => {
   }, [userImage]);
 
   const chat_start_count = () => {
+    if (selectedCharacter === false) {
+      return alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
+    }
     setChatLog((prevLog) => [
       ...prevLog,
       {
@@ -253,7 +256,7 @@ const CharacterChat = () => {
                 value={inputMessage}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    // test_handle();
+                    chat_start_count();
                   }
                 }}
               />
@@ -273,19 +276,5 @@ const CharacterChat = () => {
     </div>
   );
 };
-
-// const ChatMessages = ({ message, isUser }) => {
-//   return (
-//     <div className="chat_message_top_div">
-//       <div className={`chat_message_name`}>{message.name}</div>
-//       <div className="chat_message_chat_message">
-//         <div className="chat_message_avatar_wrapper">
-//           <div className={`chat_message_avatar ${isUser ? 'user' : 'chatbot'}`}></div>
-//         </div>
-//         <div className={`chat_message_message ${isUser ? 'user' : 'chatbot'}`}>{message.message}</div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default CharacterChat;

@@ -26,6 +26,13 @@
   height: 100px;
 }
 
+.chat_message_avatar {
+  background-color: white;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+}
+
 .user_message {
   padding-right: 20px;
 }
