@@ -34,7 +34,6 @@ const CharacterChat = () => {
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    // 버튼 클릭 시 / 경로로 이동
     navigate('/');
   };
 
@@ -178,7 +177,7 @@ const CharacterChat = () => {
   // 유저 이미지 확인
   useEffect(() => {
     axios.get('http://localhost:8000/user_image_check').then((res) => {
-      // base64로 인코딩된 이미지를 디코딩할때는 무적권 아래와 같은 형식으로 받아야함
+      // base64로 인코딩된 이미지를 디코딩할때는 아래와 같은 형식으로 받아야함
       setUserImage(`data:image/png;base64, ${res.data}`);
     });
   }, [userImage]);
@@ -190,6 +189,7 @@ const CharacterChat = () => {
         index: prevLog.length,
         character_name: selectedCharacter,
         user_name: userName,
+        user_image: userImage,
         message: inputMessage,
       },
     ]);
@@ -198,7 +198,13 @@ const CharacterChat = () => {
     return chatLog.map(
       (chat, index) =>
         index !== 0 && (
-          <ChatTest key={index} inputMessage={chat.message} selectedCharacter={chat.name} userName={chat.user_name} />
+          <ChatTest
+            key={index}
+            inputMessage={chat.message}
+            selectedCharacter={chat.character_name}
+            userName={chat.user_name}
+            userImage={chat.user_image}
+          />
         )
     );
   };

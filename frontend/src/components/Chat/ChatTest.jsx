@@ -1,20 +1,34 @@
 import React from 'react';
+import './ChatMessage.css';
 
-const ChatTest = ({ inputMessage, selectedCharacter, userName }) => {
-  // chatComponent, inputMessage, selectedCharacter 등의 값 사용
+const ChatTest = ({ inputMessage, selectedCharacter, userName, userImage }) => {
   return (
-    <div className="chat_message_top_div">
-      {/* <div className={`chat_message_name`}>{message.name}</div> */}
-      <div className="chat_message_name">{userName}</div>
-      <div className="chat_message_chat_message">
-        <div className="chat_message_avatar_wrapper">
-          {/* <div className={`chat_message_avatar ${isUser ? 'user' : 'chatbot'}`}></div> */}
-          <div className="chat_message_avatar user"></div>
+    <>
+      {/* User message */}
+      <div className="chat_message_top_div_user">
+        <div className="chat_message_user_name">{userName}</div>
+        <div className="user_info_wrapper ">
+          <div className="chat_message_message user_message">{inputMessage}</div>
+          <div className="chat_message_avatar_wrapper">
+            <div className="chat_message_avatar">
+              <img src={userImage} />
+            </div>
+          </div>
         </div>
-        {/* <div className={`chat_message_message ${isUser ? 'user' : 'chatbot'}`}>{message.message}</div> */}
-        <div className="chat_message_message user">{inputMessage}</div>
       </div>
-    </div>
+      {/* AI message */}
+      <div className="chat_message_top_div_AI">
+        <div className="chat_message_AI_name">{userName}</div>
+        <div className="AI_info_wrapper">
+          <div className="chat_message_avatar_wrapper">
+            <div className="chat_message_avatar">
+              <img src={userImage} />
+            </div>
+          </div>
+          <div className="chat_message_message AI_message">{inputMessage}</div>
+        </div>
+      </div>
+    </>
   );
 };
 
