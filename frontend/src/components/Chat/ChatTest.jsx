@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './ChatMessage.css';
 
-const ChatTest = ({ inputMessage, selectedCharacter, userName, userImage }) => {
+const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage }) => {
   const [streamToken, setStreamToken] = useState([]);
-  const [chracterImage, setCharacterImage] = useState();
-  // 캐릭터 이미지 가져오기
-  useEffect(() => {});
   const sendMessage_OAI = async () => {
     setStreamToken([]);
 
@@ -43,9 +41,9 @@ const ChatTest = ({ inputMessage, selectedCharacter, userName, userImage }) => {
     }
     processText();
   };
-  useEffect(() => {
-    sendMessage_OAI();
-  }, []);
+  // useEffect(() => {
+  //   sendMessage_OAI();
+  // }, []);
   return (
     <>
       {/* User message */}
@@ -66,7 +64,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, userName, userImage }) => {
         <div className="AI_info_wrapper">
           <div className="chat_message_avatar_wrapper">
             <div className="chat_message_avatar">
-              <img src={userImage} />
+              <img src={characterImage} />
             </div>
           </div>
           <div className="chat_message_message AI_message">

@@ -1,4 +1,5 @@
 import uvicorn
+from typing import Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, FileResponse, Response
@@ -19,7 +20,7 @@ from Legacy.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
 from Module.MakeCharacter import MakeCharacter
-from Module.CharacterCheck import Character_folder_check, user_config_parser, user_image_parser
+from Module.CharacterCheck import CharacterConfig
 from pathlib import Path
 from Module.CharacterChatOAI_Proxy_Stream import chat_with_OAI
 
@@ -101,7 +102,7 @@ def LLM_model_list():
 
 class MakeCharacterPrompt(BaseModel):
     name : str
-    prompt : str
+    prompt : Optional[str] = None
 
 @app.post("/make_character")
 def make_character(make_character : MakeCharacterPrompt):
@@ -110,7 +111,7 @@ def make_character(make_character : MakeCharacterPrompt):
 
 @app.get("/char_list_check")
 def char_list_check():
-    char_list = Character_folder_check()
+    char_list = CharacterConfig.Character_folder_check()
     return char_list
 
 class OAI_Message_chat(BaseModel):
@@ -122,14 +123,19 @@ def character_chat_OAI(message: OAI_Message_chat):
     generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt)
     return StreamingResponse(generator, media_type="text/event-stream")
 
+@app.post("/character_image_check")
+def character_image_check(character_name_check : MakeCharacterPrompt):
+    chracter_image = CharacterConfig.Character_image_parser(char_name=character_name_check.name)
+    return chracter_image
+
 @app.get("/user_name_check")
 def user_name_check():
-    user_name = user_config_parser()
+    user_name = CharacterConfig.user_config_parser()
     return user_name
 
 @app.get("/user_image_check")
 def user_image_check():
-    user_image = user_image_parser()
+    user_image = CharacterConfig.user_image_parser()
     return user_image
 
 if __name__ == "__main__":

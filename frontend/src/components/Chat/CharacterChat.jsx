@@ -167,7 +167,7 @@ const CharacterChat = () => {
   const [chatLog, setChatLog] = useState([{}]);
   const [userName, setUserName] = useState();
   const [userImage, setUserImage] = useState();
-  const [chatComponent, setChatComponent] = useState(0);
+  const [characterImage, setCharacterImage] = useState();
   // 유저 이름 확인
   useEffect(() => {
     axios.get('http://localhost:8000/user_name_check').then((res) => {
@@ -181,6 +181,18 @@ const CharacterChat = () => {
       setUserImage(`data:image/png;base64, ${res.data}`);
     });
   }, [userImage]);
+  // 캐릭터 이미지 확인
+  useEffect(() => {
+    if (selectedCharacter !== false) {
+      axios
+        .post('http://localhost:8000/character_image_check', {
+          name: selectedCharacter,
+        })
+        .then((res) => {
+          setCharacterImage(`data:image/png;base64, ${res.data}`);
+        });
+    }
+  }, [selectedCharacter]);
 
   const chat_start_count = () => {
     if (selectedCharacter === false) {
@@ -191,6 +203,7 @@ const CharacterChat = () => {
       {
         index: prevLog.length,
         character_name: selectedCharacter,
+        character_image: characterImage,
         user_name: userName,
         user_image: userImage,
         message: inputMessage,
@@ -207,6 +220,7 @@ const CharacterChat = () => {
             selectedCharacter={chat.character_name}
             userName={chat.user_name}
             userImage={chat.user_image}
+            characterImage={chat.character_image}
           />
         )
     );
