@@ -30,7 +30,6 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
       while (true) {
         const result = await reader.read();
         if (result.done) {
-          await save_history();
           break;
         }
         let token = decoder.decode(result.value);
@@ -59,10 +58,6 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   useEffect(() => {
     sendMessage_OAI();
   }, []);
-
-  const testconsole = () => {
-    console.log(streamToken);
-  };
   return (
     <div className="chat_message_top_div">
       {/* User message */}
@@ -77,13 +72,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
           </div>
         </div>
       </div>
-      <div className="chat_message_divider">
-        <button
-          onClick={() => {
-            testconsole();
-          }}
-        />
-      </div>
+      <div className="chat_message_divider"></div>
       {/* AI message */}
       <div className="chat_message_top_div_AI">
         <div className="chat_message_name chat_message_AI_name">{selectedCharacter}</div>
