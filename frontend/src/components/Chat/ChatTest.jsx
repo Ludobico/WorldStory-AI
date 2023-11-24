@@ -4,6 +4,9 @@ import './ChatMessage.css';
 
 const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage }) => {
   const [streamToken, setStreamToken] = useState([]);
+  const [testConv, setTestConv] = useState('');
+
+  // Chat with AI
   const sendMessage_OAI = async () => {
     setStreamToken([]);
 
@@ -41,9 +44,20 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
     }
     processText();
   };
+
+  // Save conversation history to backend
+  const history = () => {
+    console.log(testConv);
+    console.log(selectedCharacter);
+    console.log(inputMessage);
+  };
   // useEffect(() => {
   //   sendMessage_OAI();
   // }, []);
+  useEffect(() => {
+    setTestConv('hi');
+    history();
+  }, []);
   return (
     <div className="chat_message_top_div">
       {/* User message */}
@@ -68,11 +82,12 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
               <img src={characterImage} />
             </div>
           </div>
-          <div className="chat_message_message AI_message">
+          {/* <div className="chat_message_message AI_message">
             {streamToken.map((token, index) => (
               <span key={index}>{token}</span>
             ))}
-          </div>
+          </div> */}
+          <div className="chat_message_message AI_message">{testConv}</div>
         </div>
       </div>
     </div>
