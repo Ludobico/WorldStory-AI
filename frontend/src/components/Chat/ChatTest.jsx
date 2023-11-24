@@ -45,10 +45,10 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   //   sendMessage_OAI();
   // }, []);
   return (
-    <>
+    <div className="chat_message_top_div">
       {/* User message */}
       <div className="chat_message_top_div_user">
-        <div className="chat_message_user_name">{userName}</div>
+        <div className="chat_message_name chat_message_user_name">{userName}</div>
         <div className="user_info_wrapper ">
           <div className="chat_message_message user_message">{inputMessage}</div>
           <div className="chat_message_avatar_wrapper">
@@ -58,9 +58,10 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
           </div>
         </div>
       </div>
+      <div className="chat_message_divider"></div>
       {/* AI message */}
       <div className="chat_message_top_div_AI">
-        <div className="chat_message_AI_name">{selectedCharacter}</div>
+        <div className="chat_message_name chat_message_AI_name">{selectedCharacter}</div>
         <div className="AI_info_wrapper">
           <div className="chat_message_avatar_wrapper">
             <div className="chat_message_avatar">
@@ -74,7 +75,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

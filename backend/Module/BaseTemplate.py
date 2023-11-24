@@ -4,7 +4,6 @@ def base_template():
     {instruct}
     Name:
     Gender:
-    Age:
     Personality:
     Background:
     Appearance:
@@ -25,8 +24,6 @@ def few_shot_base_template():
 Name: Nora Blackwood
 
 Gender: Female
-
-Age: 28
 
 Personality: Nora is an intelligent, ambitious, and determined individual. She is confident in her abilities and has a strong sense of justice. She can be direct and assertive when needed, but also has a compassionate side that she reserves for those she cares about.
 

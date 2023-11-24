@@ -68,7 +68,7 @@ const CharacterSetting = () => {
       setSettingName(extractedName);
     } else {
       // alert.error('No name found');
-      alert.error(<div style={{ textTransform: 'initial' }}>No name found</div>);
+      alert.error(<div style={{ textTransform: 'initial' }}>Cannot Find Name</div>);
     }
   };
   // 프롬프트랑 텍스트 업데이트되면 axios 요청해라

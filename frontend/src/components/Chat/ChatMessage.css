@@ -1,9 +1,24 @@
+@font-face {
+  font-family: 'EASTARJET-Medium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
 .chat_message_log {
   padding: 24px;
   text-align: left;
   color: white;
 }
-
+.chat_message_divider {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.chat_message_name {
+  font-family: 'EASTARJET-Medium';
+  font-size: 18px;
+  letter-spacing: 2px;
+}
 .user_info_wrapper {
   padding: 12px;
   display: flex;
@@ -22,15 +37,15 @@
 .chat_message_avatar img {
   object-fit: cover;
   border-radius: 10px;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 150px;
 }
 
 .chat_message_avatar {
   /* background-color: white; */
   border-radius: 10px;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 150px;
 }
 
 .user_message {
