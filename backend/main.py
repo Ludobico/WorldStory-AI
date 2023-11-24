@@ -23,6 +23,7 @@ from Module.MakeCharacter import MakeCharacter
 from Module.CharacterCheck import CharacterConfig
 from pathlib import Path
 from Module.CharacterChatOAI_Proxy_Stream import chat_with_OAI
+from Module.History.ChatHistory import ChatHistory
 
 app = FastAPI()
 
@@ -137,6 +138,17 @@ def user_name_check():
 def user_image_check():
     user_image = CharacterConfig.user_image_parser()
     return user_image
+
+class Chat_history_base(BaseModel):
+    user_chat : Optional[str] = None
+    user_name : Optional[str] = None
+    AI_chat : Optional[str] = None
+    AI_name : Optional[str] = None
+
+@app.post("/chat_history_save")
+def chat_history_save(chat_history : Chat_history_base):
+    ChatHistory.save_history_to_json(user_chat=chat_history.user_chat, user_name=chat_history.user_name, AI_chat=chat_history.AI_chat, AI_name=chat_history.AI_name)
+
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app, loop='asyncio')

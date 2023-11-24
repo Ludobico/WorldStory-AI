@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './ChatMessage.css';
 
 const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage }) => {
   const [streamToken, setStreamToken] = useState([]);
-  const [testConv, setTestConv] = useState('');
+  const [aiChatResponse, setAiChatResponse] = useState();
 
   // Chat with AI
   const sendMessage_OAI = async () => {
@@ -30,6 +30,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
       while (true) {
         const result = await reader.read();
         if (result.done) {
+          await save_history();
           break;
         }
         let token = decoder.decode(result.value);
@@ -46,18 +47,22 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   };
 
   // Save conversation history to backend
-  const history = () => {
-    console.log(testConv);
-    console.log(selectedCharacter);
-    console.log(inputMessage);
+  const save_history = () => {
+    const ai_chat_response = streamToken.join('');
+    axios.post('http://localhost:8000/chat_history_save', {
+      user_chat: inputMessage,
+      user_name: userName,
+      AI_chat: ai_chat_response,
+      AI_name: selectedCharacter,
+    });
   };
-  // useEffect(() => {
-  //   sendMessage_OAI();
-  // }, []);
   useEffect(() => {
-    setTestConv('hi');
-    history();
+    sendMessage_OAI();
   }, []);
+
+  const testconsole = () => {
+    console.log(streamToken);
+  };
   return (
     <div className="chat_message_top_div">
       {/* User message */}
@@ -72,7 +77,13 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
           </div>
         </div>
       </div>
-      <div className="chat_message_divider"></div>
+      <div className="chat_message_divider">
+        <button
+          onClick={() => {
+            testconsole();
+          }}
+        />
+      </div>
       {/* AI message */}
       <div className="chat_message_top_div_AI">
         <div className="chat_message_name chat_message_AI_name">{selectedCharacter}</div>
@@ -82,12 +93,11 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
               <img src={characterImage} />
             </div>
           </div>
-          {/* <div className="chat_message_message AI_message">
+          <div className="chat_message_message AI_message">
             {streamToken.map((token, index) => (
               <span key={index}>{token}</span>
             ))}
-          </div> */}
-          <div className="chat_message_message AI_message">{testConv}</div>
+          </div>
         </div>
       </div>
     </div>
