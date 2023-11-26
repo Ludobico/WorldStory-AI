@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Logo from '../Header/Logo';
+import './ChatMessage.css';
+import '../normal.css';
+import './CharacterChat.css';
+import './Input.scss';
 import Icon, { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Switch, Slider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import './CharacterChat.css';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
 import axios from 'axios';
-import giga from '../Static/maxresdefault.jpg';
-import './Input.scss';
 import { SendOutlined } from '@ant-design/icons';
-import './ChatMessage.css';
-import '../normal.css';
 import { useAlert } from 'react-alert';
 import ChatTest from './ChatTest';
 
