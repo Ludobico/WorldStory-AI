@@ -21,8 +21,8 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message"])
 
-    llm: LLM = G4FLLM(model=models.gpt_35_turbo_16k, provider=Provider.GeekGpt, verbose=True)
-    model = LLMChain(prompt=prompt, llm=llm, verbose=True)
+    llm: LLM = G4FLLM(model=models.gpt_35_turbo_16k, provider=Provider.GeekGpt)
+    model = LLMChain(prompt=prompt, llm=llm)
 
     char_prompt = chat_base_template_result['char_prompt']
     question = content

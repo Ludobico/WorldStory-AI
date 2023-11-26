@@ -42,22 +42,24 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
     }
-    processText();
+    await processText();
   };
 
   // Save conversation history to backend
   const save_history = () => {
     const ai_chat_response = streamToken.join('');
-    axios.post('http://localhost:8000/chat_history_save', {
-      user_chat: inputMessage,
-      user_name: userName,
-      AI_chat: ai_chat_response,
-      AI_name: selectedCharacter,
-    });
+    console.log(ai_chat_response);
+    // axios.post('http://localhost:8000/chat_history_save', {
+    //   user_chat: inputMessage,
+    //   user_name: userName,
+    //   AI_chat: ai_chat_response,
+    //   AI_name: selectedCharacter,
+    // });
   };
   useEffect(() => {
     sendMessage_OAI();
   }, []);
+
   return (
     <div className="chat_message_top_div">
       {/* User message */}
