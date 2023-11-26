@@ -5,11 +5,12 @@ import './ChatMessage.css';
 const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage }) => {
   const [streamToken, setStreamToken] = useState([]);
   const [aiChatResponse, setAiChatResponse] = useState();
+  const [doneSignal, setDoneSignal] = useState(false);
 
   // Chat with AI
   const sendMessage_OAI = async () => {
     setStreamToken([]);
-
+    setDoneSignal(false);
     var message = inputMessage;
     var prompt = selectedCharacter;
     var response = await fetch('http://localhost:8000/character_chat_OAI', {
@@ -29,9 +30,6 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
     async function processText() {
       while (true) {
         const result = await reader.read();
-        if (result.done) {
-          break;
-        }
         let token = decoder.decode(result.value);
         if (token.endsWith('!') || token.endsWith('?')) {
           setStreamToken((streamToken) => [...streamToken, token + '\n']);
@@ -40,6 +38,10 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
         }
         // 자연스러운 streaming을 위해 제한시간을 걸어둠
         await new Promise((resolve) => setTimeout(resolve, 50));
+        if (result.done) {
+          setDoneSignal(true);
+          break;
+        }
       }
     }
     await processText();
@@ -48,18 +50,23 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   // Save conversation history to backend
   const save_history = () => {
     const ai_chat_response = streamToken.join('');
-    console.log(ai_chat_response);
-    // axios.post('http://localhost:8000/chat_history_save', {
-    //   user_chat: inputMessage,
-    //   user_name: userName,
-    //   AI_chat: ai_chat_response,
-    //   AI_name: selectedCharacter,
-    // });
+    axios.post('http://localhost:8000/chat_history_save', {
+      user_chat: inputMessage,
+      user_name: userName,
+      AI_chat: ai_chat_response,
+      AI_name: selectedCharacter,
+    });
   };
+  // ai chat request
   useEffect(() => {
     sendMessage_OAI();
   }, []);
-
+  // ai chat response save
+  useEffect(() => {
+    if (doneSignal) {
+      save_history();
+    }
+  }, [doneSignal]);
   return (
     <div className="chat_message_top_div">
       {/* User message */}
