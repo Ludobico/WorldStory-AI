@@ -207,6 +207,7 @@ const CharacterChat = () => {
         message: inputMessage,
       },
     ]);
+    setInputMessage('');
   };
   const createDynamicChatComponent = (chatLog) => {
     return chatLog.map(

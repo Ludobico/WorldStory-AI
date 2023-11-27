@@ -47,7 +47,11 @@
   width: 120px;
   height: 150px;
 }
-
+.chat_message_message {
+  font-size: 18px;
+  letter-spacing: 1.75px;
+  line-height: 1.5;
+}
 .user_message {
   padding-right: 20px;
 }
