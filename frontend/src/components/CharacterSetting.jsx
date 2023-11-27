@@ -141,7 +141,6 @@ const CharacterSetting = () => {
   }, [streamToken]);
   const sendMessage = async () => {
     if (selectedOption === 'Model select') {
-      // alert.error('Choose the Model');
       alert.error(<div style={{ textTransform: 'initial' }}>Choose the Model</div>);
       return;
     }
@@ -276,7 +275,9 @@ const CharacterSetting = () => {
             </span>
           ))}
         </div>
-        {imageFlag ? <img src={TestImage} className="CharacterSetting_generate_image" /> : null}
+        <div className="CharacterSetting_generate_image">
+          {imageFlag ? <img src={TestImage} className="CharacterSetting_generate_image" /> : null}
+        </div>
       </div>
       {/* generate 버튼 */}
       <div className="CharacterSetting_button">
@@ -294,6 +295,15 @@ const CharacterSetting = () => {
         {/* save 버튼 */}
         <div className="CharacterSetting_generate_save" onClick={upDateGeneratedText}>
           Save Setting
+        </div>
+        <div>
+          <button
+            onClick={() => {
+              setImageFlag(!imageFlag);
+            }}
+          >
+            test botton
+          </button>
         </div>
       </div>
       <div

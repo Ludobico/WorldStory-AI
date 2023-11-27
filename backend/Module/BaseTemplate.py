@@ -37,7 +37,7 @@ Additional details: Nora is a journalist who works for a major newspaper. She is
 ###
 """
     return few_shot_template
-
+# char_prompt_path = character name
 def chat_base_template(char_prompt_path):
     cur_dir = os.getcwd()
     char_path = os.path.join(cur_dir, 'Characters', char_prompt_path, 'prompt.txt')
@@ -46,17 +46,18 @@ def chat_base_template(char_prompt_path):
 
     chat_template = """
     You are a Fictional Character that talks to a user through the ###character prompt### below.
+    Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind
     ###character prompt###
     {char_prompt}
     ######
     Ensure your responses are consistent with the world and setting of your story
     Let's think step by step.
-
-    User : {message}
-    Answer : 
+    
+    {message}
+    
 """
 
-    return {"chat_template": chat_template, "char_prompt": char_prompt}
+    return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
 
 def image_generate_prompt(text_gen_prompt):
     image_gen_template = """

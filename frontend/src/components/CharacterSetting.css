@@ -12,8 +12,8 @@
   display: flex;
   top: 10%;
   margin-left: 3rem;
-  width: 70vw;
-  height: 35vh;
+  width: 80vw;
+  height: 40vh;
   white-space: pre-wrap;
   word-wrap: break-word;
   border-radius: 0.75rem;
@@ -23,6 +23,8 @@
 }
 /* 이미지 */
 .CharacterSetting_generate_image {
+  padding-right: 5rem;
+  padding-top: 2rem;
   width: 256px;
   height: 256px;
   margin-left: auto;
