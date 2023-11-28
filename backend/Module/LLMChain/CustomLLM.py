@@ -13,8 +13,10 @@ class CustomLLM(LLM):
   
   def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
     model = g4f.models.gpt_35_turbo
+    provider = g4f.Provider.GeekGpt
     out = g4f.ChatCompletion.create(
       model=model,
+      provider=provider,
       messages=[{"role": "user", "content": prompt}],
     )
 

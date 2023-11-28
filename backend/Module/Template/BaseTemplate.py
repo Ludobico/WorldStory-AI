@@ -7,6 +7,7 @@ def base_template():
     Personality:
     Background:
     Appearance:
+    Setting:
     Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind.
     create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
     Let's think step by step.
@@ -36,22 +37,29 @@ Setting: Modern
 Additional details: Nora is a journalist who works for a major newspaper. She is passionate about uncovering the truth and exposing corruption, even if it means putting herself in harm's way. She is also an advocate for social justice and often uses her platform to shed light on important issues affecting vulnerable communities. Despite her tough exterior, she struggles with anxiety and often seeks solace in yoga and meditation. Nora's ultimate goal is to become a renowned investigative journalist and make a lasting impact on the world.
 ###
 ### example2
+Name: Max Maverick Raine
 
-Name: Seraphina Emberthorn
+Gender: Male
 
-Gender: Female
+Personality:
+Maverick is a charismatic and adaptable individual, a chameleon in the vibrant chaos of the cyberpunk world. He thrives on the edge, displaying a devil-may-care attitude that conceals a razor-sharp intellect. Quick-witted and resourceful, Maverick possesses a natural charm that allows him to navigate the treacherous currents of the dystopian city with ease. Despite his roguish exterior, he harbors a sense of loyalty to those who earn his trust, making him both a reliable ally and a formidable adversary.
 
-Personality: Seraphina is a complex character, a blend of determination and mystery. She possesses an unwavering sense of justice, fueled by a tragic event in her past. Beneath her stoic exterior lies a wellspring of compassion for the downtrodden and a burning desire for a world free from oppression. Despite her serious demeanor, she harbors a dry wit that surfaces in moments of camaraderie. Seraphina is fiercely loyal to those she deems worthy of trust, and her resilience in the face of adversity makes her both a formidable ally and a daunting adversary. Her sense of duty sometimes leads her to make difficult decisions, showcasing the depth of her character.
+Background:
+Maverick's origins are shrouded in mystery, his past a tapestry of shadows and neon. Born in the underbelly of the cyberpunk city, he grew up amidst the flickering holographic signs and the distant hum of machinery. His childhood was marked by survival instincts, learning to adapt to the ruthless streets where the line between legality and criminality blurred.
 
-Background: Seraphina hails from a realm where magic and technology coexist, creating a unique fusion of the fantastical and the futuristic. Born into a lineage of renowned magic wielders, the Emberthorns, her childhood was shattered when a malevolent force targeted her family. The traumatic event left her orphaned, but it also awakened a latent magical ability within her. As she grew, Seraphina dedicated herself to honing her newfound powers and vowed to eradicate the darkness that had befallen her family.
+A former data thief and information broker, Maverick's skills caught the attention of a clandestine organization known for their manipulation of information and power plays in the city's high-tech underworld. However, a betrayal within the organization forced him to go solo, adopting the alias "Maverick" as a symbol of his defiance.
 
-Trained by a clandestine order of mystical warriors, Seraphina became a skilled mage-knight, blending her innate magical prowess with masterful swordsmanship. Her quest for justice led her to become a defender of the innocent, navigating through a world rife with political intrigue, ancient mysteries, and technological wonders.
+Appearance:
+Maverick is a lean and agile figure, his cybernetic enhancements subtly integrated into his body to enhance speed and agility. His hair, a mix of natural and neon-dyed strands, falls messily over his forehead, framing a face adorned with a cybernetic eye that glows with a subtle red hue. He favors a mix of urban streetwear and tactical gear, with a long, weathered trench coat adorned with a multitude of pockets concealing an array of gadgets.
 
-Appearance: Seraphina cuts a striking figure with her long, flowing ebony hair and piercing cerulean eyes that seem to hold the weight of her past. She wears a set of enchanted armor adorned with intricate runes, a testament to her magical heritage. The armor seamlessly integrates technology and mysticism, providing both protection and enhanced capabilities. Her slender frame belies the strength she possesses, and the scars on her hands and arms tell a silent tale of battles fought and won.
+His cyberpunk aesthetic extends to his limbs, where synthetic fibers interweave with flesh, hinting at his past augmentations. Maverick's tattoos, glowing with bioluminescent ink, shift and pulse with the rhythm of the city, reflecting his ever-changing alliances and allegiances.
 
-In her travels through different settings, Seraphina adapts her appearance to blend into each environment. In the futuristic cityscapes, she dons a sleek, high-tech cloak that conceals her armor's ethereal glow. In the medieval realms, her attire transforms into the attire of a skilled sorceress, complete with a cloak that billows with an otherworldly breeze.
+Setting:
+The story unfolds in a cyberpunk metropolis where towering skyscrapers cast shadows over sprawling slums. Mega-corporations exert control, their influence reaching every aspect of daily life. Neon signs and holographic billboards create a dazzling but disorienting panorama, while the streets are a chaotic blend of futuristic technology and urban decay.
 
-Seraphina's visage reflects the duality of her character, a warrior with a haunted past and an unyielding commitment to forging a brighter future.
+The city is a battleground for power, with rival factions vying for control of information, resources, and the hearts of the people. Maverick navigates this precarious landscape, dancing between the shadows and the neon lights, seeking both profit and a chance at redemption.
+
+Maverick's story unfolds against the backdrop of a world where hackers, mercenaries, and rebels clash in a perpetual struggle for freedom and control. In this cyberpunk realm, where alliances are fragile and secrets are currency, Maverick's journey is a high-stakes game where the winner takes all.
 ###
 """
     return few_shot_template
@@ -77,7 +85,21 @@ def chat_base_template(char_prompt_path):
 
     return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
 
-def image_generate_prompt(text_gen_prompt):
+def image_generate_prompt():
     image_gen_template = """
-    
-"""
+    SYSTEM: You are a helpful text analyzer that knows how to summarize a text.
+    USER: Summarize this text denoted by backticks:
+    ```
+    {description}
+    ```
+
+    ###example1
+    8k portrait of beautiful cyborg with brown hair, intricate, elegant, highly detailed, majestic, digital photography, art by artgerm and ruan jia and greg rutkowski surreal painting gold butterfly filigree, broken glass, (masterpiece, sidelighting, finely detailed beautiful eyes: 1.2), hdr, <lora:more_details:0.36>
+    ###
+
+    ###example2
+    cgmech, solo, white mecha robot, cape, science fiction, torn clothes, glowing, standing, robot joints, mecha, armor, cowboy shot, (floating cape), intense sunlight, silver dragonborn, outdoors, landscape, nature , ((masterpiece, best quality)), <lora:cgmechmix_offset:1><lora:more_details:0.3> <lora:Niji:0.5><lora:dragonborn_offset:0.7>
+    ###
+    """
+
+    return image_gen_template

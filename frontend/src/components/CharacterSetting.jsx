@@ -187,6 +187,7 @@ const CharacterSetting = () => {
     });
   };
   const sendMessage_OAI = async () => {
+    setDoneSignal(false);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
@@ -214,6 +215,7 @@ const CharacterSetting = () => {
         const result = await reader.read();
         if (result.done) {
           SetGenLoader(false);
+          setDoneSignal(true);
           break;
         }
         let token = decoder.decode(result.value);
@@ -227,6 +229,20 @@ const CharacterSetting = () => {
       }
     }
     processText();
+  };
+
+  // image generation 관련 함수
+  const [doneSignal, setDoneSignal] = useState(false);
+  const image_generation_start = () => {
+    const ai_chat_response = streamToken.join('');
+    axios.post('http://localhost:8000/Character_image_generation', {
+      prompt: ai_chat_response,
+    });
+  };
+  const image_generation_flag = () => {
+    if (doneSignal) {
+      image_generation_start();
+    }
   };
 
   // ant design 에서 모델을 선택할때
@@ -297,7 +313,7 @@ const CharacterSetting = () => {
           Save Setting
         </div>
         {/* 이미지 재생성 버튼 */}
-        <div className="CharacterSetting_regenetate_image">
+        <div className="CharacterSetting_regenetate_image" onClick={image_generation_flag}>
           <span>Image Regeneration</span>
         </div>
       </div>

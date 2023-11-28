@@ -15,6 +15,7 @@ import uvicorn
 from Module.LLMChain.CharacterSettingCT_Stream import send_message
 from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
 from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
+from Module.LLMChain.CharacterImageGeneration import CharacterImageGeneration
 # ----------------------------
 
 
@@ -166,6 +167,11 @@ def chat_history_import(chat_hitory : Chat_history_base):
     chracter_image = CharacterConfig.Character_image_parser(char_name=chat_hitory.AI_name)
     user_image = CharacterConfig.user_image_parser()
     return {"chat_log": jsonable_encoder(json_history), "char_image": chracter_image, "user_image": user_image}
+
+@app.post("/Character_image_generation")
+def Character_image_generation(character_prompt : MakeCharacterPrompt):
+    character_image_gen = CharacterImageGeneration.image_gen(character_prompt = character_prompt.prompt)
+    return character_image_gen
 
 
 if __name__ == "__main__":
