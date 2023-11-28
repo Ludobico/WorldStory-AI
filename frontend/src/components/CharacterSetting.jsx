@@ -296,14 +296,9 @@ const CharacterSetting = () => {
         <div className="CharacterSetting_generate_save" onClick={upDateGeneratedText}>
           Save Setting
         </div>
-        <div>
-          <button
-            onClick={() => {
-              setImageFlag(!imageFlag);
-            }}
-          >
-            test botton
-          </button>
+        {/* 이미지 재생성 버튼 */}
+        <div className="CharacterSetting_regenetate_image">
+          <span>Image Regeneration</span>
         </div>
       </div>
       <div
