@@ -2,7 +2,8 @@ import uvicorn
 from typing import Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse, FileResponse, Response
+from fastapi.responses import StreamingResponse
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
 
@@ -22,12 +23,18 @@ from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
 from Legacy.CharacterSettingOAI_Proxy_Stream import send_message_OAI
 # ----------------------------
 
+# History
+# ----------------------------
+from Module.History.ChatHistory import ChatHistory
+# ----------------------------
+
 from Config.AxiosConfig import CTransformerConfig
 from Config.LLMCheck import LLMCheck
+
 from Module.MakeCharacter import MakeCharacter
 from Module.CharacterCheck import CharacterConfig
 from pathlib import Path
-from Module.History.ChatHistory import ChatHistory
+
 
 app = FastAPI()
 
@@ -106,7 +113,7 @@ def LLM_model_list():
     return model_list
 
 class MakeCharacterPrompt(BaseModel):
-    name : str
+    name : Optional[str] = None
     prompt : Optional[str] = None
 
 @app.post("/make_character")
@@ -152,6 +159,13 @@ class Chat_history_base(BaseModel):
 @app.post("/chat_history_save")
 def chat_history_save(chat_history : Chat_history_base):
     ChatHistory.save_history_to_json(user_chat=chat_history.user_chat, user_name=chat_history.user_name, AI_chat=chat_history.AI_chat, AI_name=chat_history.AI_name)
+
+@app.post("/chat_history_import")
+def chat_history_import(chat_hitory : Chat_history_base):
+    json_history = ChatHistory.import_history_from_json(AI_name=chat_hitory.AI_name)
+    chracter_image = CharacterConfig.Character_image_parser(char_name=chat_hitory.AI_name)
+    user_image = CharacterConfig.user_image_parser()
+    return {"chat_log": jsonable_encoder(json_history), "char_image": chracter_image, "user_image": user_image}
 
 
 if __name__ == "__main__":

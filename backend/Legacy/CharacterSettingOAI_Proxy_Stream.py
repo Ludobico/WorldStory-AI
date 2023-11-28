@@ -6,7 +6,7 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 # from langchain import PromptTemplate
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from Module.BaseTemplate import base_template, few_shot_base_template
+from Module.Template.BaseTemplate import base_template, few_shot_base_template
 from langchain.schema import HumanMessage
 
 import g4f

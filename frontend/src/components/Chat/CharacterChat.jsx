@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './ChatMessage.css';
 import '../normal.css';
 import './CharacterChat.css';
@@ -192,6 +192,37 @@ const CharacterChat = () => {
     }
   }, [selectedCharacter]);
 
+  // 채팅 로그 불러오기 (log_flag가 true이면 chattest의 로그저장수행x, false면 수행)
+  useEffect(() => {
+    // 다른 캐릭터를 선택할수도 있으므로 초기화해야함
+    setChatLog([{}]);
+    if (selectedCharacter !== false) {
+      axios
+        .post('http://localhost:8000/chat_history_import', {
+          AI_name: selectedCharacter,
+        })
+        .then((res) => {
+          if (res.data.chat_log !== null) {
+            res.data.chat_log.map((chat) => {
+              setChatLog((prevLog) => [
+                ...prevLog,
+                {
+                  index: prevLog.length,
+                  character_name: chat.AI_name,
+                  character_image: `data:image/png;base64, ${res.data.char_image}`,
+                  user_name: chat.user_name,
+                  user_image: `data:image/png;base64, ${res.data.user_image}`,
+                  message: chat.user_chat,
+                  Ai_message: chat.AI_chat,
+                  log_flag: true,
+                },
+              ]);
+            });
+          }
+        });
+    }
+  }, [selectedCharacter]);
+
   const chat_start_count = () => {
     if (selectedCharacter === false) {
       return alert.error(<div style={{ textTransform: 'initial' }}>Choose the Character!</div>);
@@ -205,6 +236,8 @@ const CharacterChat = () => {
         user_name: userName,
         user_image: userImage,
         message: inputMessage,
+        Ai_message: null,
+        log_flag: false,
       },
     ]);
     setInputMessage('');
@@ -220,6 +253,8 @@ const CharacterChat = () => {
             userName={chat.user_name}
             userImage={chat.user_image}
             characterImage={chat.character_image}
+            Ai_message={chat.Ai_message}
+            log_flag={chat.log_flag}
           />
         )
     );

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './ChatMessage.css';
 
-const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage }) => {
+const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage, Ai_message, log_flag }) => {
   const [streamToken, setStreamToken] = useState([]);
   const [aiChatResponse, setAiChatResponse] = useState();
   const [doneSignal, setDoneSignal] = useState(false);
@@ -70,7 +70,9 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   };
   // ai chat request
   useEffect(() => {
-    sendMessage_OAI();
+    if (log_flag === false) {
+      sendMessage_OAI();
+    }
   }, []);
   // ai chat response save
   useEffect(() => {
@@ -106,6 +108,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
             {streamToken.map((token, index) => (
               <span key={index}>{token}</span>
             ))}
+            <span>{Ai_message}</span>
           </div>
         </div>
       </div>

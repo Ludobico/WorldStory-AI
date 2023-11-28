@@ -33,15 +33,12 @@ class ChatHistory:
 
   def import_history_from_json(AI_name):
     cur_dir = os.getcwd()
-    history_path = os.path.join(cur_dir, 'backend','Characters', AI_name, 'history.json')
+    history_path = os.path.join(cur_dir, 'Characters', AI_name, 'history.json')
     if not os.path.exists(history_path):
       pass
     else:
       with open(history_path, 'r', encoding='utf-8') as f:
         chat_history = json.load(f)
-        return chat_history
+      return chat_history
 
-
-if __name__ == "__main__":
-  ChatHistory.import_history_from_json(AI_name="Lyra Silvermist")
 
