@@ -4,9 +4,9 @@ from typing import AsyncIterable
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from Module.BaseTemplate import base_template, few_shot_base_template
+from Module.Template.BaseTemplate import base_template, few_shot_base_template
 
-from Module.CustomLLM import CustomLLM, CustomLLM_BETA
+from Module.LLMChain.CustomLLM import CustomLLM, CustomLLM_BETA
 
 async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   callback = AsyncIteratorCallbackHandler()

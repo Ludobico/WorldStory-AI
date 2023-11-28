@@ -9,8 +9,13 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import tracemalloc
 import uvicorn
-from Module.CharacterSettingCT_Stream import send_message
-from Module.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
+# LLM Module using langchain
+# ----------------------------
+from Module.LLMChain.CharacterSettingCT_Stream import send_message
+from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
+from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
+# ----------------------------
+
 
 # Legacy
 # ----------------------------
@@ -22,7 +27,6 @@ from Config.LLMCheck import LLMCheck
 from Module.MakeCharacter import MakeCharacter
 from Module.CharacterCheck import CharacterConfig
 from pathlib import Path
-from Module.CharacterChatOAI_Proxy_Stream import chat_with_OAI
 from Module.History.ChatHistory import ChatHistory
 
 app = FastAPI()

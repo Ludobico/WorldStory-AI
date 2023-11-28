@@ -5,7 +5,7 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms.ctransformers import CTransformers
-from Module.BaseTemplate import base_template
+from Module.Template.BaseTemplate import base_template
 
 
 async def send_message(ct_params) -> AsyncIterable[str]:

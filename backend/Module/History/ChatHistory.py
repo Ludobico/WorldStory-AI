@@ -15,12 +15,6 @@ class ChatHistory:
     
     index = str(date.strftime('%Y-%m-%d %H:%M:%S'))
 
-    # chat_history[index] = {
-    #   'user_name': user_name,
-    #   'user_chat': user_chat,
-    #   'AI_name': AI_name,
-    #   'AI_chat': AI_chat
-    # }
     new_log = {
         'date' : index,
         'user_name': user_name,
@@ -45,7 +39,7 @@ class ChatHistory:
     else:
       with open(history_path, 'r', encoding='utf-8') as f:
         chat_history = json.load(f)
-        print(chat_history[0])
+        return chat_history
 
 
 if __name__ == "__main__":
