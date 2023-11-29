@@ -35,20 +35,23 @@ class CustomLLM_GPT(LLM):
       text_callback = partial(run_manager.on_llm_new_token)
     
     text = ""
-    for token in g4f.ChatCompletion.create(model=model,provider=provider,messages=[{"role": "user", "content": prompt}], stream=True):
+    for token in g4f.ChatCompletion.create(model=model,provider=provider,messages=[{"role": "user", "content": prompt}], stream=True, supports_message_history = False):
       if text_callback:
         await text_callback(token)
       text += token
     return text
 
-class CustomLLM_BETA(LLM):
+class CustomLLM_Llama(LLM):
   @property
   def _llm_type(self) -> str:
-    return "custom_beta"
+    return "custom"
+  
   def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
-    model = g4f.models.gpt_35_turbo
+    model = g4f.models.llama2_70b
+    provider = g4f.Provider.DeepInfra
     out = g4f.ChatCompletion.create(
       model=model,
+      provider=provider,
       messages=[{"role": "user", "content": prompt}],
     )
 
@@ -61,8 +64,8 @@ class CustomLLM_BETA(LLM):
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
-    model = g4f.models.gpt_4
-    provider = g4f.Provider.Phind
+    model = g4f.models.llama2_70b
+    provider = g4f.Provider.DeepInfra
     if run_manager:
       text_callback = partial(run_manager.on_llm_new_token)
     

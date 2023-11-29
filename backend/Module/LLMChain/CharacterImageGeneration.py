@@ -1,4 +1,4 @@
-from Module.LLMChain.CustomLLM_GPT import CustomLLM_GPT
+from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama
 from Module.Template.BaseTemplate import image_generate_prompt
 # from test.iamge_generation import Generation
 from langchain.prompts import PromptTemplate

@@ -3,14 +3,16 @@ from typing import AsyncIterable
 
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
+from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from Module.Template.BaseTemplate import base_template, few_shot_base_template
+from Module.Template.FewShotPromptForCharSetting import character_setting_examples
 
-from Module.LLMChain.CustomLLM_GPT import CustomLLM_GPT
+from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama
 
 async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   callback = AsyncIteratorCallbackHandler()
-  llm = CustomLLM_GPT()
+  llm = CustomLLM_Llama()
   BaseTemplateResult = base_template()
   FewShotTemplateResult = few_shot_base_template()
 
