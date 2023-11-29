@@ -13,7 +13,7 @@ import uvicorn
 # LLM Module using langchain
 # ----------------------------
 from Module.LLMChain.CharacterSettingCT_Stream import send_message
-from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream, character_setting_gpt4_stream
+from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream
 from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
 from Module.LLMChain.CharacterImageGeneration import CharacterImageGeneration
 # ----------------------------

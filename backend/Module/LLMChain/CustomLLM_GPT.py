@@ -6,7 +6,7 @@ import g4f
 from functools import partial
 from langchain.callbacks.manager import AsyncCallbackManagerForLLMRun
 
-class CustomLLM(LLM):
+class CustomLLM_GPT(LLM):
   @property
   def _llm_type(self) -> str:
     return "custom"

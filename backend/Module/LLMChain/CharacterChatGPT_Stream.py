@@ -11,7 +11,7 @@ from langchain.schema import HumanMessage
 import g4f
 from g4f import Provider, models
 from langchain.llms.base import LLM
-from Module.LLMChain.CustomLLM import CustomLLM
+from Module.LLMChain.CustomLLM_GPT import CustomLLM_GPT
 # from Legacy.G4FLLM import G4FLLM
 
 
@@ -21,7 +21,7 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     prompt = PromptTemplate(
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message"])
 
-    llm =  CustomLLM()
+    llm =  CustomLLM_GPT()
     model = LLMChain(prompt=prompt, llm=llm)
 
     char_prompt = chat_base_template_result['char_prompt']
