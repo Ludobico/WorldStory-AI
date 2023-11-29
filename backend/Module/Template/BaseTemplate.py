@@ -14,7 +14,6 @@ def base_template():
 
     Setting:
 
-
     Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind.
     create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
     Let's think step by step.
@@ -93,7 +92,7 @@ def chat_base_template(char_prompt_path):
 
 def image_generate_prompt():
     image_gen_template = """
-    SYSTEM: You are a helpful text analyzer that knows how to summarize a text.
+    SYSTEM: You are a helpful text analyzer that knows how to summarize a text. especally character's apperance.
     USER: Summarize this text denoted by backticks:
     ```
     {description}
