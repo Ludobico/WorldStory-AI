@@ -36,7 +36,7 @@ class Completion:
                 data={
                     "prompt": prompt,
                     "withoutContext": True,
-                    # "stream": stream,
+                    "stream": stream,
                 },
                 stream=stream
             )
@@ -44,7 +44,7 @@ class Completion:
                 for chunk in resp.iter_content(chunk_size=1024):
                     cleaned_chunk = chunk.decode('utf-8').replace('b', '').replace("'", '')
                     yield cleaned_chunk
-            else:
+            elif stream == False:
                 resp.encoding = "utf-8"
                 return resp.text
         except RequestException as e:

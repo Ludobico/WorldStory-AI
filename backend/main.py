@@ -165,8 +165,10 @@ def chat_history_import(chat_hitory : Chat_history_base):
 
 @app.post("/Character_image_generation")
 def Character_image_generation(character_prompt : MakeCharacterPrompt) -> str:
-    character_image_gen = CharacterImageGeneration.image_gen(character_prompt = character_prompt.prompt)
-    return character_image_gen
+    print("asdasdasd")
+    # character_image_gen = CharacterImageGeneration.image_gen(character_prompt = character_prompt.prompt)
+    # character_image_gen
+    # return character_image_gen
 
 
 if __name__ == "__main__":

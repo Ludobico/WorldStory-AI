@@ -85,6 +85,7 @@ class CustomLLM_FreeGPT(LLM):
   def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
     completion_instance = Completion()
     out = completion_instance.create(prompt=prompt, stream=False)
+    return "asdasd"
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
