@@ -79,24 +79,12 @@ class CustomLLM_Llama(LLM):
   
 class CustomLLM_FreeGPT(LLM):
   @property
-  def _llm_type(self) -> str:
+  def _llm_type(self):
     return "custom"
   
-  # def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
-  #   model = g4f.models.llama2_70b
-  #   provider = g4f.Provider.DeepInfra
-  #   out = g4f.ChatCompletion.create(
-  #     model=model,
-  #     provider=provider,
-  #     messages=[{"role": "user", "content": prompt}],
-  #   )
-
-  #   if stop:
-  #     stop_indexes = (out.find(s) for s in stop if s in out)
-  #     min_stop = min(stop_indexes, default=-1)
-  #     if min_stop > -1:
-  #       out = out[:min_stop]
-  #   return out
+  def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
+    completion_instance = Completion()
+    out = completion_instance.create(prompt=prompt, stream=False)
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
     text_callback = None
@@ -104,7 +92,8 @@ class CustomLLM_FreeGPT(LLM):
       text_callback = partial(run_manager.on_llm_new_token)
     
     text = ""
-    for token in Completion.create(prompt):
+    completion_instance = Completion()
+    for token in completion_instance.create(prompt=prompt, stream=True):
       if text_callback:
         await text_callback(token)
       text += token

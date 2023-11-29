@@ -95,11 +95,6 @@ def char_setting_OAI(message : OAI_Message):
     generator = character_setting_gpt_stream(message.content)
     return StreamingResponse(generator, media_type="text/event-stream")
 
-@app.post("/char_setting_OAI_beta")
-def char_setting_OAI_beta(message : OAI_Message):
-    generator = character_setting_gpt4_stream(message.content)
-    return StreamingResponse(generator, media_type="text/event-stream")
-
 
 @app.get("/generate_setting_config")
 def generate_setting_config():
@@ -169,7 +164,7 @@ def chat_history_import(chat_hitory : Chat_history_base):
     return {"chat_log": jsonable_encoder(json_history), "char_image": chracter_image, "user_image": user_image}
 
 @app.post("/Character_image_generation")
-def Character_image_generation(character_prompt : MakeCharacterPrompt):
+def Character_image_generation(character_prompt : MakeCharacterPrompt) -> str:
     character_image_gen = CharacterImageGeneration.image_gen(character_prompt = character_prompt.prompt)
     return character_image_gen
 

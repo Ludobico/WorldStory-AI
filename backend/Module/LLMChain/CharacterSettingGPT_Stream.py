@@ -8,11 +8,11 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 from Module.Template.BaseTemplate import base_template, few_shot_base_template
 from Module.Template.FewShotPromptForCharSetting import character_setting_examples
 
-from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama
+from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_FreeGPT
 
 async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   callback = AsyncIteratorCallbackHandler()
-  llm = CustomLLM_Llama()
+  llm = CustomLLM_FreeGPT()
   BaseTemplateResult = base_template()
   FewShotTemplateResult = few_shot_base_template()
 

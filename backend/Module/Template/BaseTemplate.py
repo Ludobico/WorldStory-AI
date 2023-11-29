@@ -15,7 +15,7 @@ def base_template():
     Setting:
 
     Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind.
-    create a character for a story set in various settings such as historical, futuristic, fantasy,modern or science fiction.
+    create a character for a story set in various settings such as historical, futuristic, fantasy ,modern, cyberpunk or science fiction.
     Let's think step by step.
     Feel free to elaborate on each point to create a comprehensive portrayal of your character.
 
