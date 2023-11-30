@@ -235,9 +235,14 @@ const CharacterSetting = () => {
   const [doneSignal, setDoneSignal] = useState(false);
   const image_generation_start = () => {
     const ai_chat_response = streamToken.join('');
-    axios.post('http://localhost:8000/Character_image_generation', {
-      prompt: ai_chat_response,
-    });
+    console.log(ai_chat_response);
+    axios
+      .post('http://localhost:8000/Character_image_generation', {
+        prompt: ai_chat_response,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
   const image_generation_flag = () => {
     if (doneSignal) {

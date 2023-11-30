@@ -5,14 +5,12 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 class CharacterImageGeneration:
-  def image_gen(character_prompt):
+  def image_gen(input_char_prompt):
     # llm = CustomLLM_GPT()
-    llm = Completion()
+    llm = CustomLLM_FreeGPT()
     image_generate_prompt_result = image_generate_prompt()
-    result = llm.create(prompt=image_generate_prompt_result, stream=False)
-    # prompt = PromptTemplate(template=image_generate_prompt_result, input_variables=["description"])
-    # chain = LLMChain(llm=llm, prompt=prompt)
-    # question = character_prompt
-    # result = chain.run(question)
-    print(result)
+    prompt = PromptTemplate(template=image_generate_prompt_result, input_variables=["description"])
+    chain = LLMChain(llm=llm, prompt=prompt)
+    question = input_char_prompt
+    result = chain.run(question)
     return result
