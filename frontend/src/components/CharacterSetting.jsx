@@ -235,7 +235,6 @@ const CharacterSetting = () => {
   const [doneSignal, setDoneSignal] = useState(false);
   const image_generation_start = () => {
     const ai_chat_response = streamToken.join('');
-    console.log(ai_chat_response);
     axios
       .post('http://localhost:8000/Character_image_generation', {
         prompt: ai_chat_response,

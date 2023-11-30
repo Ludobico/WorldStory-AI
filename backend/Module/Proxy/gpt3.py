@@ -13,7 +13,7 @@ class Completion:
     This class provides methods for generating completions based on prompts.
     """
 
-    def create(self, prompt:str, stream:bool = False):
+    def create(self, prompt:str):
         """
         Create a completion for the given prompt using an AI text generation API.
 
@@ -36,16 +36,31 @@ class Completion:
                 data={
                     "prompt": prompt,
                     "withoutContext": True,
-                    "stream": stream,
+                    "stream": True,
                 },
-                stream=stream
+                stream=True
             )
-            if stream:
-                for chunk in resp.iter_content(chunk_size=1024):
-                    cleaned_chunk = chunk.decode('utf-8').replace('b', '').replace("'", '')
-                    yield cleaned_chunk
-            elif stream == False:
-                resp.encoding = "utf-8"
-                return resp.text
+            for chunk in resp.iter_content(chunk_size=1024):
+                cleaned_chunk = chunk.decode('utf-8').replace('b', '').replace("'", '')
+                yield cleaned_chunk
+        except RequestException as e:
+            raise RequestException("Unable to fetch the response.") from e
+
+    def create_non_stream(self, prompt:str):
+        try:
+            resp = post(
+                url="https://api.binjie.fun/api/generateStream",
+                headers={
+                    "origin": "https://chat.jinshutuan.com",
+                    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36",
+                },
+                data={
+                    "prompt": prompt,
+                    "withoutContext": True,
+                    "stream": False,
+                },
+            )
+            resp.encoding = "utf-8"
+            return resp.text
         except RequestException as e:
             raise RequestException("Unable to fetch the response.") from e

@@ -84,7 +84,7 @@ class CustomLLM_FreeGPT(LLM):
   
   def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
     completion_instance = Completion()
-    out = completion_instance.create(prompt=prompt, stream=False)
+    out = completion_instance.create_non_stream(prompt)
     return out
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
@@ -94,7 +94,7 @@ class CustomLLM_FreeGPT(LLM):
     
     text = ""
     completion_instance = Completion()
-    for token in completion_instance.create(prompt=prompt, stream=True):
+    for token in completion_instance.create(prompt=prompt):
       if text_callback:
         await text_callback(token)
       text += token
