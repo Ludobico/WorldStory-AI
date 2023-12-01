@@ -89,14 +89,3 @@ def chat_base_template(char_prompt_path):
 """
 
     return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
-
-def image_generate_prompt():
-    image_gen_template = """
-    SYSTEM: You are a helpful text analyzer that knows how to summarize a text. especally character's apperance.
-    USER: Summarize this text denoted by backticks:
-    ```
-    {description}
-    ```
-    """
-
-    return image_gen_template
