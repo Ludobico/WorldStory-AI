@@ -1,9 +1,11 @@
 import os
+from io import BytesIO
+from PIL import Image
 import base64
 from Module.Proxy.prodia import Generation
 from Module.Template.BaseTemplateForImage import base_image_generation
 class MakeCharacter:
-  def make_char_folder(self, name, prompt):
+  def make_char_folder(self, name, prompt, image):
     cur_dir = os.getcwd()
     char_folder = os.path.join(cur_dir, 'Characters', name)
 
@@ -12,6 +14,11 @@ class MakeCharacter:
 
     file_name = 'prompt.txt'
     prompt_file_path = os.path.join(char_folder, file_name)
+
+    image_data = image.split(",")[1]
+    image_bytes = BytesIO(base64.b64decode(image_data))
+    decoded_image = Image.open(image_bytes)
+    decoded_image.save(os.path.join(char_folder, f'{name}.png'))
 
     with open(prompt_file_path, 'w', encoding='utf-8') as f:
       f.write(prompt)

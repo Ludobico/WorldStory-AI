@@ -60,6 +60,10 @@ const CharacterSetting = () => {
   const [settingName, setSettingName] = useState();
 
   const upDateGeneratedText = () => {
+    if (imageFlag) {
+      alert.error(<div style={{ textTransform: 'initial' }}>Image Generating!</div>);
+      return false;
+    }
     const spans = text_div_ref.current.querySelectorAll('span');
     const textArray = Array.from(spans).map((span) => span.textContent);
     const allText = textArray.join('');
@@ -81,9 +85,9 @@ const CharacterSetting = () => {
         .post('http://localhost:8000/make_character', {
           name: settingName,
           prompt: settingPrompt,
+          image: characterImage,
         })
         .then(() => {
-          // alert.success('Character Generated in your backend/Characters folder');
           alert.success(
             <div style={{ textTransform: 'initial' }}>
               The Character was Generated in your backend/Characters folder
@@ -191,6 +195,7 @@ const CharacterSetting = () => {
   };
   const sendMessage_OAI = async () => {
     setImageFlag(true);
+    setImageGenLoader(false);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);

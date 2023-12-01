@@ -114,11 +114,12 @@ def LLM_model_list():
 class MakeCharacterPrompt(BaseModel):
     name : Optional[str] = None
     prompt : Optional[str] = None
+    image : Optional[str] = None
 
 @app.post("/make_character")
 def make_character(make_character : MakeCharacterPrompt):
     MC = MakeCharacter()
-    MC.make_char_folder(name=make_character.name, prompt=make_character.prompt)
+    MC.make_char_folder(name=make_character.name, prompt=make_character.prompt, image=make_character.image)
 
 @app.get("/char_list_check")
 def char_list_check():
