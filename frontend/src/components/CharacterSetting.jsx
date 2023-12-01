@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
-import TestImage from './Static/test.png';
+import transParentImage from './Static/transparent.png';
 import ImageGenLoading from './Static/giphy_loading.gif';
 import axios from 'axios';
 import { Select } from 'antd';
@@ -16,7 +16,7 @@ const CharacterSetting = () => {
 
   // (beta) 텍스트데이터가 끝날때 나오는 image flag
   const [imageFlag, setImageFlag] = useState(false);
-  const [characterImage, setCharacterImage] = useState();
+  const [characterImage, setCharacterImage] = useState(transParentImage);
   const [imageGenLoader, setImageGenLoader] = useState(false);
 
   // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
