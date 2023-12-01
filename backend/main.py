@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
+from PIL import Image
+from io import BytesIO
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -164,9 +166,12 @@ def chat_history_import(chat_hitory : Chat_history_base):
     return {"chat_log": jsonable_encoder(json_history), "char_image": chracter_image, "user_image": user_image}
 
 @app.post("/Character_image_generation")
-def Character_image_generation(character_prompt : MakeCharacterPrompt) -> str:
+async def Character_image_generation(character_prompt : MakeCharacterPrompt) -> str:
     character_image_gen = CharacterImageGeneration.image_gen(character_prompt.prompt)
-    print(character_image_gen)
+    MC = MakeCharacter()
+    resp = await MC.make_char_image(summary_prompt=character_image_gen)
+    Image.open(BytesIO(resp)).show()
+
     return character_image_gen
 
 
