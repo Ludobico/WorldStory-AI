@@ -16,6 +16,8 @@ const CharacterSetting = () => {
 
   // (beta) 텍스트데이터가 끝날때 나오는 image flag
   const [imageFlag, setImageFlag] = useState(false);
+  const [characterImage, setCharacterImage] = useState();
+  const [imageGenLoader, setImageGenLoader] = useState(false);
 
   // 텍스트가 늘어나면 그에따라 텍스트를 담는 바운딩박스로 늘림
   const text_div_ref = useRef();
@@ -188,7 +190,6 @@ const CharacterSetting = () => {
     });
   };
   const sendMessage_OAI = async () => {
-    setDoneSignal(false);
     setImageFlag(true);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
@@ -217,8 +218,7 @@ const CharacterSetting = () => {
         const result = await reader.read();
         if (result.done) {
           SetGenLoader(false);
-          setDoneSignal(true);
-          image_generation_flag();
+          setImageGenLoader(true);
           break;
         }
         let token = decoder.decode(result.value);
@@ -235,21 +235,22 @@ const CharacterSetting = () => {
   };
 
   // image generation 관련 함수
-  const [doneSignal, setDoneSignal] = useState(false);
+  useEffect(() => {
+    if (imageGenLoader) {
+      image_generation_start();
+    }
+  }, [imageGenLoader]);
   const image_generation_start = () => {
+    setImageFlag(true);
     const ai_chat_response = streamToken.join('');
     axios
       .post('http://localhost:8000/Character_image_generation', {
         prompt: ai_chat_response,
       })
       .then((res) => {
-        console.log(res.data);
+        setCharacterImage(`data:image/png;base64, ${res.data}`);
+        setImageFlag(false);
       });
-  };
-  const image_generation_flag = () => {
-    if (doneSignal) {
-      image_generation_start();
-    }
   };
 
   // ant design 에서 모델을 선택할때
@@ -299,7 +300,11 @@ const CharacterSetting = () => {
           ))}
         </div>
         <div className="CharacterSetting_generate_image">
-          {imageFlag ? <img src={ImageGenLoading} className="CharacterSetting_generate_image" /> : null}
+          {imageFlag ? (
+            <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
+          ) : (
+            <img src={characterImage} className="CharacterSetting_generate_image" />
+          )}
         </div>
       </div>
       {/* generate 버튼 */}
@@ -320,7 +325,7 @@ const CharacterSetting = () => {
           Save Setting
         </div>
         {/* 이미지 재생성 버튼 */}
-        <div className="CharacterSetting_regenetate_image" onClick={image_generation_flag}>
+        <div className="CharacterSetting_regenetate_image" onClick={image_generation_start}>
           <span>Image Regeneration</span>
         </div>
       </div>

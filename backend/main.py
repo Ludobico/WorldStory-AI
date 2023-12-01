@@ -7,6 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from PIL import Image
 from io import BytesIO
+import base64
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -170,9 +171,8 @@ async def Character_image_generation(character_prompt : MakeCharacterPrompt) -> 
     character_image_gen = CharacterImageGeneration.image_gen(character_prompt.prompt)
     MC = MakeCharacter()
     resp = await MC.make_char_image(summary_prompt=character_image_gen)
-    Image.open(BytesIO(resp)).show()
-
-    return character_image_gen
+    b64_resp = base64.b64encode(resp)
+    return b64_resp
 
 
 if __name__ == "__main__":

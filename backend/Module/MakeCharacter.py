@@ -1,4 +1,5 @@
 import os
+import base64
 from Module.Proxy.prodia import Generation
 from Module.Template.BaseTemplateForImage import base_image_generation
 class MakeCharacter:
@@ -17,7 +18,6 @@ class MakeCharacter:
 
   def make_char_image(self, summary_prompt):
     comp_prompt = base_image_generation(summary_prompt)
-    print(comp_prompt)
     generator = Generation()
     return generator.create(comp_prompt)
 
