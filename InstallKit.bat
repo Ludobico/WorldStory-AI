@@ -1,11 +1,3 @@
 @echo off
 
-cd frontend
-yarn add
-cd ..
-
-cd backend
-echo python -m venv worldstory_backend
-worldstory_backend\Scripts\activate
-cd ..
-pip install -r backend\requirements.txt
+start cmd /k "cd ./frontend && call yarn install && cd .. && cd backend && python -m venv worldstory_backend && cd worldstory_backend/Scripts/ && activate && cd ../../../ && pip install -r requirements.txt && exit"

@@ -1,4 +1,5 @@
 worldstory_backend
-Models/
+Models/*
+!Models/.gitkeep
 Characters/*
 !Characters/User/
