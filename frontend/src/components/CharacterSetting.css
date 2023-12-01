@@ -23,6 +23,7 @@
 }
 /* 이미지 */
 .CharacterSetting_generate_image {
+  display: flex;
   padding-right: 5rem;
   padding-top: 2rem;
   width: 256px;

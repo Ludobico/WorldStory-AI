@@ -3,6 +3,7 @@ import './CharacterSetting.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import TestImage from './Static/test.png';
+import ImageGenLoading from './Static/giphy_loading.gif';
 import axios from 'axios';
 import { Select } from 'antd';
 import { useAlert } from 'react-alert';
@@ -188,6 +189,7 @@ const CharacterSetting = () => {
   };
   const sendMessage_OAI = async () => {
     setDoneSignal(false);
+    setImageFlag(true);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
@@ -216,6 +218,7 @@ const CharacterSetting = () => {
         if (result.done) {
           SetGenLoader(false);
           setDoneSignal(true);
+          image_generation_flag();
           break;
         }
         let token = decoder.decode(result.value);
@@ -296,7 +299,7 @@ const CharacterSetting = () => {
           ))}
         </div>
         <div className="CharacterSetting_generate_image">
-          {imageFlag ? <img src={TestImage} className="CharacterSetting_generate_image" /> : null}
+          {imageFlag ? <img src={ImageGenLoading} className="CharacterSetting_generate_image" /> : null}
         </div>
       </div>
       {/* generate 버튼 */}
