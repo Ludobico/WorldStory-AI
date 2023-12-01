@@ -105,6 +105,10 @@
   color: #da36d7;
 }
 
+.CharacterSetting_regenetate_image div {
+  font-size: 1rem;
+}
+
 .CharacterSetting_generate_button:hover {
   background-position: 100%;
   border: 1px solid #fff;

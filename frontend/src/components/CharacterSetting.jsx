@@ -195,8 +195,6 @@ const CharacterSetting = () => {
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
     setStreamToken([]);
-    // setSettingPrompt('');
-    // setSettingName('');
 
     window.scrollTo({ top: 0 });
     var message = 'generate start';
@@ -299,6 +297,7 @@ const CharacterSetting = () => {
             </span>
           ))}
         </div>
+        {/* 이미지 */}
         <div className="CharacterSetting_generate_image">
           {imageFlag ? (
             <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
@@ -326,7 +325,12 @@ const CharacterSetting = () => {
         </div>
         {/* 이미지 재생성 버튼 */}
         <div className="CharacterSetting_regenetate_image" onClick={image_generation_start}>
-          <span>Image Regeneration</span>
+          {/* <span>Image Regeneration</span> */}
+          {imageFlag ? (
+            <div className="CharacterSetting_generate_not_loading loading_active"></div>
+          ) : (
+            <div className="CharacterSetting_generate_not_loading">Image Regeneration</div>
+          )}
         </div>
       </div>
       <div
