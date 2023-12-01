@@ -14,8 +14,10 @@ class MakeCharacter:
 
     file_name = 'prompt.txt'
     prompt_file_path = os.path.join(char_folder, file_name)
-
+    
+    # data:image/png;base64, 이런식으로 데이터가 전달되기때문에 , 다음 실질적인 데이터만 추출이 필요
     image_data = image.split(",")[1]
+
     image_bytes = BytesIO(base64.b64decode(image_data))
     decoded_image = Image.open(image_bytes)
     decoded_image.save(os.path.join(char_folder, f'{name}.png'))
