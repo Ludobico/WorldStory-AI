@@ -11,6 +11,6 @@ html {
 }
 
 @font-face {
-  font-family: "azonix";
-  src: url("./Static/Azonix.otf");
+  font-family: 'azonix';
+  src: url('./Static/Azonix.woff2');
 }

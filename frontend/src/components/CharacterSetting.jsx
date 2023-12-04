@@ -159,8 +159,8 @@ const CharacterSetting = () => {
     // setSettingName('');
     window.scrollTo({ top: 0 });
 
-    var message = 'generate start';
-    var response = await fetch('http://localhost:8000/stream_chat', {
+    const message = 'generate start';
+    const response = await fetch('http://localhost:8000/stream_chat', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -177,8 +177,8 @@ const CharacterSetting = () => {
       }),
     });
 
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder('utf-8');
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
 
     reader.read().then(function processResult(result) {
       if (result.done) return SetGenLoader(false);
@@ -202,8 +202,8 @@ const CharacterSetting = () => {
     setStreamToken([]);
 
     window.scrollTo({ top: 0 });
-    var message = 'generate start';
-    var response = await fetch('http://localhost:8000/char_setting_OAI', {
+    const message = 'generate start';
+    const response = await fetch('http://localhost:8000/char_setting_OAI', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -213,8 +213,8 @@ const CharacterSetting = () => {
       }),
     });
 
-    var reader = response.body.getReader();
-    var decoder = new TextDecoder('utf-8');
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder('utf-8');
 
     async function processText() {
       while (true) {
