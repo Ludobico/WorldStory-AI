@@ -195,7 +195,7 @@ const CharacterSetting = () => {
     });
   };
   const sendMessage_OAI = async () => {
-    setImageFlag(true);
+    // setImageFlag(true);
     setImageGenLoader(false);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
@@ -221,6 +221,7 @@ const CharacterSetting = () => {
       while (true) {
         const result = await reader.read();
         if (result.done) {
+          setImageFlag(true);
           SetGenLoader(false);
           setImageGenLoader(true);
           break;
@@ -235,7 +236,7 @@ const CharacterSetting = () => {
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
     }
-    processText();
+    await processText();
   };
 
   // image generation 관련 함수
@@ -302,14 +303,14 @@ const CharacterSetting = () => {
               {token}
             </span>
           ))}
-        </div>
-        {/* 이미지 */}
-        <div className="CharacterSetting_generate_image_div">
-          {imageFlag ? (
-            <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
-          ) : (
-            <img src={characterImage} className="CharacterSetting_generate_image" />
-          )}
+          {/* 이미지 */}
+          <div className="CharacterSetting_generate_image_div">
+            {imageFlag ? (
+              <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
+            ) : (
+              <img src={characterImage} className="CharacterSetting_generate_image" />
+            )}
+          </div>
         </div>
       </div>
       {/* generate 버튼 */}

@@ -34,7 +34,7 @@
   padding-top: 2rem;
   width: 256px;
   height: 256px;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 .CharacterSetting_button {
   position: relative;
