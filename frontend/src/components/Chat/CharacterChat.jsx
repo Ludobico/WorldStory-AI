@@ -7,6 +7,7 @@ import Icon, { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Switch, Slider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
+import testimage from '../Static/chat_background/fantasy_desktop.jpg';
 import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
@@ -269,6 +270,9 @@ const CharacterChat = () => {
     );
   };
   const dynamicChatComponents = createDynamicChatComponent(chatLog);
+
+  // background image
+  const [backgorundImage, setBackgroundImage] = useState(testimage);
   return (
     <div className="chat_top_div">
       <Layout
@@ -297,7 +301,7 @@ const CharacterChat = () => {
           <Menu theme={lightTheme} mode="inline" items={llmSetting} selectable={false} />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
-          <div className="chat_background">
+          <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}>
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
               <div className="chat_message_log">{dynamicChatComponents}</div>

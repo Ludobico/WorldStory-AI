@@ -29,9 +29,16 @@
   justify-content: center;
   align-items: center;
   /* background-color: #424242; */
-  background-image: url('../Static/background3.jpg');
+  /* background-image: url('../Static/background3.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.chat_background_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-repeat: no-repeat;
 }
 .chat_header {
   color: white;
@@ -39,7 +46,7 @@
   font-size: 'azonix';
 }
 .chat_content {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.3);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
