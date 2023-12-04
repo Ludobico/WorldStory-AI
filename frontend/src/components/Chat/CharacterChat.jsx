@@ -166,6 +166,15 @@ const CharacterChat = () => {
   const [userName, setUserName] = useState();
   const [userImage, setUserImage] = useState();
   const [characterImage, setCharacterImage] = useState();
+  // 스크롤 트리거
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    const scrollToBottom = () => {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollRef.current.clientHeight;
+    };
+    scrollToBottom();
+  }, [chatLog]);
   // 유저 이름 확인
   useEffect(() => {
     axios.get('http://localhost:8000/user_name_check').then((res) => {
@@ -290,7 +299,7 @@ const CharacterChat = () => {
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background">
             {/* 메시지 */}
-            <div className="chat_content">
+            <div className="chat_content" ref={scrollRef}>
               <div className="chat_message_log">{dynamicChatComponents}</div>
             </div>
             <div className="chat_input">

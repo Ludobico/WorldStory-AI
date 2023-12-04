@@ -7,13 +7,19 @@
   position: absolute;
   color: white;
 }
-.CharacterSetting_codeblock {
+.CharacterSetting_logo {
   position: relative;
+}
+.CharacterSetting_codeblock {
+  position: static;
+  margin-top: 5%;
+  height: 40vh;
   display: flex;
-  top: 10%;
+  /* 아래는 streamtoken이 길어지면 text_ref길이도 relative로 되어서 div가 조금씩 내려앉음 */
+  /* position: relative;
+  top: 10%; */
   margin-left: 3rem;
   width: 80vw;
-  height: 40vh;
   white-space: pre-wrap;
   word-wrap: break-word;
   border-radius: 0.75rem;
@@ -32,7 +38,7 @@
 }
 .CharacterSetting_button {
   position: relative;
-  top: 15%;
+  top: 5%;
   display: flex;
 }
 .CharacterSetting_generate_button {
@@ -79,7 +85,11 @@
   border: 1px solid #fff;
   color: #7a36da;
 }
-
+.CharacterSetting_setting_section {
+  height: 150px;
+  position: relative;
+  top: 10%;
+}
 .CharacterSetting_regenetate_image {
   display: flex;
   justify-content: center;
@@ -151,7 +161,7 @@
 /* 하이퍼파라미터 top div */
 .setting_range_container {
   position: relative;
-  top: 15%;
+  top: 5%;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

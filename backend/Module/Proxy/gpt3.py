@@ -37,6 +37,7 @@ class Completion:
                     "prompt": prompt,
                     "withoutContext": True,
                     "stream": True,
+                    "tempature": 1.0
                 },
                 stream=True
             )

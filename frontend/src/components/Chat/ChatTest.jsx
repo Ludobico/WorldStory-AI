@@ -6,17 +6,6 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   const [streamToken, setStreamToken] = useState([]);
   const [aiChatResponse, setAiChatResponse] = useState();
   const [doneSignal, setDoneSignal] = useState(false);
-  const scrollRef = useRef();
-
-  // scroll controller
-  const scrollToBotton = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  };
-  useEffect(() => {
-    scrollToBotton();
-  }, [inputMessage]);
 
   // Chat with AI
   const sendMessage_OAI = async () => {
@@ -81,7 +70,7 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
     }
   }, [doneSignal]);
   return (
-    <div className="chat_message_top_div" ref={scrollRef}>
+    <div className="chat_message_top_div">
       {/* User message */}
       <div className="chat_message_top_div_user">
         <div className="chat_message_name chat_message_user_name">{userName}</div>

@@ -338,15 +338,7 @@ const CharacterSetting = () => {
           )}
         </div>
       </div>
-      <div
-        style={{
-          height: '150px',
-          alignItems: 'center',
-          position: 'relative',
-          top: '20%',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="CharacterSetting_setting_section">
         {/* setting 글자 */}
         <span className="CharacterSetting_setting_name">Setting</span>
 
