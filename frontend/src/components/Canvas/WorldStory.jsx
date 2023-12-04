@@ -161,6 +161,7 @@ const WorldStory = () => {
           starPoints={0.1}
           ghostScale={0.1}
           haloScale={0.5}
+          starBurst={false}
         />
       </EffectComposer>
       <directionalLight intensity={1} position={[0, 0, 0]} />
