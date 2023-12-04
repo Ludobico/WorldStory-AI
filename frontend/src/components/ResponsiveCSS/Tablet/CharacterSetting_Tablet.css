@@ -1,0 +1,53 @@
+@media (max-width: 1024px) {
+  .CharacterSetting_codeblock {
+    position: static;
+    margin-top: 10%;
+    height: 40vh;
+    display: flex;
+    margin-left: 3rem;
+    width: 80vw;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border-radius: 0.75rem;
+    border: solid 1px rgba(255, 255, 255, 0.1);
+    background-color: #1a202c;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+  .CharacterSetting_generate_not_loading {
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+  .CharacterSetting_generate_save {
+    font-size: 15px;
+    align-items: center;
+  }
+  .CharacterSetting_regenetate_image div {
+    font-size: 12px;
+  }
+  .Charsetting_ram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .CharacterSetting_setting_name {
+    position: relative;
+    left: 30%;
+    justify-content: center;
+    margin-left: 1.5em;
+    font-size: 2.5rem;
+    font-family: 'azonix';
+  }
+  .Charsetting_dropdown_body {
+    display: inline-flex;
+    position: relative;
+    top: 25%;
+    left: -30%;
+  }
+  .CharacterSetting_setting_section {
+    height: 200px;
+    position: relative;
+    top: 10%;
+  }
+}

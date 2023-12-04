@@ -12,7 +12,7 @@
 }
 .CharacterSetting_codeblock {
   position: static;
-  margin-top: 5%;
+  margin-top: 7%;
   height: 40vh;
   display: flex;
   /* 아래는 streamtoken이 길어지면 text_ref길이도 relative로 되어서 div가 조금씩 내려앉음 */
@@ -28,7 +28,7 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 /* 이미지 */
-.CharacterSetting_generate_image {
+.CharacterSetting_generate_image_div {
   display: flex;
   padding-right: 5rem;
   padding-top: 2rem;
@@ -124,6 +124,10 @@
   border: 1px solid #fff;
   color: #55e7fc;
 }
+.stream_token_div {
+  display: inline;
+  margin: 30px;
+}
 /* 스트리밍 메시지 css */
 .stream_token_span {
   font-size: 20px;
@@ -151,10 +155,7 @@
 /* setting 폰트 */
 .CharacterSetting_setting_name {
   position: relative;
-  /* top: 50%; */
-  /* margin-left: 7em; */
   margin-left: 1.5em;
-  /* left: 80%; */
   font-size: 2.5rem;
   font-family: 'azonix';
 }

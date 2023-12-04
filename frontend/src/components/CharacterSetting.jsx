@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CharacterSetting.css';
+import './ResponsiveCSS/Tablet/CharacterSetting_Tablet.css';
 import CharracterSettingRange from './CharracterSettingRange';
 import Logo from './Header/Logo';
 import transParentImage from './Static/transparent.png';
@@ -295,7 +296,7 @@ const CharacterSetting = () => {
       </div>
       {/* stream 된 텍스트가 출력되는 div */}
       <div className="CharacterSetting_codeblock" ref={text_div_ref} id="CharacterSetting_generate_result">
-        <div style={{ margin: '30px' }}>
+        <div className="stream_token_div">
           {streamToken.map((token, index) => (
             <span key={index} className="stream_token_span" ref={span_ref}>
               {token}
@@ -303,7 +304,7 @@ const CharacterSetting = () => {
           ))}
         </div>
         {/* 이미지 */}
-        <div className="CharacterSetting_generate_image">
+        <div className="CharacterSetting_generate_image_div">
           {imageFlag ? (
             <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
           ) : (
