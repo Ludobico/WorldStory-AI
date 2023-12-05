@@ -4,9 +4,10 @@ sys.path.append(r"C:\Users\aqs45\OneDrive\바탕 화면\repo\WorldStory_AI\backe
 # -----------------------------------------
 # local import
 from Module.LLMChain.CustomLLM import CustomLLM_FreeGPT
-from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate, AIMessagePromptTemplate
+from langchain.chains import LLMChain, ConversationChain
+from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate, AIMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
 from langchain.memory import ConversationBufferMemory
+
 # -----------------------------------------
 def chat_base_template(char_prompt_path):
     cur_dir = os.getcwd()
@@ -15,13 +16,6 @@ def chat_base_template(char_prompt_path):
         char_prompt = f.read()
 
     chat_template = """
-    You are a Fictional Character that talks to a user through the ###character prompt### below.
-    Ensure your responses are consistent with the world and setting of your story. Be creative and feel free to include any relevant details that will help the model generate a rich and unique character description. Provide as much information as possible to make the character come to life within the story you have in mind
-    ###character prompt###
-    {char_prompt}
-    ######
-    Ensure your responses are consistent with the world and setting of your story
-    Let's think step by step.
 
     ###Previous conversation###
     {chat_history}
@@ -29,22 +23,38 @@ def chat_base_template(char_prompt_path):
 
     {message}
     
-"""
+    """
 
     return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
 
-def image_gen(message):
+def image_gen(question):
   llm = CustomLLM_FreeGPT()
-  chat_base_template_result = chat_base_template('Lyra Silvermist')
-  input_char_prompt = chat_base_template_result['char_prompt']
-  question = message
+  template = """
+  당신은 사람과 대화하는 챗봇입니다.
+
+  {history}
+  Human: {human_input}
+  Chatbot:
   
-  memory = ConversationBufferMemory(memory_key="chat_history")
-  prompt = PromptTemplate(template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", 'chat_history'])
-  chain = LLMChain(llm=llm, prompt=prompt, memory=memory)
+  """
+
+  # prompt = PromptTemplate(
+  #     input_variables=["history", "human_input"], template=template
+  # )
+  prompt = ChatPromptTemplate(messages = [
+     SystemMessagePromptTemplate.from_template(template),
+     MessagesPlaceholder(variable_name="history"),
+     HumanMessagePromptTemplate.from_template("{human_input}")
+  ])
+  memory = ConversationBufferMemory()
+
+  # chain = LLMChain(
+  #     llm=llm, prompt=prompt, verbose=True, memory=memory
+  # )
+  chain = ConversationChain(llm=llm, prompt=prompt, memory=memory)
 
 
-  result = chain.run(char_prompt=input_char_prompt, message=question)
+  result = chain.predict(question)
   print(result)
 if __name__ == "__main__":
   while True:
