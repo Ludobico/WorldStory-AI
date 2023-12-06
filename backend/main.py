@@ -143,7 +143,7 @@ def character_image_check(character_name_check : MakeCharacterPrompt):
 @app.get("/user_name_check")
 def user_name_check():
     user_name = CharacterConfig.user_config_parser()
-    return user_name
+    return user_name['user_name']
 
 @app.get("/user_image_check")
 def user_image_check():

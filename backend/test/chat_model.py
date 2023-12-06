@@ -27,7 +27,7 @@ def chat_base_template(char_prompt_path):
 
     return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
 
-def image_gen(question):
+def image_gen():
   llm = CustomLLM_FreeGPT()
   # template = """
   # You are a friendly chatbot that converses with human 
@@ -58,12 +58,15 @@ def image_gen(question):
   chain = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
   # chain = ConversationChain(llm=llm, memory=memory, prompt=prompt, verbose=True)
 
-
   # result = chain.run(input=question)
   # print(result)
-  print(chain.run(human_input="What's my name?"))
+  return chain
+
+def run_chat(question, chain):
+   print(chain.run(question))
+
 if __name__ == "__main__":
-   image_gen("What's my name?")
-  # while True:
-    # input_char_prompt = input("say : ")
-    # image_gen(input_char_prompt)
+  chain = image_gen()
+  while True:
+    input_char_prompt = input("say : ")
+    run_chat(input_char_prompt,chain)

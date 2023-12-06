@@ -5,29 +5,30 @@ from typing import AsyncIterable, Optional, List, Mapping, Any
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
+from langchain.memory import ConversationBufferMemory
 from Module.Template.BaseTemplate import chat_base_template
-from langchain.schema import HumanMessage
-
-import g4f
-from g4f import Provider, models
-from langchain.llms.base import LLM
+from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_FreeGPT
 
 
 async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     chat_base_template_result = chat_base_template(char_prompt_path)
+    user_config = CharacterConfig.user_config_parser()
+    user_name = user_config['user_name']
     prompt = PromptTemplate(
-        template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message"])
+        template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", "chat_history", "user_name", "ai_name"])
+    
+    memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
 
     llm =  CustomLLM_FreeGPT()
-    model = LLMChain(prompt=prompt, llm=llm)
+    model = LLMChain(prompt=prompt, llm=llm, memory=memory, verbose=True)
 
     char_prompt = chat_base_template_result['char_prompt']
     question = content
   
     task = asyncio.create_task(
-        model.arun(char_prompt = char_prompt, message = question, callbacks=[callback])
+        model.arun(char_prompt = char_prompt, message = question, user_name = user_name,ai_name = char_prompt_path, callbacks=[callback])
     )
     try:
         async for token in callback.aiter():

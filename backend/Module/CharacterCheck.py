@@ -47,7 +47,7 @@ class CharacterConfig:
 
     default = user_config['DEFAULT']
     name = default['user_name']
-    return name
+    return {"user_name" : name}
 
   def user_image_parser():
     cur_dir = os.getcwd()

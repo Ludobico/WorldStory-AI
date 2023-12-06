@@ -1,4 +1,5 @@
 import os
+from Module.CharacterCheck import CharacterConfig
 def base_template():
     template = """
     {instruct}
@@ -83,8 +84,13 @@ def chat_base_template(char_prompt_path):
     ######
     Ensure your responses are consistent with the world and setting of your story
     Let's think step by step.
+
+    ###Previous conversation###
+    {chat_history}
+    ######
     
-    {message}
+    {user_name} : {message}
+    {ai_name} : 
     
 """
 
