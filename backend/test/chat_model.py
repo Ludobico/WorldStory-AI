@@ -29,34 +29,41 @@ def chat_base_template(char_prompt_path):
 
 def image_gen(question):
   llm = CustomLLM_FreeGPT()
-  template = """
-  당신은 사람과 대화하는 챗봇입니다.
+  # template = """
+  # You are a friendly chatbot that converses with human 
 
-  {history}
-  Human: {human_input}
-  Chatbot:
+  # {history}
+  # Human: {input}
+  # Chatbot:
   
-  """
+  # """
 
   # prompt = PromptTemplate(
-  #     input_variables=["history", "human_input"], template=template
+  #     input_variables=["history", "input"], template=template
   # )
-  prompt = ChatPromptTemplate(messages = [
-     SystemMessagePromptTemplate.from_template(template),
-     MessagesPlaceholder(variable_name="history"),
-     HumanMessagePromptTemplate.from_template("{human_input}")
-  ])
-  memory = ConversationBufferMemory()
 
-  # chain = LLMChain(
-  #     llm=llm, prompt=prompt, verbose=True, memory=memory
-  # )
-  chain = ConversationChain(llm=llm, prompt=prompt, memory=memory)
+  template = """You are a chatbot having a conversation with a human.
+
+  {chat_history}
+  Human: {human_input}
+  Chatbot:"""
+
+  prompt = PromptTemplate(
+      input_variables=["chat_history", "human_input"], template=template
+  )
+  memory = ConversationBufferMemory(memory_key="chat_history")
+
+  # memory = ConversationBufferMemory(memory_key="history")
+
+  chain = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
+  # chain = ConversationChain(llm=llm, memory=memory, prompt=prompt, verbose=True)
 
 
-  result = chain.predict(question)
-  print(result)
+  # result = chain.run(input=question)
+  # print(result)
+  print(chain.run(human_input="What's my name?"))
 if __name__ == "__main__":
-  while True:
-    input_char_prompt = input("say : ")
-    image_gen(input_char_prompt)
+   image_gen("What's my name?")
+  # while True:
+    # input_char_prompt = input("say : ")
+    # image_gen(input_char_prompt)
