@@ -27,46 +27,30 @@ def chat_base_template(char_prompt_path):
 
     return {"chat_template": chat_template, "char_prompt": char_prompt, "char_prompt_path": char_prompt_path}
 
-def image_gen():
-  llm = CustomLLM_FreeGPT()
-  # template = """
-  # You are a friendly chatbot that converses with human 
+class Foo:
+    def __init__(self):
+        self.llm_chain = self.init_llm_chain()
 
-  # {history}
-  # Human: {input}
-  # Chatbot:
-  
-  # """
+    def init_llm_chain(self):
+        llm = CustomLLM_FreeGPT()
+        template = """You are a chatbot having a conversation with a human.
 
-  # prompt = PromptTemplate(
-  #     input_variables=["history", "input"], template=template
-  # )
+        {chat_history}
+        Human: {human_input}
+        Chatbot:"""
 
-  template = """You are a chatbot having a conversation with a human.
+        prompt = PromptTemplate(
+            input_variables=["chat_history", "human_input"], template=template
+        )
+        memory = ConversationBufferMemory(memory_key="chat_history")
+        chain = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
+        return chain
 
-  {chat_history}
-  Human: {human_input}
-  Chatbot:"""
-
-  prompt = PromptTemplate(
-      input_variables=["chat_history", "human_input"], template=template
-  )
-  memory = ConversationBufferMemory(memory_key="chat_history")
-
-  # memory = ConversationBufferMemory(memory_key="history")
-
-  chain = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
-  # chain = ConversationChain(llm=llm, memory=memory, prompt=prompt, verbose=True)
-
-  # result = chain.run(input=question)
-  # print(result)
-  return chain
-
-def run_chat(question, chain):
-   print(chain.run(question))
+    def run_chat(self, question):
+        print(self.llm_chain.run(question))
 
 if __name__ == "__main__":
-  chain = image_gen()
-  while True:
-    input_char_prompt = input("say : ")
-    run_chat(input_char_prompt,chain)
+    while True:
+        cls = Foo()
+        input_char_prompt = input("say : ")
+        cls.run_chat(input_char_prompt)
