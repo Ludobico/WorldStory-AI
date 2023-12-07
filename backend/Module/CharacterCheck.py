@@ -46,8 +46,18 @@ class CharacterConfig:
     user_config.read(user_config_path, encoding='UTF-8')
 
     default = user_config['DEFAULT']
-    name = default['user_name']
-    return {"user_name" : name}
+    preference = user_config['PREFERENCE']
+
+    # default config
+    user_name = default['user_name']
+
+    # preference config
+    era = preference['era']
+    gender = preference['gender']
+    name = preference['name']
+
+
+    return {"user_name" : user_name, "era" : era, "gender" : gender, "name" : name}
 
   def user_image_parser():
     cur_dir = os.getcwd()
