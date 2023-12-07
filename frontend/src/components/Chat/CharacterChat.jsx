@@ -12,6 +12,8 @@ import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
 import ChatTest from './ChatTest';
+import { Canvas } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -280,7 +282,13 @@ const CharacterChat = () => {
           minHeight: '100vh',
         }}
       >
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={lightTheme}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          theme={lightTheme}
+          style={{ zIndex: 1 }}
+        >
           <div className="demo-logo-vertical" onClick={handleButtonClick}>
             <span>{collapsed ? 'WS' : 'WORLD STORY AI'}</span>
           </div>
@@ -298,7 +306,9 @@ const CharacterChat = () => {
           <Menu theme={lightTheme} mode="inline" items={llmSetting} selectable={false} />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
-          <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}>
+          {/* <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}> */}
+          <img src={backgorundImage} className="chat_background_image" />
+          <div className="chat_background">
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
               <div className="chat_message_log">{dynamicChatComponents}</div>
