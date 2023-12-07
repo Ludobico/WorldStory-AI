@@ -113,7 +113,7 @@ const CharacterChat = () => {
     setGpu_layers(value);
   };
   const [llmSetting, setLlmSetting] = useState([
-    getItem('Setting', 'sub2', <SettingOutlined />, [
+    getItem('LLM Setting', 'sub2', <SettingOutlined />, [
       getItem('top_k', top_k, null, [
         getItem(<Slider defaultValue={top_k} onChange={handleChange_top_k} min={5} max={80} />, 'top_k_key'),
       ]),
@@ -300,14 +300,23 @@ const CharacterChat = () => {
               unCheckedChildren="Light"
             />
           </div>
+          {/* GPT3.5 */}
           <Menu theme={lightTheme} mode="inline" items={selectedModelItem} selectable={false} />
+          {/* LocalModel */}
           <Menu theme={lightTheme} mode="inline" items={modelItems} onClick={handleModelSelet} />
+          {/* Character */}
           <Menu theme={lightTheme} mode="inline" items={characterItems} onClick={handleCharacterSelet} />
+          {/* setting */}
           <Menu theme={lightTheme} mode="inline" items={llmSetting} selectable={false} />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           {/* <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}> */}
-          <img src={backgorundImage} className="chat_background_image" />
+          {/* THREE Image Transition Effect */}
+          <Canvas style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0 }}>
+            {/* <Html fullscreen zIndex={0}>
+              <img src={backgorundImage} className="chat_background_image" />
+            </Html> */}
+          </Canvas>
           <div className="chat_background">
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
