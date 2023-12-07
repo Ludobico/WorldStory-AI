@@ -284,10 +284,7 @@ const CharacterChat = () => {
           <div className="demo-logo-vertical" onClick={handleButtonClick}>
             <span>{collapsed ? 'WS' : 'WORLD STORY AI'}</span>
           </div>
-          <div
-            className="light_switch"
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginLeft: '20px' }}
-          >
+          <div className="light_switch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Switch
               checked={lightTheme === 'dark'}
               onChange={changeTheme}
