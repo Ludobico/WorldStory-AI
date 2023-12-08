@@ -8,6 +8,7 @@ import LoaderCSS from './components/Loader/LoaderCSS';
 import { positions, Provider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import CharacterChat from './components/Chat/CharacterChat';
+import Experience from './components/Chat/background/Experience';
 
 function App() {
   const options = {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/charsetting" element={<CharacterSetting />} />
           <Route path="loader" element={<LoaderCSS />} />
           <Route path="/chat" element={<CharacterChat />} />
+          <Route path="/three" element={<Experience />} />
         </Routes>
       </Provider>
     </div>

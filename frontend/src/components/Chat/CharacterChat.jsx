@@ -12,6 +12,7 @@ import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
 import ChatTest from './ChatTest';
+import Experience from './background/Experience';
 import { Canvas } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 
@@ -312,11 +313,7 @@ const CharacterChat = () => {
         <Content style={{ width: '100vw', height: '100vh' }}>
           {/* <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}> */}
           {/* THREE Image Transition Effect */}
-          <Canvas style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0 }}>
-            {/* <Html fullscreen zIndex={0}>
-              <img src={backgorundImage} className="chat_background_image" />
-            </Html> */}
-          </Canvas>
+          <Experience />
           <div className="chat_background">
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>

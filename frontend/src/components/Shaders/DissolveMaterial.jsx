@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber';
-import { patchShaders } from 'gl-noise';
+import { patchShaders } from 'gl-noise/build/glNoise.m';
 import { easing } from 'maath';
 import * as React from 'react';
 import * as THREE from 'three';

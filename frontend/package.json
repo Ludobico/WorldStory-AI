@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@react-three/drei": "^9.68.6",
+    "@react-three/drei": "^9.90.1",
     "@react-three/fiber": "^8.13.0",
     "@react-three/postprocessing": "^2.11.4",
     "@swup/parallel-plugin": "^0.2.0",
