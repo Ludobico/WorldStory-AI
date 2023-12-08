@@ -275,7 +275,17 @@ const CharacterChat = () => {
   const dynamicChatComponents = createDynamicChatComponent(chatLog);
 
   // background image
-  const [backgorundImage, setBackgroundImage] = useState(testimage);
+  const [backgorundImage, setBackgroundImage] = useState([
+    getItem('Background', 'Background', <SettingOutlined />, [
+      getItem('Fantasy', 'Fantasy', null),
+      getItem('Cyberpunk', 'Cyberpunk', null),
+    ]),
+  ]);
+  const [selectedBackground, setSelectedBackground] = useState('Fantasy');
+  const handleBackgroundSelet = (item) => {
+    setSelectedBackground(item.key);
+    console.log(selectedBackground);
+  };
   return (
     <div className="chat_top_div">
       <Layout
@@ -309,11 +319,19 @@ const CharacterChat = () => {
           <Menu theme={lightTheme} mode="inline" items={characterItems} onClick={handleCharacterSelet} />
           {/* setting */}
           <Menu theme={lightTheme} mode="inline" items={llmSetting} selectable={false} />
+          {/* Background */}
+          <Menu
+            theme={lightTheme}
+            mode="inline"
+            items={backgorundImage}
+            onClick={handleBackgroundSelet}
+            defaultSelectedKeys={['Fantasy']}
+          />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           {/* <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}> */}
           {/* THREE Image Transition Effect */}
-          <Experience />
+          <Experience backgroundValue={selectedBackground} />
           <div className="chat_background">
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
