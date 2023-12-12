@@ -29,7 +29,7 @@ const InsideCanvas = ({ backgroundValue }) => {
             <planeGeometry args={[viewport.width, viewport.height]} />
             <DissolveMaterial
               baseMaterial={fantasy_boxMaterial}
-              color="#0000cd"
+              color="#000000"
               visible={backgroundValue == 'Fantasy'}
               intensity={10}
               thickness={0.1}
@@ -45,7 +45,7 @@ const InsideCanvas = ({ backgroundValue }) => {
             <planeGeometry args={[viewport.width, viewport.height]} />
             <DissolveMaterial
               baseMaterial={cyberpunk_boxMaterial}
-              color="#0000cd"
+              color="#000000"
               visible={backgroundValue == 'Cyberpunk'}
               intensity={10}
               thickness={0.1}

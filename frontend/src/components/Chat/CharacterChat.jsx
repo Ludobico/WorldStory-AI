@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './ChatMessage.css';
 import '../normal.css';
 import './CharacterChat.css';
@@ -7,11 +7,14 @@ import Icon, { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Switch, Slider, Tooltip } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
-import testimage from '../Static/chat_background/fantasy_desktop.jpg';
+import fantasyimage from '../Static/chat_background/fantasy_desktop.jpg';
+import cyberpunkimage from '../Static/chat_background/cyberpunk-city-buildings-art.jpg';
 import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
-import ChatTest from './ChatTest';
+import Chat from './Chat';
+
+// three js test
 import Experience from './background/Experience';
 import { Canvas } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
@@ -259,7 +262,7 @@ const CharacterChat = () => {
     return chatLog.map(
       (chat, index) =>
         index !== 0 && (
-          <ChatTest
+          <Chat
             key={index}
             inputMessage={chat.message}
             selectedCharacter={chat.character_name}
@@ -282,10 +285,18 @@ const CharacterChat = () => {
     ]),
   ]);
   const [selectedBackground, setSelectedBackground] = useState('Fantasy');
+  const [testbackground, setTestBackground] = useState(fantasyimage);
   const handleBackgroundSelet = (item) => {
     setSelectedBackground(item.key);
-    console.log(selectedBackground);
   };
+  useEffect(() => {
+    if (selectedBackground == 'Fantasy') {
+      setTestBackground(fantasyimage);
+    } else if (selectedBackground == 'Cyberpunk') {
+      setTestBackground(cyberpunkimage);
+    }
+  }, [selectedBackground]);
+
   return (
     <div className="chat_top_div">
       <Layout
@@ -329,10 +340,10 @@ const CharacterChat = () => {
           />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
-          {/* <div className="chat_background" style={{ backgroundImage: `url(${backgorundImage})` }}> */}
-          {/* THREE Image Transition Effect */}
-          <Experience backgroundValue={selectedBackground} />
-          <div className="chat_background">
+          <div className="chat_background" style={{ backgroundImage: `url(${testbackground})` }}>
+            {/* THREE Image Transition Effect */}
+            {/* <Experience backgroundValue={selectedBackground} /> */}
+            {/* <div className="chat_background"> */}
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
               <div className="chat_message_log">{dynamicChatComponents}</div>

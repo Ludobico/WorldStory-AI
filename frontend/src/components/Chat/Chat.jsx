@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './ChatMessage.css';
 
-const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, userImage, Ai_message, log_flag }) => {
+const Chat = ({ inputMessage, selectedCharacter, characterImage, userName, userImage, Ai_message, log_flag }) => {
   const [streamToken, setStreamToken] = useState([]);
   const [aiChatResponse, setAiChatResponse] = useState();
   const [doneSignal, setDoneSignal] = useState(false);
@@ -105,4 +105,4 @@ const ChatTest = ({ inputMessage, selectedCharacter, characterImage, userName, u
   );
 };
 
-export default ChatTest;
+export default Chat;
