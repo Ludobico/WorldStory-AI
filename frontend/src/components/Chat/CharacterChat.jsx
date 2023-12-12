@@ -289,7 +289,7 @@ const CharacterChat = () => {
   const handleBackgroundSelet = (item) => {
     setSelectedBackground(item.key);
   };
-  useEffect(() => {
+  useMemo(() => {
     if (selectedBackground == 'Fantasy') {
       setTestBackground(fantasyimage);
     } else if (selectedBackground == 'Cyberpunk') {

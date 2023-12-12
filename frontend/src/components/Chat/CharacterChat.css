@@ -32,6 +32,7 @@
   /* background-image: url('../Static/background3.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
+  transition: 2s;
 }
 
 .chat_background_image {
