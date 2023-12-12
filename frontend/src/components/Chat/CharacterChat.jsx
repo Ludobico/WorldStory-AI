@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { OpenAIlogo, SelectModelLogo, LLMLogo } from './SVGStorage';
 import fantasyimage from '../Static/chat_background/fantasy_desktop.jpg';
 import cyberpunkimage from '../Static/chat_background/cyberpunk-city-buildings-art.jpg';
+import westernimage from '../Static/chat_background/western.jpg';
+import apocalypseimage from '../Static/chat_background/Apocalypse.jpg';
 import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
@@ -282,6 +284,8 @@ const CharacterChat = () => {
     getItem('Background', 'Background', <SettingOutlined />, [
       getItem('Fantasy', 'Fantasy', null),
       getItem('Cyberpunk', 'Cyberpunk', null),
+      getItem('Western', 'Western', null),
+      getItem('Apocalypse', 'Apocalypse', null),
     ]),
   ]);
   const [selectedBackground, setSelectedBackground] = useState('Fantasy');
@@ -294,6 +298,10 @@ const CharacterChat = () => {
       setTestBackground(fantasyimage);
     } else if (selectedBackground == 'Cyberpunk') {
       setTestBackground(cyberpunkimage);
+    } else if (selectedBackground == 'Western') {
+      setTestBackground(westernimage);
+    } else if (selectedBackground == 'Apocalypse') {
+      setTestBackground(apocalypseimage);
     }
   }, [selectedBackground]);
 
