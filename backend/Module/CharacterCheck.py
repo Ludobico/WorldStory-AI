@@ -50,6 +50,7 @@ class CharacterConfig:
 
     # default config
     user_name = default['user_name']
+    user_lang = default['language']
 
     # preference config
     era = preference['era']
@@ -57,7 +58,7 @@ class CharacterConfig:
     name = preference['name']
 
 
-    return {"user_name" : user_name, "era" : era, "gender" : gender, "name" : name}
+    return {"user_name" : user_name,"user_lang" : user_lang, "era" : era, "gender" : gender, "name" : name}
 
   def user_image_parser():
     cur_dir = os.getcwd()

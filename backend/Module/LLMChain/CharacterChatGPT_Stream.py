@@ -16,8 +16,9 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     chat_base_template_result = chat_base_template(char_prompt_path)
     user_config = CharacterConfig.user_config_parser()
     user_name = user_config['user_name']
+    user_lang = user_config['user_lang']
     prompt = PromptTemplate(
-        template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", "chat_history", "user_name", "ai_name"])
+        template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", "chat_history", "user_name", "ai_name", "user_lang"])
     
     memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
 
@@ -28,7 +29,9 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
     question = content
   
     task = asyncio.create_task(
-        model.arun(char_prompt = char_prompt, message = question, user_name = user_name,ai_name = char_prompt_path, callbacks=[callback])
+        model.arun(char_prompt = char_prompt, message = question,
+                    user_name = user_name, ai_name = char_prompt_path,
+                      user_lang = user_lang, callbacks=[callback])
     )
     try:
         async for token in callback.aiter():
