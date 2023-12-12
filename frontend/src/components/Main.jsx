@@ -28,9 +28,9 @@ const Main = () => {
         <WorldStory />
         <Stats />
       </Canvas>
-      <div className="inside">
+      {/* <div className="inside">
         <InsideStory />
-      </div>
+      </div> */}
     </div>
   );
 };

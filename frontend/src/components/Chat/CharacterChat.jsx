@@ -322,7 +322,10 @@ const CharacterChat = () => {
           <div className="demo-logo-vertical" onClick={handleButtonClick}>
             <span>{collapsed ? 'WS' : 'WORLD STORY AI'}</span>
           </div>
-          <div className="light_switch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div
+            className="light_switch"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: '20px' }}
+          >
             <Switch
               checked={lightTheme === 'dark'}
               onChange={changeTheme}
@@ -331,9 +334,15 @@ const CharacterChat = () => {
             />
           </div>
           {/* GPT3.5 */}
-          <Menu theme={lightTheme} mode="inline" items={selectedModelItem} selectable={false} />
+          {/* <Menu theme={lightTheme} mode="inline" items={selectedModelItem} selectable={false} /> */}
           {/* LocalModel */}
-          <Menu theme={lightTheme} mode="inline" items={modelItems} onClick={handleModelSelet} />
+          <Menu
+            theme={lightTheme}
+            mode="inline"
+            items={modelItems}
+            onClick={handleModelSelet}
+            defaultSelectedKeys={'GPT3.5'}
+          />
           {/* Character */}
           <Menu theme={lightTheme} mode="inline" items={characterItems} onClick={handleCharacterSelet} />
           {/* setting */}
