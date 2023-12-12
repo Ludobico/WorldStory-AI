@@ -58,7 +58,6 @@ jupyter_core==5.3.1
 langchain==0.0.311
 langchain-g4f @ git+https://github.com/MIDORIBIN/langchain-gpt4free.git@78fcb695cefff1a65a73e85ecf6cf306b176fde9
 langsmith==0.0.43
-llama-cpp-python==0.1.78
 loguru==0.7.2
 lxml==4.9.3
 lz4==4.3.2

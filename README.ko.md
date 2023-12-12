@@ -8,11 +8,20 @@ WroldStory_AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트�
 
 WorldStory_AI를 사용하기 위해서는 다음과 같은 프로그램을 설치하여야합니다.
 
-- python 3.10 이상의 버전
-
-- [Cmake](https://cmake.org/download/)
+- python 3.10 (⚠️ 3.11 이상은 작동이 안됩니다.)
 
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+
+## Installation-local
+
+로컬로 사용하려면 아래의 라이브러리 및 프로그램을 추가로 설치하세요
+
+- [Cmake](https://cmake.org/download/)
+- VS C++ 14.0 이상의 버전
+
+```bash
+pip install llama-cpp-python
+```
 
 위의 프로그램을 설치하신뒤 `InstallKit.bat` 파일을 실행하여 프론트엔드, 백엔드 프로그램을 설치합니다.
 
