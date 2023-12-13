@@ -105,6 +105,8 @@ uvicorn main:app --reload
 
 ## Create Character!
 
+![Alt text](./frontend/src/components/Static/create_character.gif)
+
 맨 처음 화면에서 Character setting 버튼을 클릭하여 캐릭터를 생성할 수 있습니다. GPT3.5 모델과 로컬 Llama 모델([GGML](https://github.com/ggerganov/ggml)) 둘 중 하나를 선택하여 캐릭터를 만들 수 있습니다.
 
 - 지원되는 Llama 모델
@@ -117,3 +119,14 @@ uvicorn main:app --reload
 ⚠️ 로컬 Llama 모델은 아직 테스트 단계입니다. 프롬프트 및 이미지 생성 기능은 모두 GPT3.5를 기반으로 만들어져있습니다.
 
 `Model select` 에서 GPT3.5를 클릭하신 뒤 `Generate` 버튼을 클릭하면 캐릭터를 생성합니다.
+
+생성된 캐릭터와 대화하려면
+`Save setting` 버튼을 클릭하여 [backend/Characters](./backend/Characters) 폴더에 저장하세요.
+
+## User config
+
+캐릭터를 생성하고 대화하기 전, 유저의 이름, 사진과 원하는 시대,이름,성별의 캐릭터를 설정할 수 있습니다. [backend/Characters/User](./backend/Characters/User/) 폴더의 `UserConfig.ini` 파일을 수정하여 유저 프로필을 만드세요.
+
+![Alt text](./frontend/src/components/Static/user_config.png)
+
+`language` 옵션으로 원하는 언어로 대화할 수 있지만, 캐릭터를 생성할때는 **영어로 고정**됩니다. 생성된 캐릭터의 외형을 기반으로 이미지를 생성해야하는데 이 기능은 영어일때만 동작합니다.

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './ChatMessage.css';
-import '../normal.css';
 import './CharacterChat.css';
 import './Input.scss';
 import Icon, { SettingOutlined, UserOutlined } from '@ant-design/icons';
