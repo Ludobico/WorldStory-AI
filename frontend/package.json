@@ -15,7 +15,6 @@
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "framer-motion": "^10.16.3",
-    "gl-noise": "^1.6.1",
     "glslify": "^7.1.1",
     "gsap": "^3.11.5",
     "gsap-trial": "^3.11.5",
@@ -32,7 +31,6 @@
     "sass": "^1.67.0",
     "swup": "^4.3.4",
     "three": "^0.152.2",
-    "three-custom-shader-material": "^5.4.0",
     "typescript": "^5.0.4",
     "web-vitals": "^2.1.0"
   },

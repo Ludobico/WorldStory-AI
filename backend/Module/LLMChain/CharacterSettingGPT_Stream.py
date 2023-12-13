@@ -20,7 +20,7 @@ async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   # prompt = PromptTemplate(template=BaseTemplateResult['template'] + FewShotTemplateResult, input_variables=["instruct"])
   prompt = PromptTemplate(template=BaseTemplateResult['template'], input_variables=["instruct", "name", "gender", "era"])
 
-  chain = LLMChain(llm=llm, prompt=prompt, verbose=True)
+  chain = LLMChain(llm=llm, prompt=prompt)
   question = BaseTemplateResult['instruct']
   name = user_preference['name']
   gender = user_preference['gender']

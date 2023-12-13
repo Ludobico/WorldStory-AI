@@ -16,11 +16,6 @@ import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
 import Chat from './Chat';
 
-// three js test
-import Experience from './background/Experience';
-import { Canvas } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
-
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -358,9 +353,6 @@ const CharacterChat = () => {
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
           <div className="chat_background" style={{ backgroundImage: `url(${testbackground})` }}>
-            {/* THREE Image Transition Effect */}
-            {/* <Experience backgroundValue={selectedBackground} /> */}
-            {/* <div className="chat_background"> */}
             {/* 메시지 */}
             <div className="chat_content" ref={scrollRef}>
               <div className="chat_message_log">{dynamicChatComponents}</div>

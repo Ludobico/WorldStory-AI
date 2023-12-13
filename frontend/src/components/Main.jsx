@@ -26,7 +26,7 @@ const Main = () => {
           <Logo /> */}
         </Html>
         <WorldStory />
-        <Stats />
+        {/* <Stats /> */}
       </Canvas>
       {/* <div className="inside">
         <InsideStory />

@@ -1,5 +1,7 @@
 # WorldStory_AI
 
+![Alt text](./frontend/src/components/Static/intro.gif)
+
 ## Introduction
 
 WroldStory_AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트입니다.
