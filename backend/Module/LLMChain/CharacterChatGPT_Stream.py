@@ -22,7 +22,7 @@ async def chat_with_OAI(content: str, char_prompt_path, memory) -> AsyncIterable
 
     llm =  CustomLLM_FreeGPT()
     # memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
-    model = LLMChain(prompt=prompt, llm=llm, memory=memory, verbose=True)
+    model = LLMChain(prompt=prompt, llm=llm, memory=memory)
 
     char_prompt = chat_base_template_result['char_prompt']
     question = content
