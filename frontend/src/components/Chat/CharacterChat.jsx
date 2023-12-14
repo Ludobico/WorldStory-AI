@@ -154,7 +154,6 @@ const CharacterChat = () => {
   // 선택된 캐릭터
   const handleCharacterSelet = (item) => {
     setSeletedCharacter(item.key);
-    // console.log(item.key);
   };
   // light, dark 모드
   const [lightTheme, setLightTheme] = useState('dark');
@@ -204,7 +203,7 @@ const CharacterChat = () => {
     }
   }, [selectedCharacter]);
 
-  // 채팅 로그 불러오기 (log_flag가 true이면 chattest의 로그저장수행x, false면 수행)
+  // 채팅 로그 불러오기 (log_flag가 true이면 chat의 로그저장수행x, false면 수행)
   useEffect(() => {
     // 다른 캐릭터를 선택할수도 있으므로 초기화해야함
     setChatLog([{}]);
