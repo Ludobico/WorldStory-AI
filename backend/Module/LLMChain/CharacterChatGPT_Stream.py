@@ -10,20 +10,20 @@ from Module.Template.BaseTemplate import chat_base_template
 from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_FreeGPT
 
-
-async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
+async def chat_with_OAI(content: str, char_prompt_path, chat_llm) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     chat_base_template_result = chat_base_template(char_prompt_path)
     user_config = CharacterConfig.user_config_parser()
     user_name = user_config['user_name']
     user_lang = user_config['user_lang']
+
     prompt = PromptTemplate(
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", "chat_history", "user_name", "ai_name", "user_lang"])
-    
-    memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
 
-    llm =  CustomLLM_FreeGPT()
-    model = LLMChain(prompt=prompt, llm=llm, memory=memory)
+    # llm =  CustomLLM_FreeGPT()
+    llm = chat_llm
+    memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
+    model = LLMChain(prompt=prompt, llm=llm, memory=memory, verbose=True)
 
     char_prompt = chat_base_template_result['char_prompt']
     question = content
@@ -34,7 +34,7 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
                       user_lang = user_lang, callbacks=[callback])
     )
     try:
-        async for token in callback.aiter():
+        async for token in callback .aiter():
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")

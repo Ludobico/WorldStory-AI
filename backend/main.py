@@ -15,6 +15,7 @@ import tracemalloc
 import uvicorn
 # LLM Module using langchain
 # ----------------------------
+from Module.LLMChain.CustomLLM import CustomLLM_FreeGPT
 from Module.LLMChain.CharacterSettingCT_Stream import send_message
 from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream
 from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
@@ -130,9 +131,12 @@ class OAI_Message_chat(BaseModel):
     content : str
     prompt : str
 
+# initial LLM before chat
+chat_llm = CustomLLM_FreeGPT()
+
 @app.post("/character_chat_OAI")
 def character_chat_OAI(message: OAI_Message_chat):
-    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt)
+    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt, chat_llm=chat_llm)
     return StreamingResponse(generator, media_type="text/event-stream")
 
 @app.post("/character_image_check")

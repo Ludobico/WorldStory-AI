@@ -35,10 +35,11 @@ class ChatHistory:
     cur_dir = os.getcwd()
     history_path = os.path.join(cur_dir, 'Characters', AI_name, 'history.json')
     if not os.path.exists(history_path):
-      pass
+      chat_history = ""
     else:
       with open(history_path, 'r', encoding='utf-8') as f:
         chat_history = json.load(f)
       return chat_history
+    
 
 
