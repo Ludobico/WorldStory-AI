@@ -103,7 +103,7 @@ cd ../../
 uvicorn main:app --reload
 ```
 
-## Create Character!
+## Create Character
 
 ![Alt text](./frontend/src/components/Static/create_character.gif)
 
@@ -130,3 +130,5 @@ uvicorn main:app --reload
 ![Alt text](./frontend/src/components/Static/user_config.png)
 
 `language` 옵션으로 원하는 언어로 대화할 수 있지만, 캐릭터를 생성할때는 **영어로 고정**됩니다. 생성된 캐릭터의 외형을 기반으로 이미지를 생성해야하는데 이 기능은 영어일때만 동작합니다.
+
+`memory` 옵션은 대화를 할때 캐릭터가 기억할 수 있는 대화의 수입니다. memory가 높을수록 이전의 대화를 기억할 수 있지만, 토큰의 길이가 초과될 경우 일부 정보가 소실될 수 있으니 적절한 값으로 설정해야합니다.
