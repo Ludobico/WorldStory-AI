@@ -1,4 +1,4 @@
-import uvicorn
+import uvicorn, tracemalloc, base64, configparser, os
 from typing import Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -7,18 +7,17 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from PIL import Image
 from io import BytesIO
-import base64
-
 
 from fastapi.middleware.cors import CORSMiddleware
-import tracemalloc
-import uvicorn
+
+
 # LLM Module using langchain
 # ----------------------------
 from Module.LLMChain.CharacterSettingCT_Stream import send_message
 from Module.LLMChain.CharacterSettingGPT_Stream import character_setting_gpt_stream
 from Module.LLMChain.CharacterChatGPT_Stream import chat_with_OAI
 from Module.LLMChain.CharacterImageGeneration import CharacterImageGeneration
+from langchain.memory import ConversationBufferMemory, ConversationBufferWindowMemory
 # ----------------------------
 
 
@@ -129,11 +128,18 @@ def char_list_check():
 class OAI_Message_chat(BaseModel):
     content : Optional[str] = None
     prompt : str
-    llm : Optional[str] = None
+cur_dir = os.getcwd()
+user_config_path = os.path.join(cur_dir ,'Characters', 'User', 'UserConfig.ini')
+user_config = configparser.ConfigParser()
+user_config.read(user_config_path, encoding='UTF-8')
 
+memory_config = user_config['DEFAULT']
+
+# memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
+memory = ConversationBufferWindowMemory(memory_key="chat_history", input_key="message", k=memory_config['memory'])
 @app.post("/character_chat_OAI")
 def character_chat_OAI(message: OAI_Message_chat):
-    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt)
+    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt, memory=memory)
     return StreamingResponse(generator, media_type="text/event-stream")
 
 @app.post("/character_image_check")

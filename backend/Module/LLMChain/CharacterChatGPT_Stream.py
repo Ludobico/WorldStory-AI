@@ -10,7 +10,7 @@ from Module.Template.BaseTemplate import chat_base_template
 from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_FreeGPT
 
-async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
+async def chat_with_OAI(content: str, char_prompt_path, memory) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     chat_base_template_result = chat_base_template(char_prompt_path)
     user_config = CharacterConfig.user_config_parser()
@@ -21,7 +21,7 @@ async def chat_with_OAI(content: str, char_prompt_path) -> AsyncIterable[str]:
         template=chat_base_template_result['chat_template'], input_variables=["char_prompt", "message", "chat_history", "user_name", "ai_name", "user_lang"])
 
     llm =  CustomLLM_FreeGPT()
-    memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
+    # memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
     model = LLMChain(prompt=prompt, llm=llm, memory=memory, verbose=True)
 
     char_prompt = chat_base_template_result['char_prompt']
