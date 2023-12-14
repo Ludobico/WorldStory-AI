@@ -42,7 +42,8 @@ class Completion:
                 stream=True
             )
             for chunk in resp.iter_content(chunk_size=1024):
-                cleaned_chunk = chunk.decode('utf-8').replace('b', '').replace("'", '')
+                # cleaned_chunk = chunk.decode('utf-8').replace('b', '').replace("'", '')
+                cleaned_chunk = chunk.decode('utf-8')
                 yield cleaned_chunk
         except RequestException as e:
             raise RequestException("Unable to fetch the response.") from e
