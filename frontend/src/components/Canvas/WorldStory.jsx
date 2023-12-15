@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LensFlare from './UltimateLensFlare';
 import './WorldStory.css';
+import '../ResponsiveCSS/Tablet/WorldStory_Tablet.css';
+import '../ResponsiveCSS/Phone/WorldStory_Phone.css';
 import { EffectComposer } from '@react-three/postprocessing';
 import { Html, OrbitControls, PerspectiveCamera, Stars, useTexture } from '@react-three/drei';
 import lensIMG from '../Static/lensDirtTexture.png';

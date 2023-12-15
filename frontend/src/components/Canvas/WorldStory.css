@@ -61,19 +61,6 @@
   line-height: 6.5rem;
 }
 
-@media (max-width: 1024px) {
-  .intro_reveal {
-    font-size: 3.5em;
-  }
-  .Introduce_intro3 {
-    top: 67%;
-  }
-}
-@media (max-width: 479px) {
-  .intro_reveal {
-    font-size: 2em;
-  }
-}
 .button_container {
   display: flex;
   position: relative;
