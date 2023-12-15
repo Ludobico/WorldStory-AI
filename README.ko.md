@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 ## Installation-LlamaCPP
 
-Llama-cpp를 사용하려면 아래의 라이브러리와 프로그램을 추가로 설치하세요
+[Llama-cpp](https://github.com/abetlen/llama-cpp-python)를 사용하려면 아래의 라이브러리와 프로그램을 추가로 설치하세요
 
 - [Cmake](https://cmake.org/download/)
 - Visual Studio C++ 14.0 이상의 버전
