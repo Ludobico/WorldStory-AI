@@ -49,7 +49,7 @@ activate
 ```
 
 ```bash
-cd ../../../
+cd ../../
 ```
 
 ```bash
