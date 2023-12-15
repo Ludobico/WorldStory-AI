@@ -10,7 +10,7 @@ WroldStory_AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트�
 
 WorldStory_AI를 사용하기 위해서는 다음과 같은 프로그램을 설치하여야합니다.
 
-- python 3.10 (⚠️ 3.11 이상은 작동이 안됩니다.)
+- python 3.10 이상
 
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 
@@ -116,6 +116,8 @@ uvicorn main:app --reload
   - kimiko-7b.ggmlv3
   - Kimiko-v2-13B-GGML
 
+Llama 모델을 HuggingFace에서 bin파일 형식으로 다운받은 뒤, [backend/Models](./backend/Models) 폴더에 넣으면 인식됩니다.
+
 ⚠️ 로컬 Llama 모델은 아직 테스트 단계입니다. 프롬프트 및 이미지 생성 기능은 모두 GPT3.5를 기반으로 만들어져있습니다.
 
 `Model select` 에서 GPT3.5를 클릭하신 뒤 `Generate` 버튼을 클릭하면 캐릭터를 생성합니다.
@@ -131,4 +133,40 @@ uvicorn main:app --reload
 
 `language` 옵션으로 원하는 언어로 대화할 수 있지만, 캐릭터를 생성할때는 **영어로 고정**됩니다. 생성된 캐릭터의 외형을 기반으로 이미지를 생성해야하는데 이 기능은 영어일때만 동작합니다.
 
-`memory` 옵션은 대화를 할때 캐릭터가 기억할 수 있는 대화의 수입니다. memory가 높을수록 이전의 대화를 기억할 수 있지만, 토큰의 길이가 초과될 경우 일부 정보가 소실될 수 있으니 적절한 값으로 설정해야합니다.
+`memory` 옵션은 대화를 할때 캐릭터가 기억할 수 있는 대화의 수입니다. memory가 높을수록 더 이전의 대화를 기억할 수 있지만, 토큰의 길이가 초과될 경우 일부 정보가 소실될 수 있으니 적절한 값으로 설정해야합니다.
+
+`era` 옵션은 캐릭터를 생성할 때, 자신이 원하는 시대의 캐릭터(예 : 판타지, 사이버펑크, 디스토피아)를 설정할 수 있습니다. 값이 비어있으면 랜덤으로 생성합니다.
+
+`gender` 및 `name` 옵션 또한 캐릭터를 생성할 떄 성별과 이름을 지정할 수 있습니다. 값이 비어있으면 랜덤으로 생성합니다.
+
+![Alt text](./frontend/src/components/Static/user_profile.png)
+
+프로필 이미지를 변경하고 싶으면, [/backend/Characters/User](./backend/Characters/User/) 경로의 기존의 이미지를 삭제하고 원하는 이미지로 대체하면 변경됩니다.
+
+## Chat with Character
+
+![Alt text](./frontend/src/components/Static/chatting.gif)
+
+`Chat with Character` 버튼을 클릭하여 자신이 생성한 캐릭터와 대화할 수 있습니다.
+
+![Alt text](./frontend/src/components/Static/chat_setting.png)
+
+### GPT3.5 or LocalModel
+
+대화를 할 모델로써 `GPT3.5` 와 `LocalModel` 을 선택할 수 있습니다. 기본값은 GPT3.5로 설정되어있습니다.
+
+⚠️ `LocalModel` 은 개발중입니다. 현재는 GPT3.5만 동작합니다.
+
+### Character
+
+Character setting 에서 캐릭터를 생성하면 `Character` 섹션을 선택하여 원하는 캐릭터와 대화하세요.
+
+### LLM Setting
+
+LocalModel에서 설정할 수 있는 파라미터 값입니다.
+
+⚠️ `LLM Setting` 은 개발중입니다. 현재는 GPT3.5만 동작합니다.
+
+### Background
+
+자신의 캐릭터의 시대에 맞게 배경을 변경할 수 있습니다. 판타지, 사이버펑크, 서부시대, 아포칼립스 배경 중 하나를 선택할 수 있습니다.
