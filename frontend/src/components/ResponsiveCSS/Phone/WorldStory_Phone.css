@@ -27,27 +27,33 @@
     line-height: 3rem;
   }
   .button_container {
-    top: 50%;
-    left: 0%;
+    display: block;
+    margin: 0 auto;
+    top: 40%;
+    left: 10%;
+  }
+  .logo_top_div {
+    margin-left: 0;
   }
   .intro_button {
+    width: 50vw;
     font-size: 1rem;
     position: relative;
     padding: 12px 48px;
     margin: 10px 0;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
     border-radius: 40px;
     background: linear-gradient(90deg, #0162c8, #55e7fc);
     cursor: pointer;
   }
 
   .intro_button2 {
-    font-size: 1rem;
+    width: 50vw;
+    font-size: 15px;
     position: relative;
     padding: 12px 48px;
     margin: 10px 0;
-    margin-right: 50px;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
     border-radius: 40px;
     background: transparent;
     border: 2px solid #755bea;
@@ -56,5 +62,8 @@
   .Introduce_a {
     text-decoration: none;
     color: inherit;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
   }
 }

@@ -1,0 +1,19 @@
+@media (max-width: 479px) {
+  .logo_top_div {
+    color: white;
+    font-size: 2rem;
+    width: 100vw;
+    height: 10vh;
+    position: absolute;
+    top: 2.25rem;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    font-family: 'azonix';
+  }
+
+  .logo_top_div a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

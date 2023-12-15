@@ -1,5 +1,6 @@
-import React from "react";
-import "./Logo.css";
+import React from 'react';
+import './Logo.css';
+import '../ResponsiveCSS/Phone/Logo_Phone.css';
 
 const Logo = () => {
   return (
