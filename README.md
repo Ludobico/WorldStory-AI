@@ -1,4 +1,4 @@
-# WorldStory_AI
+# WorldStory-AI
 
 [![ko](https://img.shields.io/badge/lang-ko-green.svg)](./README.ko.md)
 
@@ -6,11 +6,11 @@
 
 ## Introduction
 
-WroldStory_AI is a project that creates and interacts with fictional characters
+WroldStory-AI is a project that creates and interacts with fictional characters
 
 ## Installation
 
-To use WorldStory_AI, need to install the following programs
+To use WorldStory-AI, need to install the following programs
 
 - python 3.10 or newer
 
@@ -18,7 +18,7 @@ To use WorldStory_AI, need to install the following programs
 
 After installing the above programs, run the `InstallKit.bat` file to install both the frontend and backend libraries
 
-if the batch file is not executed, or if you prefer to install it using commands, clone the WorldStory_AI repository and enter the following commands in sequence
+if the batch file is not executed, or if you prefer to install it using commands, clone the WorldStory-AI repository and enter the following commands in sequence
 
 - frontend
 
@@ -71,7 +71,7 @@ pip install llama-cpp-python
 
 After installing both the frontend and backend, execute the `StartKit.bat` file to launch the project.
 
-if the batch file does not run, or if you prefer to run it using commands, enter the following commands in two seperate terminals withi the direcory where you downloaded the WorldStory_AI repository
+if the batch file does not run, or if you prefer to run it using commands, enter the following commands in two seperate terminals withi the direcory where you downloaded the WorldStory-AI repository
 
 - frondend
 

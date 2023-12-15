@@ -1,14 +1,14 @@
-# WorldStory_AI
+# WorldStory-AI
 
 ![Alt text](./frontend/src/components/Static/intro.gif)
 
 ## Introduction
 
-WroldStory_AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트입니다.
+WroldStory-AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트입니다.
 
 ## Installation
 
-WorldStory_AI를 사용하기 위해서는 다음과 같은 프로그램을 설치하여야합니다.
+WorldStory-AI를 사용하기 위해서는 다음과 같은 프로그램을 설치하여야합니다.
 
 - python 3.10 이상
 
@@ -16,7 +16,7 @@ WorldStory_AI를 사용하기 위해서는 다음과 같은 프로그램을 설�
 
 위의 프로그램을 설치하신뒤 `InstallKit.bat` 파일을 실행하여 프론트엔드, 백엔드 프로그램을 설치합니다.
 
-만일 배치파일이 실행되지 않거나, 명령어로 설치하려면 WorldStory_AI 레파지토리를 클론한 뒤 아래의 명령어를 순서대로 입력해주세요
+만일 배치파일이 실행되지 않거나, 명령어로 설치하려면 WorldStory-AI 레파지토리를 클론한 뒤 아래의 명령어를 순서대로 입력해주세요
 
 - frontend
 
@@ -69,7 +69,7 @@ pip install llama-cpp-python
 
 프론트엔드와 백엔드가 설치되었다면 `StartKit.bat` 파일을 실행하여 프로젝트를 실행합니다.
 
-만일 배치파일이 실행되지 않거나, 명령어로 실행하려면 WorldStory_AI 레파지토리를 다운받은 폴더에서 2개의 터미널에서 아래의 명령어를 순서대로 입력해주세요
+만일 배치파일이 실행되지 않거나, 명령어로 실행하려면 WorldStory-AI 레파지토리를 다운받은 폴더에서 2개의 터미널에서 아래의 명령어를 순서대로 입력해주세요
 
 - frondend
 
