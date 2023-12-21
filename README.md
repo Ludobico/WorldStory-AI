@@ -86,7 +86,7 @@ yarn start
 - backend
 
 ```bash
-./backend
+cd ./backend
 ```
 
 ```bash
