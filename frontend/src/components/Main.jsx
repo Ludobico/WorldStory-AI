@@ -11,6 +11,7 @@ import LoaderTransition from './Loader/LoaderTransition';
 import InsideStory from './Canvas/InsideStory';
 import './Canvas/InsideStory.css';
 import Logo from './Header/Logo';
+import WebGPURenderer from 'three/examples/jsm/renderers/webgpu/WebGPURenderer';
 
 const Main = () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,7 +19,6 @@ const Main = () => {
     <div className="Main_top_div">
       <Canvas
         gl={{ alpha: false, stencil: false, antialias: false, depth: false }}
-        dpr={1}
         style={{ width: '100vw', height: '100vh' }}
       >
         <Html fullscreen>

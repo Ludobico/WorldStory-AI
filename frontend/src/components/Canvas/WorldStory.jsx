@@ -150,8 +150,6 @@ const WorldStory = () => {
       <MemoOrbitControl ref={OrbitcameraRef} autoRotate enableZoom={false} />
       <PerspectiveCamera makeDefault position={[-2.129, 0.177, 27.08]} ref={cameraRef} />
       <EffectComposer>
-        {/* 테스트용 */}
-        {/* <LensFlare dirtTextureFile={lensIMG} {...lensFlareProps} /> */}
         <LensFlare
           dirtTextureFile={lensIMG}
           colorGain={new THREE.Color(56, 22, 11)}
