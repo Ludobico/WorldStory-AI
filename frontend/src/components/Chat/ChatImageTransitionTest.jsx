@@ -69,9 +69,9 @@ const ImageTransition = ({ currentImage, nextImage}) => {
   // });
 
   const ChangeImages = () => {
-    console.log(materialRef.current.uniforms.dispFactor.value)
+    const currentValue = materialRef.current.uniforms.dispFactor.value
     gsap.to(materialRef.current.uniforms.dispFactor, {
-      value: 1,
+      value: currentValue === 0 ? 1: 0,
       duration: 1,
       ease: "power2.out",
     })
