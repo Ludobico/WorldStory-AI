@@ -10,16 +10,17 @@ import fantasyimage from '../Static/chat_background/fantasy_desktop.jpg';
 import cyberpunkimage from '../Static/chat_background/cyberpunk-city-buildings-art.jpg';
 import westernimage from '../Static/chat_background/western.jpg';
 import apocalypseimage from '../Static/chat_background/Apocalypse.jpg';
+import futuristicimage from '../Static/chat_background/futuristic.jpg';
 import blackimage from '../Static/chat_background/635b6e3b30bfeae7b713cb8162aa2c9a.jpg';
 import axios from 'axios';
 import { SendOutlined } from '@ant-design/icons';
 import { useAlert } from 'react-alert';
 import Chat from './Chat';
-import * as THREE from 'three'
+import * as THREE from 'three';
 import { OrbitControls, PerspectiveCamera, shaderMaterial, useAspect, useTexture } from '@react-three/drei';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
-import glsl from "glslify";
-import gsap from 'gsap'
+import glsl from 'glslify';
+import gsap from 'gsap';
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -33,10 +34,9 @@ function getItem(label, key, icon, children) {
 const ImageTransitionMaterial = shaderMaterial(
   // uniforms
   {
-    dispFactor : 0,
-    currentImage : new THREE.Texture(),
-    nextImage : new THREE.Texture(),
-  
+    dispFactor: 0,
+    currentImage: new THREE.Texture(),
+    nextImage: new THREE.Texture(),
   },
   // vertex
   glsl`
@@ -78,67 +78,61 @@ const ImageTransitionMaterial = shaderMaterial(
 );
 
 extend({
-  ImageTransitionMaterial
-})
+  ImageTransitionMaterial,
+});
 
-
-const ImageTransition = ({ prevImage, nextImage}) => {
+const ImageTransition = ({ prevImage, nextImage }) => {
   const materialRef = useRef();
-  const [animationFlag, setAnimationFlag] = useState(false)
-  const {size} = useThree();
-  const scale = useAspect(
-    size.width,
-    size.height,
-    1
-  )
+  const [animationFlag, setAnimationFlag] = useState(false);
+  const { size } = useThree();
+  const scale = useAspect(size.width, size.height, 1);
 
- const ChangeImage = () => {
-    const currentValue = materialRef.current.uniforms.dispFactor.value
-    setAnimationFlag(true)
+  const ChangeImage = () => {
+    const currentValue = materialRef.current.uniforms.dispFactor.value;
+    setAnimationFlag(true);
     gsap.to(materialRef.current.uniforms.dispFactor, {
-      value: currentValue === 0 ? 1: 0,
+      value: currentValue === 0 ? 1 : 0,
       duration: 1,
-      ease: "power2.out",
+      ease: 'power2.out',
       oninit: () => {
         if (currentValue === 1) {
-          materialRef.current.uniforms.currentImage.value = nextImage
-          materialRef.current.uniforms.nextImage.value = prevImage
-        }
-        else{
-        materialRef.current.uniforms.currentImage.value = prevImage
-        materialRef.current.uniforms.nextImage.value = nextImage
+          materialRef.current.uniforms.currentImage.value = nextImage;
+          materialRef.current.uniforms.nextImage.value = prevImage;
+        } else {
+          materialRef.current.uniforms.currentImage.value = prevImage;
+          materialRef.current.uniforms.nextImage.value = nextImage;
         }
       },
       onComplete: () => {
-        setAnimationFlag(false)
-      }
-    })
-  }
+        setAnimationFlag(false);
+      },
+    });
+  };
   useEffect(() => {
-    if (animationFlag === false){
-    ChangeImage()
+    if (animationFlag === false) {
+      ChangeImage();
     }
-  },[nextImage])
-  return(
-    <mesh position={[0,0,0]} scale={scale}>
+  }, [nextImage]);
+  return (
+    <mesh position={[0, 0, 0]} scale={scale}>
       <planeGeometry />
-      <imageTransitionMaterial ref={materialRef}/>
+      <imageTransitionMaterial ref={materialRef} />
     </mesh>
-  )
-}
+  );
+};
 
-const Scene = ({image1, image2}) => {
-  const prevImage = useTexture(image1)
-  const nextImage = useTexture(image2)
+const Scene = ({ image1, image2 }) => {
+  const prevImage = useTexture(image1);
+  const nextImage = useTexture(image2);
 
-  return(
+  return (
     <>
-    <PerspectiveCamera makeDefault position={[0,0,1]}/>
-    <ImageTransition prevImage={prevImage} nextImage={nextImage} />
-    <ambientLight intensity={3} />
+      <PerspectiveCamera makeDefault position={[0, 0, 1]} />
+      <ImageTransition prevImage={prevImage} nextImage={nextImage} />
+      <ambientLight intensity={3} />
     </>
-  )
-}
+  );
+};
 const CharacterChat = () => {
   // 알림
   const alert = useAlert();
@@ -394,6 +388,7 @@ const CharacterChat = () => {
       getItem('Cyberpunk', 'Cyberpunk', null),
       getItem('Western', 'Western', null),
       getItem('Apocalypse', 'Apocalypse', null),
+      getItem('Futuristic', 'Futuristic', null),
     ]),
   ]);
   const [selectedBackground, setSelectedBackground] = useState(fantasyimage);
@@ -401,7 +396,7 @@ const CharacterChat = () => {
 
   const handleBackgroundSelet = (item) => {
     setPreviousBackground(selectedBackground);
-    
+
     if (item.key === 'Fantasy') {
       setSelectedBackground(fantasyimage);
     } else if (item.key === 'Cyberpunk') {
@@ -410,6 +405,8 @@ const CharacterChat = () => {
       setSelectedBackground(westernimage);
     } else if (item.key === 'Apocalypse') {
       setSelectedBackground(apocalypseimage);
+    } else if (item.key === 'Futuristic') {
+      setSelectedBackground(futuristicimage);
     }
   };
 
@@ -478,8 +475,8 @@ const CharacterChat = () => {
           />
         </Sider>
         <Content style={{ width: '100vw', height: '100vh' }}>
-          <Canvas style={{width: '100vw', height: '100vh', position: 'absolute'}}>
-            <Scene image1={previousBackground} image2={selectedBackground}/>
+          <Canvas style={{ width: '100vw', height: '100vh', position: 'absolute' }}>
+            <Scene image1={previousBackground} image2={selectedBackground} />
           </Canvas>
           {/* <div className="chat_background" style={{ backgroundImage: `url(${testbackground})` }}> */}
           <div className="chat_background">
