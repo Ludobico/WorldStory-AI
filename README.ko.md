@@ -170,3 +170,5 @@ LocalModel에서 설정할 수 있는 파라미터 값입니다.
 ### Background
 
 자신의 캐릭터의 시대에 맞게 배경을 변경할 수 있습니다. 판타지, 사이버펑크, 서부시대, 아포칼립스 배경 중 하나를 선택할 수 있습니다.
+
+![Alt text](./frontend/src/components/Static/Background_transition.gif)
