@@ -122,6 +122,8 @@ Llama 모델을 HuggingFace에서 bin파일 형식으로 다운받은 뒤, [back
 
 `Model select` 에서 GPT3.5를 클릭하신 뒤 `Generate` 버튼을 클릭하면 캐릭터를 생성합니다.
 
+이미지는 캐릭터의 외형을 기반으로 자동생성됩니다.
+
 생성된 캐릭터와 대화하려면
 `Save setting` 버튼을 클릭하여 [backend/Characters](./backend/Characters) 폴더에 저장하세요.
 

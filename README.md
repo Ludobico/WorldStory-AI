@@ -124,6 +124,8 @@ Download the Llama model from HuggingFace as a binary(.bin) file and place it in
 
 Under `Model Select`, choose GPT-3.5 and then click the `Generate` button to create the character
 
+The image is automatically generated based on the character's appearance.
+
 To interact with the created character, click the `Save Setting` button to store it in the [backend/Characters](./backend/Characters) folder
 
 ## User config
