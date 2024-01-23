@@ -1,34 +1,33 @@
 {
-  "GPT-2" : {
-    "model_type" : "gpt2"
+  "GPT-2": {
+    "model_type": "gpt2"
   },
-  "GPT-J" : {
-    "model_type" : "gptj",
-    "extra" : "not only GPTJ also GPT4ALL-J"
+  "GPT-J": {
+    "model_type": "gptj",
+    "extra": "GPT4ALL-J"
   },
-  "GPT-NeoX" : {
-    "model_type" : "gpt_neox",
-    "extra" : "not only GPT-NeoX also StableLM"
+  "GPT-NeoX": {
+    "model_type": "gpt_neox",
+    "extra": "StableLM"
   },
-  "Falcon" : {
-    "model_type" : "falcon"
+  "Falcon": {
+    "model_type": "falcon"
   },
-  "LLaMA" : {
-    "model_type" : "llama",
-    "extra" : "not only llama also llama2"
+  "LLaMA": {
+    "model_type": "llama",
+    "extra": "llama2"
   },
-  "MPT" : {
-    "model_type" : "mpt"
+  "MPT": {
+    "model_type": "mpt"
   },
-  "StarCoder" : {
-    "model_type" : "gpt_bigcode",
-    "extra" : "not only StarCoder, also StarChat"
+  "StarCoder": {
+    "model_type": "gpt_bigcode",
+    "extra": "StarChat"
   },
-  "DollyV2" : {
-    "model_type" : "dolly-v2"
+  "DollyV2": {
+    "model_type": "dolly-v2"
   },
-  "Replit" : {
-    "model_type" : "replit"
+  "Replit": {
+    "model_type": "replit"
   }
-
 }
