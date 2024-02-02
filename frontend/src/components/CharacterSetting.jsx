@@ -197,6 +197,7 @@ const CharacterSetting = () => {
   const sendMessage_OAI = async () => {
     // setImageFlag(true);
     setImageGenLoader(false);
+    setCharacterImage(transParentImage);
     text_div_ref.current.style.height = reset_text_div_ref;
     container_div_ref.current.style.height = reset_container_div_ref;
     SetGenLoader(true);
