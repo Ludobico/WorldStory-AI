@@ -36,6 +36,10 @@
   height: 256px;
   /* margin-left: auto; */
 }
+
+.CharacterSetting_generate_image {
+  margin-bottom: 15px;
+}
 .CharacterSetting_button {
   position: relative;
   top: 5%;
