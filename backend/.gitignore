@@ -3,3 +3,4 @@ Models/*
 !Models/.gitkeep
 Characters/*
 !Characters/User/
+__pycache__/
