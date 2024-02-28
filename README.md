@@ -12,7 +12,7 @@ WroldStory-AI is a project that creates and interacts with fictional characters
 
 To use WorldStory-AI, need to install the following programs
 
-- python 3.10 or newer
+- python 3.10 >=
 
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 To use [Llama-cpp](https://github.com/abetlen/llama-cpp-python), install the following additional libraries and programs
 
 - [Cmake](https://cmake.org/download/)
-- Visual Studio C++ 14.0 or newer
+- Visual Studio C++ 14.0 >=
 
 ```bash
 pip install llama-cpp-python
