@@ -172,6 +172,6 @@ Parameter values that can be configured in the LocalModel
 
 ### Background
 
-You can change the background to match the era of your character. You can choose from fantasy, cyberpunk, wild west and apocalyptic settings
+You can change the background to match the era of your character. You can choose from fantasy, cyberpunk, wild west and apocalyptic settings.
 
 ![Alt text](./frontend/src/components/Static/Background_transition.gif)
