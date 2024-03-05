@@ -407,6 +407,9 @@ const CharacterChat = () => {
       setSelectedBackground(apocalypseimage);
     } else if (item.key === 'Futuristic') {
       setSelectedBackground(futuristicimage);
+    } else {
+      // backend background image
+      setSelectedBackground(`data:image/png;base64, ${item.key}`);
     }
   };
 
@@ -427,7 +430,7 @@ const CharacterChat = () => {
   useEffect(() => {
     axios.get('http://localhost:8000/chat_background_select').then((res) => {
       for (let i = 0; i < res.data.length; i++) {
-        const newBackgorundImage = getItem(res.data[i], res.data[i], null);
+        const newBackgorundImage = getItem(res.data[i].image_name, res.data[i].image_base64, null);
         const updatedBackgroundImage = [...backgorundImage];
         updatedBackgroundImage[0].children.push(newBackgorundImage);
 
