@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# background
+/src/components/Static/chat_background/*
+!/src/components/Static/chat_background/635b6e3b30bfeae7b713cb8162aa2c9a.jpg
+!/src/components/Static/chat_background/Apocalypse.jpg
+!/src/components/Static/chat_background/fantasy_desktop.jpg
+!/src/components/Static/chat_background/futuristic.jpg
+!/src/components/Static/chat_background/western.jpg
+!/src/components/Static/chat_background/cyberpunk-city-buildings-art.jpg
