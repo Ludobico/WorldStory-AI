@@ -426,20 +426,15 @@ const CharacterChat = () => {
   // 백엔드에서 배경화면 이미지 불러오기
   useEffect(() => {
     axios.get('http://localhost:8000/chat_background_select').then((res) => {
-      console.log(res.data);
+      for (let i = 0; i < res.data.length; i++) {
+        const newBackgorundImage = getItem(res.data[i], res.data[i], null);
+        const updatedBackgroundImage = [...backgorundImage];
+        updatedBackgroundImage[0].children.push(newBackgorundImage);
+
+        setBackgroundImage(updatedBackgroundImage);
+      }
     });
-    // useEffect(() => {
-    //   if (selectedCharacter !== false) {
-    //     axios
-    //       .post('http://localhost:8000/character_image_check', {
-    //         name: selectedCharacter,
-    //       })
-    //       .then((res) => {
-    //         setCharacterImage(`data:image/png;base64, ${res.data}`);
-    //       });
-    //   }
-    // }, [selectedCharacter]);
-  });
+  }, []);
 
   return (
     <div className="chat_top_div">
