@@ -174,3 +174,9 @@ LocalModel에서 설정할 수 있는 파라미터 값입니다.
 자신의 캐릭터의 시대에 맞게 배경을 변경할 수 있습니다. 판타지, 사이버펑크, 서부시대, 아포칼립스 배경 중 하나를 선택할 수 있습니다.
 
 ![Alt text](./frontend/src/components/Static/Background_transition.gif)
+
+또한 자신이 원하는 배경을 넣고싶다면, [frontend/src/components/Static/chat_background/](./frontend/src/components/Static/chat_background/) 폴더에 원하는 이미지를 넣으면 사용하실 수 있습니다.
+
+![alt text](./frontend/src/components/Static/test_image.png)
+
+![alt text](./frontend/src/components/Static/test_image2.png)

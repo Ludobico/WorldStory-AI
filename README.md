@@ -175,3 +175,9 @@ Parameter values that can be configured in the LocalModel
 You can change the background to match the era of your character. You can choose from fantasy, cyberpunk, wild west and apocalyptic settings.
 
 ![Alt text](./frontend/src/components/Static/Background_transition.gif)
+
+Also, if you want to add your own background, you can use the [frontend/src/components/Static/chat_background/](./frontend/src/components/Static/chat_background/) folder with an image of your choice.
+
+![alt text](./frontend/src/components/Static/test_image.png)
+
+![alt text](./frontend/src/components/Static/test_image2.png)
