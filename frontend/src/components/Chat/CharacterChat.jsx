@@ -423,6 +423,24 @@ const CharacterChat = () => {
   //   }
   // }, [selectedBackground]);
 
+  // 백엔드에서 배경화면 이미지 불러오기
+  useEffect(() => {
+    axios.get('http://localhost:8000/chat_background_select').then((res) => {
+      console.log(res.data);
+    });
+    // useEffect(() => {
+    //   if (selectedCharacter !== false) {
+    //     axios
+    //       .post('http://localhost:8000/character_image_check', {
+    //         name: selectedCharacter,
+    //       })
+    //       .then((res) => {
+    //         setCharacterImage(`data:image/png;base64, ${res.data}`);
+    //       });
+    //   }
+    // }, [selectedCharacter]);
+  });
+
   return (
     <div className="chat_top_div">
       <Layout

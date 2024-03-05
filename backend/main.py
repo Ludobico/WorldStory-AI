@@ -36,7 +36,7 @@ from Config.LLMCheck import LLMCheck
 
 from Module.MakeCharacter import MakeCharacter
 from Module.CharacterCheck import CharacterConfig
-from pathlib import Path
+from Module.BackgroundSelect import background_select
 
 
 app = FastAPI()
@@ -182,6 +182,10 @@ async def Character_image_generation(character_prompt : MakeCharacterPrompt) -> 
     b64_resp = base64.b64encode(resp)
     return b64_resp
 
+@app.get("/chat_background_select")
+async def chat_background_select() -> list:
+    back_image = background_select()
+    return back_image
 
 if __name__ == "__main__":
     uvicorn.run(host="0.0.0.0", port=8000, app=app, loop='asyncio')
