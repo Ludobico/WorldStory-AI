@@ -109,7 +109,7 @@ uvicorn main:app --reload
 
 ![Alt text](./frontend/src/components/Static/create_character.gif)
 
-You can create a character bt clicking the Character Setting button on the first screen. Choose either the GPT-3.5 model or the local Llama model([GGML](https://github.com/ggerganov/ggml)) to create your character
+You can create a character by clicking the Character Setting button on the first screen. Choose either the GPT-3.5 model or the local Llama model([GGML](https://github.com/ggerganov/ggml)) to create your character
 
 - Supported Llama Models
   - openbuddy-llama2-13b-v11.1.ggmlv3
@@ -130,7 +130,7 @@ To interact with the created character, click the `Save Setting` button to store
 
 ## User config
 
-Before creating and interacting with a character, you can set the User's name, picture, and preferences for era, name, and gender. Create a user profile bt modifying the `UserConfig.ini` file in the [backend/Characters/User](./backend/Characters/User/) folder
+Before creating and interacting with a character, you can set the User's name, picture, and preferences for era, name, and gender. Create a user profile by modifying the `UserConfig.ini` file in the [backend/Characters/User](./backend/Characters/User/) folder
 
 ![Alt text](./frontend/src/components/Static/user_config.png)
 
