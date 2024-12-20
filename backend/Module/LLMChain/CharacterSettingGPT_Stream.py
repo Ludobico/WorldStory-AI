@@ -12,7 +12,7 @@ from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_
 
 async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   callback = AsyncIteratorCallbackHandler()
-  llm = CustomLLM_FreeGPT()
+  llm = CustomLLM_GPT()
   BaseTemplateResult = base_template()
   FewShotTemplateResult = few_shot_base_template()
   user_preference = CharacterConfig.user_config_parser()
@@ -20,7 +20,7 @@ async def character_setting_gpt_stream(content : str) -> AsyncIterable[str]:
   # prompt = PromptTemplate(template=BaseTemplateResult['template'] + FewShotTemplateResult, input_variables=["instruct"])
   prompt = PromptTemplate(template=BaseTemplateResult['template'], input_variables=["instruct", "name", "gender", "era"])
 
-  chain = LLMChain(llm=llm, prompt=prompt)
+  chain = llm | prompt
   question = BaseTemplateResult['instruct']
   name = user_preference['name']
   gender = user_preference['gender']

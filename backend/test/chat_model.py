@@ -35,8 +35,6 @@ def init_llm_chain(question):
         stream=True
     )
 
-    # print(response.choices[0].message.content)
-
     llm = TestLLM()
 
     chain = prompt | llm
