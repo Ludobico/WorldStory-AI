@@ -1,7 +1,6 @@
 import os
 from Module.CharacterCheck import CharacterConfig
 def base_template():
-    user_preference = CharacterConfig.user_config_parser()
     template = """
     {instruct}
     Name: {name}

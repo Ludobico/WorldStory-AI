@@ -1,7 +1,8 @@
 from typing import Optional, List, Any
 from langchain.llms.base import LLM
 
-from g4f.client import Client
+from g4f.client import Client, AsyncClient
+from g4f import Provider
 from Module.Proxy.gpt3 import Completion
 
 from functools import partial
@@ -31,15 +32,16 @@ class CustomLLM_GPT(LLM):
         messages=[{"role" : "user", "content" : prompt}],
         stream=True
     )
-      string_response = response.choices[0].message.content
       if run_manager:
           text_callback = partial(run_manager.on_llm_new_token)
       
       text = ""
-      for token in string_response:
-          if text_callback:
-              await text_callback(token)
-          text += token
+      for chunk in response:
+          if chunk.choices and chunk.choices[0].delta.content:
+              token = chunk.choices[0].delta.content
+              if text_callback:
+                  await text_callback(token)
+              text += token
       return text
 
 class CustomLLM_Llama(LLM):

@@ -6,7 +6,7 @@ from g4f.models import Model
 from g4f.Provider.base_provider import BaseProvider
 from langchain.callbacks.manager import AsyncCallbackManagerForLLMRun, CallbackManagerForLLMRun
 from langchain.llms.base import LLM
-from langchain.llms.utils import enforce_stop_tokens
+from langchain_community.llms.utils import enforce_stop_tokens
 
 
 class G4FLLM(LLM):
