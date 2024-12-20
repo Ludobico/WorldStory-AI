@@ -14,7 +14,6 @@ attrs==24.3.0
 backcall==0.2.0
 blinker==1.9.0
 Brotli==1.1.0
-browser-cookie3==0.20.0
 certifi==2024.12.14
 cffi==1.17.1
 charset-normalizer==3.4.0
@@ -44,6 +43,7 @@ h2==4.1.0
 hpack==4.0.0
 httpcore==1.0.7
 httpx==0.28.1
+httpx-sse==0.4.0
 huggingface-hub==0.27.0
 hyperframe==6.0.1
 idna==3.10
@@ -60,6 +60,7 @@ jsonpointer==3.0.0
 jupyter_client==8.6.3
 jupyter_core==5.7.2
 langchain==0.3.13
+langchain-community==0.3.13
 langchain-core==0.3.28
 langchain-g4f @ git+https://github.com/MIDORIBIN/langchain-gpt4free.git@78fcb695cefff1a65a73e85ecf6cf306b176fde9
 langchain-text-splitters==0.3.4
@@ -99,6 +100,7 @@ pycparser==2.22
 pycryptodome==3.21.0
 pycryptodomex==3.21.0
 pydantic==2.10.4
+pydantic-settings==2.7.0
 pydantic_core==2.27.2
 PyExecJS==1.5.1
 Pygments==2.18.0
