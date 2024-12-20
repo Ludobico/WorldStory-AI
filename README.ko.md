@@ -2,6 +2,8 @@
 
 ![Alt text](./frontend/src/components/Static/intro.gif)
 
+### 현재 WorldStory-AI는 Langchain의 최신 문법(LCEL)및 G4F 모델에 맞춰 리팩토링 중입니다. 현재 동작하지 않습니다!
+
 ## Introduction
 
 WroldStory-AI는 가상의 캐릭터를 생성하고 대화하는 프로젝트입니다.

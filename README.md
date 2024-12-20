@@ -4,6 +4,8 @@
 
 ![Alt text](./frontend/src/components/Static/intro.gif)
 
+### Current WorldStort-AI is being refactoring to adapt to the updates in LangchainExpressionLanguage(LCEL) and the G4F model, so it is not functional!!!
+
 ## Introduction
 
 WroldStory-AI is a project that creates and interacts with fictional characters
