@@ -1,33 +1,53 @@
-import os
-import sys
-sys.path.append(r"C:\Users\aqs45\OneDrive\바탕 화면\repo\WorldStory_AI\backend")
+import os, sys
+backend_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if backend_root not in sys.path:
+    sys.path.append(backend_root)
 # -----------------------------------------
-# local import
-from Module.LLMChain.CustomLLM import CustomLLM_FreeGPT
-from langchain.chains import LLMChain, ConversationChain
-from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate, AIMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
-from langchain.memory import ConversationBufferMemory, ConversationBufferWindowMemory
+from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
+from langchain.memory import  ConversationBufferWindowMemory
+from g4f.client import Client
+from langchain_with_g4f import TestLLM
 # -----------------------------------------
 
-def init_llm_chain(question, memory):
-    llm = CustomLLM_FreeGPT()
-    template = """You are a chatbot having a conversation with a human.
+def init_llm_chain(question):
+    system_template = """You are a chatbot having a conversation with a human.
+    """
 
-    {history}
-    Human: {input}
-    Chatbot:"""
+    human_template = """
+{question}
+"""
+    memory_key = "chat_history"
 
-    prompt = PromptTemplate(
-        input_variables=["history", "input"], template=template
+    messages = [
+        SystemMessagePromptTemplate.from_template(system_template),
+        HumanMessagePromptTemplate.from_template(human_template)
+    ]
+
+    prompt = ChatPromptTemplate(
+        messages=messages,
+        input_variables=['question']
     )
-    chain = LLMChain(llm=llm, prompt=prompt, verbose=True, memory=memory)
-    print(chain.run(question))
-    print(id(chain))
+
+    client = Client()
+    response = client.chat.completions.create(
+        model='gpt-4o-mini',
+        messages=[{"role" : "user", "content" : question}],
+        stream=True
+    )
+
+    # print(response.choices[0].message.content)
+
+    llm = TestLLM()
+
+    chain = prompt | llm
+
+    result = chain.invoke({"question" : question})
+    print(result)
+
+
 
 if __name__ == "__main__":
-    # memory = ConversationBufferMemory(memory_key="history", input_key="input")
-    memory = ConversationBufferWindowMemory(memory_key="history", input_key="input", k=3)
     while True:
         input_char_prompt = input("say : ")
-        init_llm_chain(input_char_prompt, memory)
+        init_llm_chain(input_char_prompt)
         
