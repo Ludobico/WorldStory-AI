@@ -25,19 +25,19 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     era = user_preference['era']
 
 
-    # async for chunk in chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}):
-    #     yield chunk
+    async for chunk in chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}):
+        yield chunk
 
-#   response = chain.ainvoke({"instruct" : question, "name" : name, "gender" : gender, "era" : era})
+    # response = chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}, config={"callbacks" : [callback]})
 
-    task = asyncio.create_task(chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}, config={"callbacks" : [callback]}))
+    # task = asyncio.create_task(response)
     
-    try:
-        async for token in callback.aiter():
-            yield token
-    except Exception as e:
-        print(f"Caught exception: {e}")
-    finally:
-        callback.done.set()
+    # try:
+    #     async for token in callback.aiter():
+    #         yield token
+    # except Exception as e:
+    #     print(f"Caught exception: {e}")
+    # finally:
+    #     callback.done.set()
 
-    await task
+    # await task

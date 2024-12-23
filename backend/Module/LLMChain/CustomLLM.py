@@ -37,11 +37,10 @@ class CustomLLM_GPT(LLM):
       
       text = ""
       for chunk in response:
-          if chunk.choices and chunk.choices[0].delta.content:
-              token = chunk.choices[0].delta.content
-              if text_callback:
-                  await text_callback(token)
-              text += token
+            token = chunk.choices[0].delta.content
+            if text_callback:
+                await text_callback(token)
+            text += token
       return text
 
 class CustomLLM_Llama(LLM):
