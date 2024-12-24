@@ -31,7 +31,8 @@ class CustomLLM_GPT(LLM):
       response = client.chat.completions.create(
         model='gpt-4o-mini',
         messages=[{"role" : "user", "content" : prompt}],
-        stream=True
+        stream=True,
+        temperature=1.0
     )
       if run_manager:
           text_callback = partial(run_manager.on_llm_new_token)

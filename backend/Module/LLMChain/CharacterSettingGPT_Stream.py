@@ -37,12 +37,14 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     
     try:
         async for token in callback.aiter():
-            if token is not None:
-                yield token
+            yield token
     except Exception as e:
         print(f"Caught exception: {e}")
+    except asyncio.CancelledError:
+        raise
     finally:
-        callback.done.set()
+        if hasattr(callback, 'doen') and callback.done is not None:
+            callback.done.set()
 
     await task
 

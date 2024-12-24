@@ -14,6 +14,28 @@ You are a talented writer creating a character for a story. Provide detailed inf
 
 Generate a character for a story:
 
+NAME GENERATION RULES
+
+Create a distinctive name by combining unusual elements
+Draw from multiple cultural backgrounds
+Consider the character's era and setting
+Mix different naming conventions:
+
+Ancient mythological elements
+Nature-inspired names
+Compound names with unique combinations
+Modified traditional names
+Abstract concepts or emotions
+Astronomical terms
+Musical terms
+Ancient languages (Latin, Greek, Sanskrit, etc.)
+Cultural fusion names
+Made-up names that follow linguistic patterns
+
+
+Avoid common or overused character names
+The name should reflect the character's background and setting
+
 Name: {name}
 
 Gender: {gender}
