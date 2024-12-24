@@ -3,7 +3,7 @@ from io import BytesIO
 from PIL import Image
 import base64
 from Module.Proxy.prodia import Generation
-from Module.Template.BaseTemplateForImage import base_image_generation
+from Legacy.Template.BaseTemplateForImage import base_image_generation
 class MakeCharacter:
   def make_char_folder(self, name, prompt, image):
     cur_dir = os.getcwd()

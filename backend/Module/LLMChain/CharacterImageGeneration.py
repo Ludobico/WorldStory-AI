@@ -13,7 +13,6 @@ class CharacterImageGeneration:
     chain = prompt | llm
     desc = input_char_prompt
     result = chain.invoke({"description" : desc})
-    print(result)
     return result
 
 if __name__ == "__main__":

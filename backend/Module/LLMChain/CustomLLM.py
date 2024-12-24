@@ -39,6 +39,8 @@ class CustomLLM_GPT(LLM):
       text = ""
       for chunk in response:
             token = chunk.choices[0].delta.content
+            if token is None:
+              continue
             if text_callback:
                 await text_callback(token)
             text += token

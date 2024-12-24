@@ -7,7 +7,7 @@ if backend_root not in sys.path:
     sys.path.append(backend_root)
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from backend.Module.Prompt.CharacterSettingPrompt import character_generation_prompt
+from Module.Prompt.CharacterSettingPrompt import character_generation_prompt
 from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT
 
@@ -37,7 +37,8 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     
     try:
         async for token in callback.aiter():
-            yield token
+            if token is not None:
+                yield token
     except Exception as e:
         print(f"Caught exception: {e}")
     finally:
