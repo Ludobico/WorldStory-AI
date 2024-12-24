@@ -33,29 +33,20 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     # async for chunk in chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}):
     #     yield chunk
 
-    # method 2 -> it worked back then, before the arun() method was used
-    response = chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}, config={"callbacks" : [callback]})
+    response = chain.ainvoke({"instruct" : question, "name" : name, "gender" : gender, "era" : era}, config={"callbacks" : [callback]})
 
-    # task = asyncio.create_task(response)
+    task = asyncio.create_task(response)
     
-    # try:
-    #     async for token in callback.aiter():
-    #         yield token
-    # except Exception as e:
-    #     print(f"Caught exception: {e}")
-    # finally:
-    #     callback.done.set()
-
-    # await task
-
     try:
-        async for token in aiter(response):
+        async for token in callback.aiter():
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
     finally:
-        if hasattr(callback, 'done'):
-            callback.done.set()
+        callback.done.set()
+
+    await task
+
 
 if __name__ == "__main__":
     generator = character_setting_gpt_stream()
