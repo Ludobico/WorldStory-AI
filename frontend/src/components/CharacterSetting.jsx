@@ -46,7 +46,7 @@ const CharacterSetting = () => {
   const [modelList, setModelList] = useState([
     {
       label: 'GPT API',
-      options: [{ label: 'GPT3.5', value: 'GPT3.5' }],
+      options: [{ label: 'GPT4o', value: 'GPT3.5' }],
     },
     {
       label: 'Local Models',

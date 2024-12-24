@@ -1,6 +1,9 @@
 import os
 from Module.CharacterCheck import CharacterConfig
 def base_template():
+    """
+    the base_template() function is deprecated -> use the character_generation_prompt function instead base_template()
+    """
     template = """
     {instruct}
     Name: {name}

@@ -1,4 +1,7 @@
 def text_summary_for_image_generation():
+    """
+    This function is deprecated. you should use the character_to_CLIP_keywords_conversion_prompt() function instead.
+    """
     image_gen_template = """
     SYSTEM: You are a helpful text analyzer that knows how to summarize a text. especally character's apperance.
     USER: Summarize this text denoted by backticks:
