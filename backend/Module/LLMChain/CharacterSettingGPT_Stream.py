@@ -1,6 +1,11 @@
 import asyncio
 from typing import AsyncIterable
 
+import os, sys, pdb
+backend_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if backend_root not in sys.path:
+    sys.path.append(backend_root)
+
 from langchain.prompts import PromptTemplate, ChatPromptTemplate, SystemMessagePromptTemplate
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.callbacks import AsyncIteratorCallbackHandler
@@ -25,7 +30,7 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     era = user_preference['era']
 
 
-    async for chunk in chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}):
+    for chunk in chain.stream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}):
         yield chunk
 
     # response = chain.astream({"instruct" : question, "name" : name, "gender" : gender, "era" : era}, config={"callbacks" : [callback]})
@@ -41,3 +46,6 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     #     callback.done.set()
 
     # await task
+
+if __name__ == "__main__":
+    generator = character_setting_gpt_stream()
