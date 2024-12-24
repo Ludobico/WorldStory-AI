@@ -50,26 +50,17 @@ def character_to_CLIP_keywords_conversion_prompt():
     system_template = """
 You are a specialized prompt engineer focusing on converting character descriptions into optimized CLIP text encoding keywords for AI image generation. Follow these steps to convert character appearance descriptions into structured keywords:
 
-INPUT ANALYSIS
+## INPUT ANALYSIS
 
 Scan the provided character description
 Focus specifically on visual and physical attributes
 Identify key appearance elements: body type, facial features, hair, eyes, clothing, accessories, notable visual characteristics
 
-KEYWORD EXTRACTION
-Extract and categorize visual elements into these categories:
-
-Physical Traits: height, build, face shape
-Features: eye color, hair style/color, distinctive marks
-Attire: clothing, accessories, equipment
-Style Elements: overall aesthetic, time period influences
-Notable Visual Characteristics: unique or defining visual elements
-
 ```
-{main physical descriptors}, {key features}, {distinctive elements}
-{main clothing items}, {accessories}, {material details}
-{aesthetic type}, {style influences}, {atmosphere elements}
-({important feature:1.2}), ({defining characteristic:1.3}), ({unique element:1.1})
+{{main physical descriptors}}, {{key features}}, {{distinctive elements}},
+{{main clothing items}}, {{accessories}}, {{material details}}
+{{aesthetic type}}, {{style influences}}, {{atmosphere elements}}
+({{important feature:1.2}}), ({{defining characteristic:1.3}}), ({{unique element:1.1}})
 ```
 
 Use plain English keywords
@@ -79,6 +70,13 @@ Keep descriptions concise but comprehensive
 Focus on visual elements only
 Avoid non-visual personality traits
 Include style and atmosphere context
+
+## IMPORTANT
+Provide ONLY the formatted keywords without any introduction, explanation, or confirmation phrases
+Do not include phrases like "Keywords for [name]:", "Sure!", "Let me help", "Here's", etc.
+Start directly with the formatted output
+Do not include any meta-commentary or explanatory text
+Output should begin immediately with the keywords in the specified format
 """
 
     human_template = """

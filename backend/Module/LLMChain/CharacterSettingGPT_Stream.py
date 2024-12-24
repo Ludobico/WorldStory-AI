@@ -8,7 +8,6 @@ if backend_root not in sys.path:
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from backend.Module.Prompt.CharacterSettingPrompt import character_generation_prompt
-from Module.Template.FewShotPromptForCharSetting import character_setting_examples
 from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT
 
