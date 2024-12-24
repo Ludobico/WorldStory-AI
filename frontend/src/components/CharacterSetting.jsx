@@ -305,13 +305,13 @@ const CharacterSetting = () => {
             </span>
           ))}
           {/* 이미지 */}
-          <div className="CharacterSetting_generate_image_div">
+          {/* <div className="CharacterSetting_generate_image_div">
             {imageFlag ? (
               <img src={ImageGenLoading} className="CharacterSetting_generate_image" />
             ) : (
               <img src={characterImage} className="CharacterSetting_generate_image" />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       {/* generate 버튼 */}

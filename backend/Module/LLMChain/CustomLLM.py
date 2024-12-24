@@ -26,9 +26,10 @@ class CustomLLM_GPT(LLM):
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
       text_callback = None
-      client = Client(provider=Provider.Airforce)
+      client = Client(provider=Provider.Copilot)
+      # client = AsyncClient(provider=Provider.Copilot)
       response = client.chat.completions.create(
-        model='gpt-4o-mini',
+        model='gpt-4',
         messages=[{"role" : "user", "content" : prompt}],
         stream=True
     )
@@ -36,8 +37,9 @@ class CustomLLM_GPT(LLM):
           text_callback = partial(run_manager.on_llm_new_token)
       
       text = ""
-      for chunk in response:
+      async for chunk in response:
             token = chunk.choices[0].delta.content
+            print(token)
             if text_callback:
                 await text_callback(token)
             text += token

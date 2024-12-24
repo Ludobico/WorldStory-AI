@@ -93,7 +93,7 @@ async def stream_chat(ct_params: CT_parameters):
     # return await StreamingResponse(character_setting_gpt_stream(message.content), media_type="text/event-stream")
 
 @app.post("/char_setting_OAI")
-def char_setting_OAI(message : OAI_Message):
+async def char_setting_OAI(message : OAI_Message):
     generator = character_setting_gpt_stream()
     return StreamingResponse(generator, media_type="text/event-stream")
 
