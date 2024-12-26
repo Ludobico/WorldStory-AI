@@ -43,7 +43,7 @@ async def character_setting_gpt_stream() -> AsyncIterable[str]:
     except asyncio.CancelledError:
         raise
     finally:
-        if hasattr(callback, 'doen') and callback.done is not None:
+        if hasattr(callback, 'done') and callback.done is not None:
             callback.done.set()
 
     await task
