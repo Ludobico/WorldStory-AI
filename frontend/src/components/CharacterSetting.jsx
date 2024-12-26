@@ -72,7 +72,7 @@ const CharacterSetting = () => {
     const nameMatch = /(?:\*\*?)?Name:?(?:\*\*?)?\s*(.+)/i.exec(allText);
 
     if (nameMatch) {
-      const extractedName = nameMatch[1];
+      const extractedName = nameMatch[1].replace(/\s+/g, '');
       setSettingName(extractedName);
     } else {
       // alert.error('No name found');
