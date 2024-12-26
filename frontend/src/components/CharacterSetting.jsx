@@ -69,7 +69,7 @@ const CharacterSetting = () => {
     const textArray = Array.from(spans).map((span) => span.textContent);
     const allText = textArray.join('');
     setSettingPrompt(allText);
-    const nameMatch = /Name: (.+)/i.exec(allText);
+    const nameMatch = /(?:\*\*?)?Name:?(?:\*\*?)?\s*(.+)/i.exec(allText);
 
     if (nameMatch) {
       const extractedName = nameMatch[1];
