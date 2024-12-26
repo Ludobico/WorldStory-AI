@@ -21,7 +21,7 @@ async def chat_with_OAI(content: str, char_prompt_path, memory) -> AsyncIterable
 
     prompt = chat_base_prompt(char_prompt_path)
     llm =  CustomLLM_GPT()
-    memory = ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=int(memory_limit))
+    memory = ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=int(memory_limit), human_prefix=user_name, ai_prefix=char_prompt_path)
     chain = (
         RunnablePassthrough.assign(
             chat_history = lambda x : memory.chat_memory.messages
@@ -30,19 +30,19 @@ async def chat_with_OAI(content: str, char_prompt_path, memory) -> AsyncIterable
         | llm
     )
 
-    def invoke_with_memory(input_text):
-        result = chain.astream({"user_lang" : user_lang, "user_name" : user_name, "message" : input_text, "ai_name" : char_prompt_path}, {'callbacks' : [callback]})
-        memory.save_context({"input" : input_text}, {"output" : result.content})
+    full_response = ""
+    response = chain.ainvoke({"user_lang" : user_lang, "user_name" : user_name, "message" : content, "ai_name" : char_prompt_path}, {'callbacks' : [callback]})
   
-    task = asyncio.create_task(
-        invoke_with_memory(content)
-    )
+    task = asyncio.create_task(response)
+
     try:
         async for token in callback.aiter():
+            full_response += token
             yield token
     except Exception as e:
         print(f"Caught exception: {e}")
     finally:
         callback.done.set()
+        memory.save_context({'input' : content, 'output' : full_response})
 
     await task

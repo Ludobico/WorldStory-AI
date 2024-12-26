@@ -4,7 +4,7 @@ import os
 def chat_base_prompt(char_prompt_path):
     cur_dir = os.getcwd()
     char_path = os.path.join(cur_dir, 'Characters', char_prompt_path, 'prompt.txt')
-    with open(char_path, 'r') as f:
+    with open(char_path, 'r', encoding='utf-8') as f:
         char_prompt = f.read()
 
     system_template = """
