@@ -36,7 +36,7 @@ async def chat_with_OAI(content: str, char_prompt_path : str, store : Dict) -> A
     )
 
     def history_chain_call(content : str, session_id : str, store : Dict):
-        response = chain_with_history.ainvoke({"user_lang" : user_lang, "user_name" : user_name, "message" : content, "ai_name" : char_prompt_path}, config={"configurable" : {"session_id" : session_id}})
+        response = chain_with_history.ainvoke({"user_lang" : user_lang, "user_name" : user_name, "message" : content, "ai_name" : char_prompt_path}, config={"configurable" : {"session_id" : session_id}, "callbacks" : [callback]})
         return response
 
     response = history_chain_call(content=content, session_id=char_prompt_path, store=store)
