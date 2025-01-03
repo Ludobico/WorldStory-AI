@@ -1,6 +1,7 @@
 import configparser
 import asyncio
-from typing import AsyncIterable, Optional, List, Mapping, Any
+from typing import AsyncIterable, Optional, List, Mapping, Any, Dict
+import os
 
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from langchain.memory import ConversationBufferWindowMemory
@@ -9,7 +10,7 @@ from Module.CharacterCheck import CharacterConfig
 from Module.LLMChain.CustomLLM import CustomLLM_GPT, CustomLLM_Llama, CustomLLM_FreeGPT
 from Module.Prompt.CharacterChatPrompt import chat_base_prompt
 
-async def chat_with_OAI(content: str, char_prompt_path, memory) -> AsyncIterable[str]:
+async def chat_with_OAI(content: str, char_prompt_path : os.PathLike, store : Dict) -> AsyncIterable[str]:
     callback = AsyncIteratorCallbackHandler()
     user_config = CharacterConfig.user_config_parser()
     user_name = user_config['user_name']

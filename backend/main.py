@@ -135,8 +135,7 @@ user_config.read(user_config_path, encoding='UTF-8')
 
 memory_config = user_config['DEFAULT']
 
-# memory = ConversationBufferMemory(memory_key="chat_history", input_key="message")
-memory = ConversationBufferWindowMemory(memory_key="chat_history", input_key="message", k=memory_config['memory'])
+store = {}
 @app.post("/character_chat_OAI")
 def character_chat_OAI(message: OAI_Message_chat):
     generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt, memory=memory)
