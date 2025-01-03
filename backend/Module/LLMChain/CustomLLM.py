@@ -26,7 +26,7 @@ class CustomLLM_GPT(LLM):
   
   async def _acall(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[AsyncCallbackManagerForLLMRun] = None, **kwargs: Any) -> str:
       text_callback = None
-      client = Client(provider=Provider.Airforce)
+      client = Client()
       # client = AsyncClient()
       response = client.chat.completions.create(
         model='gpt-4o',

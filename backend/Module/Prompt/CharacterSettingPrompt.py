@@ -77,6 +77,7 @@ You are a specialized prompt engineer focusing on converting character descripti
 Scan the provided character description
 Focus specifically on visual and physical attributes
 Identify key appearance elements: body type, facial features, hair, eyes, clothing, accessories, notable visual characteristics
+Include gender-specific visual cues
 
 ```
 {{main physical descriptors}}, {{key features}}, {{distinctive elements}},
