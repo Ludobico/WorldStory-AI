@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder, AIMessagePromptTemplate
 import os
 
-def chat_base_prompt(char_prompt_path):
+def chat_base_prompt(char_prompt_path, memory_limit : int):
     cur_dir = os.getcwd()
     char_path = os.path.join(cur_dir, 'Characters', char_prompt_path, 'prompt.txt')
     with open(char_path, 'r', encoding='utf-8') as f:
@@ -21,12 +21,12 @@ def chat_base_prompt(char_prompt_path):
 """
 
     ai_template = """
-{ai_name}
+{ai_name} : 
 """
 
     messages = [
         SystemMessagePromptTemplate.from_template(system_template),
-        MessagesPlaceholder(variable_name="chat_history"),
+        MessagesPlaceholder(variable_name="chat_history", n_messages = memory_limit),
         HumanMessagePromptTemplate.from_template(human_template),
         AIMessagePromptTemplate.from_template(ai_template)
     ]

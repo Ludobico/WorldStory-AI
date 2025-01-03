@@ -15,12 +15,6 @@ class InMemoryHistory(BaseChatMessageHistory, BaseModel):
     
     def clear(self) -> None:
         self.messages = []
-    
-
-def get_by_session_id(session_id : str, store : Dict) -> BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id] = InMemoryHistory()
-    return store[session_id]
 
 class HistoryMessageExtractor:
     """

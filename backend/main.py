@@ -138,7 +138,7 @@ memory_config = user_config['DEFAULT']
 store = {}
 @app.post("/character_chat_OAI")
 def character_chat_OAI(message: OAI_Message_chat):
-    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt, memory=memory)
+    generator = chat_with_OAI(content=message.content, char_prompt_path=message.prompt, store=store)
     return StreamingResponse(generator, media_type="text/event-stream")
 
 @app.post("/character_image_check")
