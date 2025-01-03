@@ -33,7 +33,7 @@ class Generation:
                     params={
                         "new": "true",
                         "prompt": prompt,
-                        "model": "dreamshaper_7.safetensors [5cf5ae06]",
+                        "model": "dreamshaper_8.safetensors [9d40847d]",
                         "negative_prompt": "CGI, 3d, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
                         "steps": "20",
                         "cfg": "7",
