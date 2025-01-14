@@ -36,9 +36,9 @@ Made-up names that follow linguistic patterns
 Avoid common or overused character names
 The name should reflect the character's background and setting
 
-Name: {name}
+Name: {name} -- [Apply name generation rules above]
 
-Gender: {gender}
+Gender: {gender} -- [Specify "Male" or "Female" only]
 
 Personality: Describe the character's key traits, behaviors, and motivations.
 

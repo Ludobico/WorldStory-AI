@@ -154,7 +154,7 @@ const CharacterChat = () => {
   // modelItems 상태
   const [selectedModelItem, setSelectedModelItem] = useState([getItem('Model select', null, <SELECT_MODEL_LOGO />)]);
   const [modelItems, setModelItems] = useState([
-    getItem('GPT3.5', 'GPT3.5', <OPENAI_LOGO />),
+    getItem('GPT4o', 'GPT4o', <OPENAI_LOGO />),
     getItem('LocalModel', 'LocalModel', <LLMLOGO />, null),
   ]);
   // LLM list를 출력해 modelItems 에 업데이트
@@ -467,7 +467,7 @@ const CharacterChat = () => {
               unCheckedChildren="Light"
             />
           </div>
-          {/* GPT3.5 */}
+          {/* GPT4o */}
           {/* <Menu theme={lightTheme} mode="inline" items={selectedModelItem} selectable={false} /> */}
           {/* LocalModel */}
           <Menu
@@ -475,7 +475,7 @@ const CharacterChat = () => {
             mode="inline"
             items={modelItems}
             onClick={handleModelSelet}
-            defaultSelectedKeys={'GPT3.5'}
+            defaultSelectedKeys={'GPT4o'}
           />
           {/* Character */}
           <Menu theme={lightTheme} mode="inline" items={characterItems} onClick={handleCharacterSelet} />
